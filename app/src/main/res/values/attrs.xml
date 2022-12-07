@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--XfermodeImageView-->
+    <declare-styleable name="XfermodeImageView">
+        <attr name="xiv_border_width" format="dimension" />
+        <attr name="xiv_border_color" format="color" />
+        <attr name="xiv_bg_src" format="reference" />
+        <attr name="xiv_need_scale" format="boolean" />
+        <attr name="xiv_draw_cache" format="boolean" />
+        <attr name="xiv_xfer_mode">
+            <enum name="in" value="0" />
+            <enum name="out" value="1" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="View">
+        <attr name="atsize_ratio" format="float|reference" />
+        <attr name="atsize_base_type">
+            <enum name="atsize_width" value="0" />
+            <enum name="atsize_height" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>

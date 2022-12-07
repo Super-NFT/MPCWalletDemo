@@ -9,4 +9,12 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="total_balance">Total Balance</string>
+    <string name="receive">Receive</string>
+    <string name="send">Send</string>
+
+    <string name="tokens">Tokens</string>
+    <string name="nfts">NFTs</string>
+
 </resources>
