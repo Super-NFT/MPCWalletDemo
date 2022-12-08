@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
 import com.go23wallet.mpcwalletdemo.databinding.ActivityWalletBinding
+import com.go23wallet.mpcwalletdemo.dialog.SettingDialog
 import com.go23wallet.mpcwalletdemo.fragment.NFTFragment
 import com.go23wallet.mpcwalletdemo.fragment.TokenFragment
+import com.go23wallet.mpcwalletdemo.utils.ScreenUtils
 
 class WalletActivity : AppCompatActivity() {
 
@@ -15,6 +17,10 @@ class WalletActivity : AppCompatActivity() {
     private val fragments = mutableListOf<Fragment>()
     private var tabAdapter: TabFragmentAdapter? = null
     private lateinit var binding: ActivityWalletBinding
+
+    private val settingDialog by lazy {
+        SettingDialog(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +49,8 @@ class WalletActivity : AppCompatActivity() {
             finish()
         }
         binding.icMore.setOnClickListener {
-
+            settingDialog.setHeight((ScreenUtils.getScreenHeight(this) * 0.8).toInt())
+            settingDialog.show(supportFragmentManager, "settingDialog")
         }
 
         binding.tvCoinType.setOnClickListener {

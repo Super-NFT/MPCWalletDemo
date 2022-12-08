@@ -16,5 +16,30 @@
 
     <string name="tokens">Tokens</string>
     <string name="nfts">NFTs</string>
+    <string name="setting">Setting</string>
+    <string name="successfully">Successfully</string>
+    <string name="resharding">Resharding Private Key</string>
+    <string name="recover_wallet">Recover Wallet</string>
+    <string name="email">Email</string>
+    <string name="pin_code">PIN code</string>
+    <string name="pin_code_error">PIN code Error</string>
+    <string name="verify_count">Verify your count</string>
+    <string name="verify">Verify</string>
+    <string name="confirm">Confirm</string>
+    <string name="forget_psw">Forget password</string>
+    <string name="send_code">Send a code to your email to verify</string>
+    <string name="has_send_tips">An email with code has been send to your e-mail</string>
+    <string name="sending">Sending， please wait</string>
+    <string name="verifying">Verifying， please wait</string>
+    <string name="verify_error">Verify code is error, please check it</string>
+    <string name="confirm_error">The two pincode are different, please check it</string>
+    <string name="dont_receive">Didn`t receive?</string>
+    <string name="resend">Please click resend</string>
+    <string name="set_pin_code">Set Pincode</string>
+    <string name="confirm_pin_code">Confirm Pincode</string>
+    <string name="set_pin_code_tips">Please enter 8 characters including letters, numbers and special characters</string>
 
+    <string name="start_reshard">Start to reshard private key</string>
+    <string name="loading">Loading…</string>
+    <string name="resharding_loading">Resharding, please wait</string>
 </resources>
