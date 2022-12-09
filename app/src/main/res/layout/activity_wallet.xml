@@ -36,10 +36,21 @@
         android:drawableEnd="@drawable/icon_down"
         android:drawablePadding="5dp"
         android:gravity="center"
-        android:paddingStart="8dp"
+        android:textSize="14sp"
+        android:textColor="@color/color_262626"
+        android:paddingStart="32dp"
         android:paddingEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_coin_type"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_coin_type"
+        app:layout_constraintStart_toStartOf="@id/tv_coin_type"
+        app:layout_constraintTop_toTopOf="@id/tv_coin_type" />
 
     <com.go23wallet.mpcwalletdemo.view.xfer.XfermodeImageView
         android:id="@+id/iv_avatar"
@@ -180,17 +191,17 @@
         android:layout_height="24dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        app:tabTextAppearance="@style/TabTextAppearance"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/line"
-        app:tabIndicatorFullWidth="true"
         app:tabBackground="@android:color/transparent"
-        app:tabRippleColor="@android:color/transparent"
+        app:tabIndicator="@drawable/shape_r4_bg"
+        app:tabIndicatorColor="@color/color_E1F4F5"
+        app:tabIndicatorFullWidth="true"
         app:tabIndicatorGravity="stretch"
         app:tabMode="scrollable"
-        app:tabIndicatorColor="@color/color_E1F4F5"
-        app:tabIndicator="@drawable/shape_r4_bg"
+        app:tabRippleColor="@android:color/transparent"
         app:tabSelectedTextColor="@color/color_262626"
+        app:tabTextAppearance="@style/TabTextAppearance"
         app:tabTextColor="@color/color_8C8C8C" />
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -207,8 +218,8 @@
         android:id="@+id/view_pager"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

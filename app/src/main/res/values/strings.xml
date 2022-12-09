@@ -42,4 +42,10 @@
     <string name="start_reshard">Start to reshard private key</string>
     <string name="loading">Loading…</string>
     <string name="resharding_loading">Resharding, please wait</string>
+
+    <string name="choose_mainnet">Choose Mainnets</string>
+
+    <string name="copy_success">Copy Success</string>
+    <string name="receive_tips">Scan the QR code to pay \n Mainnet %s</string>
+    <string name="receive_qrcode_tips">This address only accepts tokens from Ethereum.</string>
 </resources>
