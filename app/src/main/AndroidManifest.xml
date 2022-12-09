@@ -29,6 +29,9 @@
         </activity>
         <activity android:name=".wallet.WalletActivity"
             android:theme="@style/Theme.WalletDemo"/>
+
+        <activity android:name=".wallet.TokenDetailsActivity" />
+        <activity android:name=".wallet.ChargeDetailsActivity" />
     </application>
 
 </manifest>

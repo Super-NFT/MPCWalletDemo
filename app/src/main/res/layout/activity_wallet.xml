@@ -36,10 +36,10 @@
         android:drawableEnd="@drawable/icon_down"
         android:drawablePadding="5dp"
         android:gravity="center"
-        android:textSize="14sp"
-        android:textColor="@color/color_262626"
         android:paddingStart="32dp"
         android:paddingEnd="8dp"
+        android:textColor="@color/color_262626"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
@@ -122,58 +122,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_total_content" />
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/ll_scan"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_receive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="34dp"
         android:layout_marginTop="25dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toStartOf="@id/ll_send"
+        android:drawableTop="@drawable/icon_scan"
+        android:drawablePadding="6dp"
+        android:text="@string/receive"
+        android:textColor="@color/color_848484"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@id/tv_send"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_coins">
+        app:layout_constraintTop_toBottomOf="@id/tv_coins" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:src="@drawable/icon_scan" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="@string/receive"
-            android:textColor="@color/color_848484"
-            android:textSize="14sp" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/ll_send"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="34dp"
+        android:drawableTop="@drawable/icon_send"
+        android:drawablePadding="6dp"
         android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@id/ll_scan"
+        android:text="@string/send"
+        android:textColor="@color/color_848484"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_receive"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ll_scan"
-        app:layout_constraintTop_toTopOf="@id/ll_scan">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:src="@drawable/icon_send" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="@string/send"
-            android:textColor="@color/color_848484"
-            android:textSize="14sp" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        app:layout_constraintStart_toEndOf="@id/tv_receive"
+        app:layout_constraintTop_toTopOf="@id/tv_receive" />
 
     <View
         android:id="@+id/line"
@@ -183,7 +162,7 @@
         android:background="@color/color_D9D9D9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_scan" />
+        app:layout_constraintTop_toBottomOf="@id/tv_receive" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab"

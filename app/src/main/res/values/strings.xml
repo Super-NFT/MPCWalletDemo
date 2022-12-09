@@ -48,4 +48,19 @@
     <string name="copy_success">Copy Success</string>
     <string name="receive_tips">Scan the QR code to pay \n Mainnet %s</string>
     <string name="receive_qrcode_tips">This address only accepts tokens from Ethereum.</string>
+
+    <string name="type_all">All</string>
+    <string name="type_out">Out</string>
+    <string name="type_in">In</string>
+    <string name="failed">Failed</string>
+
+    <string name="details">Details</string>
+    <string name="processing">Processing…</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="txID">TxID</string>
+    <string name="network">Network</string>
+    <string name="amount">Amount</string>
+    <string name="gas_free">Gas Fee</string>
+    <string name="total">Total</string>
 </resources>

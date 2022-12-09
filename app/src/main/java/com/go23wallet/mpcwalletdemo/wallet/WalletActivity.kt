@@ -1,10 +1,6 @@
 package com.go23wallet.mpcwalletdemo.wallet
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.go23wallet.mpcwalletdemo.R
@@ -83,13 +79,13 @@ class WalletActivity : AppCompatActivity() {
             CopyUtils.copyText(this, binding.tvAddress.text.toString())
         }
 
-        binding.llScan.setOnClickListener {
+        binding.tvReceive.setOnClickListener {
             receiveDialog = ReceiveDialog(this, "").apply {
                 show(supportFragmentManager, "receiveDialog")
             }
         }
 
-        binding.llSend.setOnClickListener { }
+        binding.tvSend.setOnClickListener { }
 
         binding.ivAdd.setOnClickListener { }
 
