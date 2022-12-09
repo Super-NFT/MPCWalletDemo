@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_top_r12_white"
+    android:paddingBottom="35dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="@string/send_nft"
+        android:textColor="@color/color_262626"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_close"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/icon_close"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_title" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/color_F5F5F5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <View
+        android:id="@+id/view_info"
+        android:layout_width="0dp"
+        android:layout_height="156dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/shape_r16_border_d9_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_nft_pro"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="@id/view_info"
+        app:layout_constraintTop_toTopOf="@id/view_info" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_nft_pro_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:textColor="@color/color_595959"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/tv_nft_pro"
+        app:layout_constraintStart_toEndOf="@id/iv_nft_pro"
+        app:layout_constraintTop_toTopOf="@id/iv_nft_pro"
+        tools:text="asasdad" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_nft_pro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:textColor="@color/color_8C8C8C"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_nft_pro"
+        app:layout_constraintStart_toEndOf="@id/iv_nft_pro"
+        app:layout_constraintTop_toBottomOf="@id/tv_nft_pro_no"
+        tools:text="asasdad" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_nft_avatar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="@id/view_info"
+        app:layout_constraintTop_toBottomOf="@id/iv_nft_pro" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_nft_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:textColor="@color/color_595959"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/tv_nft_token_id"
+        app:layout_constraintStart_toEndOf="@id/iv_nft_avatar"
+        app:layout_constraintTop_toTopOf="@id/iv_nft_avatar"
+        tools:text="asasdad" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_nft_token_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:textColor="@color/color_8C8C8C"
+        android:text="@string/token_id_content"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_nft_avatar"
+        app:layout_constraintStart_toEndOf="@id/iv_nft_avatar"
+        app:layout_constraintTop_toBottomOf="@id/tv_nft_no" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_contact"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/contract"
+        android:textColor="@color/color_8C8C8C"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_info" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_contact_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/color_595959"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_contact"
+        app:layout_constraintTop_toBottomOf="@id/view_info"
+        tools:text="asdasdadsads" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_from"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/from"
+        android:textColor="@color/color_8C8C8C"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_contact_content" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_from_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/color_595959"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_contact"
+        app:layout_constraintTop_toBottomOf="@id/tv_contact_content"
+        tools:text="asdasdadsads" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_to"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/to"
+        android:textColor="@color/color_8C8C8C"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_from_content" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_to_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/color_595959"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_contact"
+        app:layout_constraintTop_toBottomOf="@id/tv_from_content"
+        tools:text="asdasdadsads" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_token_id"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/token_id"
+        android:textColor="@color/color_8C8C8C"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_to_content" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_token_id_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/color_595959"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_contact"
+        app:layout_constraintTop_toBottomOf="@id/tv_to_content"
+        tools:text="asdasdadsads" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_value"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/value"
+        android:textColor="@color/color_8C8C8C"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_token_id_content" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_value_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/color_595959"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_contact"
+        app:layout_constraintTop_toBottomOf="@id/tv_token_id_content"
+        tools:text="asdasdadsads" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_gas"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/gas_free"
+        android:textColor="@color/color_8C8C8C"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_value" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_gas_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/color_595959"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_contact"
+        app:layout_constraintTop_toBottomOf="@id/tv_value"
+        tools:text="asdasdadsads" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_gas_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:textColor="@color/color_8C8C8C"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_contact"
+        app:layout_constraintTop_toBottomOf="@id/tv_gas_content"
+        tools:text="asdasdadsads" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_confirm"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/shape_r8_35c1d8_bg"
+        android:gravity="center"
+        android:text="@string/confirm"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_gas_value"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

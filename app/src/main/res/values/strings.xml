@@ -26,6 +26,7 @@
     <string name="verify_count">Verify your count</string>
     <string name="verify">Verify</string>
     <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
     <string name="forget_psw">Forget password</string>
     <string name="send_code">Send a code to your email to verify</string>
     <string name="has_send_tips">An email with code has been send to your e-mail</string>
@@ -46,6 +47,7 @@
     <string name="choose_mainnet">Choose Mainnets</string>
 
     <string name="copy_success">Copy Success</string>
+    <string name="paste_error">Paste Error</string>
     <string name="receive_tips">Scan the QR code to pay \n Mainnet %s</string>
     <string name="receive_qrcode_tips">This address only accepts tokens from Ethereum.</string>
 
@@ -55,6 +57,7 @@
     <string name="failed">Failed</string>
 
     <string name="details">Details</string>
+    <string name="send_nft">Send NFT</string>
     <string name="processing">Processing…</string>
     <string name="from">From</string>
     <string name="to">To</string>
@@ -63,4 +66,18 @@
     <string name="amount">Amount</string>
     <string name="gas_free">Gas Fee</string>
     <string name="total">Total</string>
+
+    <string name="description">Description</string>
+    <string name="attributes">Attributes</string>
+    <string name="contract">Contract</string>
+    <string name="contract_address">Contract address</string>
+    <string name="website">Website</string>
+    <string name="transfer">Transfer</string>
+    <string name="paste">Paste</string>
+    <string name="receiving_address">Receiving Address</string>
+    <string name="token_id">TokenID</string>
+    <string name="token_id_content">Token ID:</string>
+    <string name="value">Value</string>
+    <string name="transaction_result">Transaction Result</string>
+    <string name="go_it">GO it</string>
 </resources>

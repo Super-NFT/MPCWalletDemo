@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.go23wallet.mpcwalletdemo.adapter.TokenTypeAdapter
 import com.go23wallet.mpcwalletdemo.databinding.FragmentTabLayoutBinding
 import com.go23wallet.mpcwalletdemo.wallet.ChargeDetailsActivity
@@ -56,7 +54,7 @@ class TokenTypeFragment : Fragment() {
         fun newInstance(type: Int): Fragment {
             val args = Bundle()
 
-            val fragment = TokenFragment()
+            val fragment = TokenTypeFragment()
             args.putInt("type", type)
             fragment.arguments = args
             return fragment

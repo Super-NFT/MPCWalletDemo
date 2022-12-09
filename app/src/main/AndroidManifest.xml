@@ -27,11 +27,22 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".wallet.WalletActivity"
-            android:theme="@style/Theme.WalletDemo"/>
+        <activity
+            android:name=".wallet.WalletActivity"
+            android:theme="@style/Theme.WalletDemo" />
 
-        <activity android:name=".wallet.TokenDetailsActivity" />
-        <activity android:name=".wallet.ChargeDetailsActivity" />
+        <activity
+            android:name=".wallet.TokenDetailsActivity"
+            android:theme="@style/Theme.WalletDemo" />
+        <activity
+            android:name=".wallet.ChargeDetailsActivity"
+            android:theme="@style/Theme.WalletDemo" />
+        <activity
+            android:name=".wallet.NFTDetailsActivity"
+            android:theme="@style/Theme.WalletDemo" />
+        <activity
+            android:name=".wallet.SendNFTActivity"
+            android:theme="@style/Theme.WalletDemo" />
     </application>
 
 </manifest>
