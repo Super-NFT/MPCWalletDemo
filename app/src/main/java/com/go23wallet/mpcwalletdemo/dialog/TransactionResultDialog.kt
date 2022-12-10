@@ -7,8 +7,7 @@ import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogTransactionResultLayoutBinding
 import com.go23wallet.mpcwalletdemo.utils.ScreenUtils
 
-
-class TransactionResultDialog(private val mContext: Context, private val mData: String) :
+class TransactionResultDialog(private val mContext: Context) :
     BaseDialogFragment<DialogTransactionResultLayoutBinding>() {
 
     override fun onAttach(context: Context) {
@@ -22,7 +21,7 @@ class TransactionResultDialog(private val mContext: Context, private val mData: 
     override fun initViews(v: View?) {
 
         viewBinding.ivStatus.setImageResource(R.drawable.icon_charge_success)
-        viewBinding.tvStatus.text = mData
+        viewBinding.tvStatus.text = ""
 
         viewBinding.ivClose.setOnClickListener {
             dismissAllowingStateLoss()

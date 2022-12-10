@@ -15,9 +15,12 @@
     <color name="color_848484">#848484</color>
     <color name="color_BFBFBF">#BFBFBF</color>
     <color name="color_E1F4F5">#E1F4F5</color>
+    <color name="color_E2E1F5">#E2E1F5</color>
     <color name="color_35C1D8">#35C1D8</color>
+    <color name="color_35C1D8_20">#3335C1D8</color>
     <color name="color_8C8C8C">#8C8C8C</color>
     <color name="color_8B8B8B">#8B8B8B</color>
     <color name="color_D83548">#D83548</color>
     <color name="color_595959">#595959</color>
+
 </resources>

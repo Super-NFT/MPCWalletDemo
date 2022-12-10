@@ -1,5 +1,6 @@
 package com.go23wallet.mpcwalletdemo.wallet
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
 import com.go23wallet.mpcwalletdemo.databinding.ActivityWalletBinding
 import com.go23wallet.mpcwalletdemo.dialog.ChooseMainnetDialog
+import com.go23wallet.mpcwalletdemo.dialog.ImportAssetDialog
 import com.go23wallet.mpcwalletdemo.dialog.ReceiveDialog
 import com.go23wallet.mpcwalletdemo.dialog.SettingDialog
 import com.go23wallet.mpcwalletdemo.fragment.NFTFragment
@@ -30,7 +32,12 @@ class WalletActivity : AppCompatActivity() {
     private val settingDialog by lazy {
         SettingDialog(this)
     }
-    private var receiveDialog: ReceiveDialog ?= null
+
+    private val importAssetDialog by lazy {
+        ImportAssetDialog(this)
+    }
+
+    private var receiveDialog: ReceiveDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +82,7 @@ class WalletActivity : AppCompatActivity() {
             binding.tvCoinType.text = it
         }
 
-        binding.ivCopy.setOnClickListener {
+        binding.tvAddress.setOnClickListener {
             CopyUtils.copyText(this, binding.tvAddress.text.toString())
         }
 
@@ -85,9 +92,14 @@ class WalletActivity : AppCompatActivity() {
             }
         }
 
-        binding.tvSend.setOnClickListener { }
+        binding.tvSend.setOnClickListener {
+            startActivity(Intent(this, SendCoinActivity::class.java).apply {
+                putExtra("data", "")
+            })
+        }
 
-        binding.ivAdd.setOnClickListener { }
-
+        binding.ivAdd.setOnClickListener {
+            importAssetDialog.show(supportFragmentManager, "importAssetDialog")
+        }
     }
 }

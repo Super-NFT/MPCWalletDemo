@@ -26,6 +26,7 @@
     <string name="verify_count">Verify your count</string>
     <string name="verify">Verify</string>
     <string name="confirm">Confirm</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="forget_psw">Forget password</string>
     <string name="send_code">Send a code to your email to verify</string>
@@ -80,4 +81,26 @@
     <string name="value">Value</string>
     <string name="transaction_result">Transaction Result</string>
     <string name="go_it">GO it</string>
+    <string name="album">Album</string>
+    <string name="scan_qrcode">Scan QR-CODE</string>
+    <string name="request_camera_permission_fail">Failed to obtain camera permission</string>
+
+    <string name="import_str">Import</string>
+    <string name="import_asset">Import assets</string>
+    <string name="import_nfts">Import NFTs</string>
+    <string name="add_a_token">Add a Token</string>
+    <string name="add_custom_token">Add Custom Token</string>
+    <string name="nft_contact_address">NFT Contract Address</string>
+    <string name="add_token_warning">Anyone can create a token, including creating fake version of existing tokens.</string>
+    <string name="token_contract">Token Contract</string>
+    <string name="token_symbol">Token Symbol</string>
+    <string name="token_precision">Token of Precision</string>
+    <string name="available">Available: %s</string>
+    <string name="all">All</string>
+
+    <string name="select_token_send">Select token to send</string>
+    <string name="confirm_transfer">Confirm Transfer</string>
+    <string name="request_sent">The request is sent</string>
+    <string name="pending_block_validation">Pending block validation. Please go to Details page to view details of this transaction.</string>
+    <string name="view_details">View Details</string>
 </resources>

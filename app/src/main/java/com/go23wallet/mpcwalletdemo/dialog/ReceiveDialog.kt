@@ -27,7 +27,7 @@ class ReceiveDialog(private val mContext: Context, private val mData: String) : 
         viewBinding.tvTitle.text = mData
         viewBinding.tvContent.text = String.format(getString(R.string.receive_tips), mData)
         GlideUtils.loadImg(mContext, mData, viewBinding.ivQrcode)
-        val address = "qwertyuuoplkkjhgdsaasdsadfadsfdzx"//字符串最后加一个两个空格以便将其替换成图标。不然就会被图标占据内容
+        val address = "qwertyuuoplkkjhgdsaasdsadfadsfdzx"
         TextEllipsizeSpanUtil.setTextEndImg(mContext, viewBinding.tvAddress, address, R.drawable.icon_copy) {
             CopyUtils.copyText(mContext, address)
         }

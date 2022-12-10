@@ -145,7 +145,6 @@
         app:tabIndicatorColor="@color/color_35C1D8"
         app:tabIndicatorFullWidth="true"
         app:tabIndicatorHeight="2dp"
-        app:tabMode="scrollable"
         app:tabRippleColor="@android:color/transparent"
         app:tabSelectedTextColor="@color/color_35C1D8"
         app:tabTextAppearance="@style/TabTextAppearance"

@@ -50,6 +50,9 @@ dependencies {
     //glide-transformations 为图片加载框架提供图片形状变幻能力的框架
     implementation 'jp.wasabeef:glide-transformations:4.3.0'
 
+    implementation 'com.blankj:utilcode:1.30.7'
+    implementation 'com.google.zxing:core:3.3.0'
+
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.10'
 
     testImplementation 'junit:junit:4.13.2'

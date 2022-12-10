@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_top_r12_white"
+    android:paddingBottom="80dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="@string/import_nfts"
+        android:textColor="@color/color_262626"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_close"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/icon_close"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_ntf_address_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/nft_contact_address"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_ntf_address"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/shape_r8_f5_bg_35c1d8_border"
+        android:gravity="center_vertical"
+        android:hint="Ox"
+        android:paddingStart="8dp"
+        android:paddingEnd="32dp"
+        android:textColor="@color/color_262626"
+        android:textColorHint="@color/color_8C8C8C"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_ntf_address_title" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_nft_clear"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/icon_clear"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/et_ntf_address"
+        app:layout_constraintEnd_toEndOf="@id/et_ntf_address"
+        app:layout_constraintTop_toTopOf="@id/et_ntf_address" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_token_address_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/token_id"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_ntf_address" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_token_address"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/shape_r8_f5_border_d9_bg"
+        android:gravity="center_vertical"
+        android:hint="Tokens"
+        android:paddingStart="8dp"
+        android:paddingEnd="32dp"
+        android:textColor="@color/color_262626"
+        android:textColorHint="@color/color_8C8C8C"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_token_address_title" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_token_clear"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/icon_clear"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/et_token_address"
+        app:layout_constraintEnd_toEndOf="@id/et_token_address"
+        app:layout_constraintTop_toTopOf="@id/et_token_address" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_import"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/selector_btn_enable"
+        android:gravity="center"
+        android:text="@string/import_str"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_token_address" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

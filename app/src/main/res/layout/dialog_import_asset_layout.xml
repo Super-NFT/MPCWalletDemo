@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_top_r12_white"
+    android:paddingBottom="80dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="@string/import_asset"
+        android:textColor="@color/color_262626"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_close"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/icon_close"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_token"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/shape_r8_e1f4f5_bg"
+        android:drawableEnd="@drawable/icon_next_black"
+        android:gravity="center_vertical"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:text="@string/tokens"
+        android:textColor="@color/color_262626"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_nfts"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/shape_r8_e2e1f5_bg"
+        android:drawableEnd="@drawable/icon_next_black"
+        android:gravity="center_vertical"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:text="@string/nfts"
+        android:textColor="@color/color_262626"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_token" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

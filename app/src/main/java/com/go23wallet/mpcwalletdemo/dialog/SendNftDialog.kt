@@ -15,6 +15,10 @@ import com.go23wallet.mpcwalletdemo.utils.TextEllipsizeSpanUtil
 class SendNftDialog(private val mContext: Context, private val mData: String) :
     BaseDialogFragment<DialogSendNftLayoutBinding>() {
 
+    private val transactionResultDialog: TransactionResultDialog by lazy {
+        TransactionResultDialog(mContext)
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         setHeight((ScreenUtils.getScreenHeight(mContext) * 0.8).toInt())
@@ -45,7 +49,7 @@ class SendNftDialog(private val mContext: Context, private val mData: String) :
         }
 
         viewBinding.tvConfirm.setOnClickListener {
-
+            transactionResultDialog.show(parentFragmentManager, "transactionResultDialog")
         }
 
     }
