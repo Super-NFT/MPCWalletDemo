@@ -8,7 +8,8 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 
-class AddTokenListAdapter(private val mContext: Context): BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_add_token_layout) {
+class AddTokenListAdapter(private val mContext: Context, private val selectList: MutableList<String>) :
+    BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_add_token_layout) {
 
     override fun convert(holder: BaseViewHolder, item: String) {
         val ivTokenIcon = holder.getView<AppCompatImageView>(R.id.iv_token_icon)
@@ -20,6 +21,7 @@ class AddTokenListAdapter(private val mContext: Context): BaseQuickAdapter<Strin
         tvTokenName.text = item
         tvTokenNum.text = item
         tvTokenValue.text = item
-        ivStatus.setImageResource(R.drawable.icon_checked)
+
+        ivStatus.setImageResource(if (selectList.contains(item)) R.drawable.icon_checked else R.drawable.icon_uncheck)
     }
 }

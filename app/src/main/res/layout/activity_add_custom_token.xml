@@ -83,28 +83,16 @@
         app:layout_constraintTop_toBottomOf="@id/tv_contact_content" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_token_address"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:textColor="@color/color_35C1D8"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_contact_content" />
-
-    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_symbol_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="24dp"
         android:text="@string/token_symbol"
         android:textColor="@color/color_262626"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_token_address" />
+        app:layout_constraintTop_toBottomOf="@id/et_token_contact" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_token_symbol"
@@ -153,13 +141,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_precision_content" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="tv_token_address,tv_symbol_content,tv_token_symbol,tv_precision_content,tv_token_precision" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_confirm"

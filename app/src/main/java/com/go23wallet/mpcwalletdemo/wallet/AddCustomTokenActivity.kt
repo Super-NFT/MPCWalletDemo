@@ -33,8 +33,6 @@ class AddCustomTokenActivity : AppCompatActivity() {
             if (isInput) {
                 isInput = false
                 binding.etTokenContact.visibility = View.GONE
-                binding.group.visibility = View.VISIBLE
-                binding.tvTokenAddress.text = ""
                 binding.tvTokenSymbol.text = ""
                 binding.tvTokenPrecision.text = ""
             } else {

@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.go23wallet.mpcwalletdemo.adapter.NFTAdapter
 import com.go23wallet.mpcwalletdemo.databinding.FragmentTabLayoutBinding
+import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
 import com.go23wallet.mpcwalletdemo.wallet.NFTDetailsActivity
 
 class NFTFragment : Fragment() {
@@ -31,6 +33,11 @@ class NFTFragment : Fragment() {
     }
 
     private fun initView() {
+        UpdateDataLiveData.liveData.observe(viewLifecycleOwner, Observer {
+            if (it == 2) {
+
+            }
+        })
         binding.recyclerView.apply {
             layoutManager = GridLayoutManager(context, 2)
             if (mAdapter == null) {

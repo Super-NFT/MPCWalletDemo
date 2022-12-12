@@ -55,6 +55,21 @@ dependencies {
 
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.10'
 
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.32"
+
+    // 协程核心库
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
+    // 协程Android支持库
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3"
+    // 协程Java8支持库
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.4.3"
+
+    // lifecycle对于协程的扩展封装
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'

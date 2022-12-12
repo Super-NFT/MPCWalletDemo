@@ -18,7 +18,7 @@ class ReshardingDialog(mContext: Context) : BaseDialogFragment<DialogReshardingL
     private val mHandler: Handler = Handler(Looper.getMainLooper())
 
     private val forgetPswDialog: ForgetPswDialog by lazy {
-        ForgetPswDialog(mContext)
+        ForgetPswDialog(mContext, 1)
     }
 
     private val startReshardDialog: StartReshardDialog by lazy {

@@ -9,6 +9,7 @@ import com.go23wallet.mpcwalletdemo.utils.CopyUtils
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 import com.go23wallet.mpcwalletdemo.utils.ScreenUtils
 import com.go23wallet.mpcwalletdemo.utils.TextEllipsizeSpanUtil
+import com.google.zxing.common.BitmapUtils
 
 
 class ReceiveDialog(private val mContext: Context, private val mData: String) : BaseDialogFragment<DialogReceiveLayoutBinding>() {
@@ -26,10 +27,12 @@ class ReceiveDialog(private val mContext: Context, private val mData: String) : 
     override fun initViews(v: View?) {
         viewBinding.tvTitle.text = mData
         viewBinding.tvContent.text = String.format(getString(R.string.receive_tips), mData)
-        GlideUtils.loadImg(mContext, mData, viewBinding.ivQrcode)
         val address = "qwertyuuoplkkjhgdsaasdsadfadsfdzx"
-        TextEllipsizeSpanUtil.setTextEndImg(mContext, viewBinding.tvAddress, address, R.drawable.icon_copy) {
+        viewBinding.ivQrcode.setImageBitmap(BitmapUtils.create2DCode(address))
+        TextEllipsizeSpanUtil.setTextEndImg(mContext, viewBinding.tvAddress, address, R.drawable.icon_copy)
+        viewBinding.tvAddress.setOnClickListener {
             CopyUtils.copyText(mContext, address)
+
         }
     }
 }

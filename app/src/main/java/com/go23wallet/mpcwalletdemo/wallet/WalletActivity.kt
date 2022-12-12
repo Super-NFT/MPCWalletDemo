@@ -7,10 +7,7 @@ import androidx.fragment.app.Fragment
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
 import com.go23wallet.mpcwalletdemo.databinding.ActivityWalletBinding
-import com.go23wallet.mpcwalletdemo.dialog.ChooseMainnetDialog
-import com.go23wallet.mpcwalletdemo.dialog.ImportAssetDialog
-import com.go23wallet.mpcwalletdemo.dialog.ReceiveDialog
-import com.go23wallet.mpcwalletdemo.dialog.SettingDialog
+import com.go23wallet.mpcwalletdemo.dialog.*
 import com.go23wallet.mpcwalletdemo.fragment.NFTFragment
 import com.go23wallet.mpcwalletdemo.fragment.TokenFragment
 import com.go23wallet.mpcwalletdemo.utils.CopyUtils
@@ -29,6 +26,10 @@ class WalletActivity : AppCompatActivity() {
         ChooseMainnetDialog(this)
     }
 
+    private val forgetPswDialog: ForgetPswDialog by lazy {
+        ForgetPswDialog(this)
+    }
+
     private val settingDialog by lazy {
         SettingDialog(this)
     }
@@ -44,6 +45,10 @@ class WalletActivity : AppCompatActivity() {
         binding = ActivityWalletBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+
+        // TODO
+        // first: set pin code
+        //or show forgetPswDialog
 
         initView()
         setListener()

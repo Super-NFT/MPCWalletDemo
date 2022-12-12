@@ -8,9 +8,9 @@ import com.go23wallet.mpcwalletdemo.databinding.DialogSettingLayoutBinding
 
 class SettingDialog(mContext: Context): BaseDialogFragment<DialogSettingLayoutBinding>() {
 
-    private val reshardingDialog: ReshardingDialog by lazy {
-        ReshardingDialog(mContext)
-    }
+//    private val reshardingDialog: ReshardingDialog by lazy {
+//        ReshardingDialog(mContext)
+//    }
 
     override val layoutId: Int = R.layout.dialog_setting_layout
 
@@ -20,7 +20,9 @@ class SettingDialog(mContext: Context): BaseDialogFragment<DialogSettingLayoutBi
         }
         viewBinding.tvResharding.setOnClickListener {
             dismissAllowingStateLoss()
-            reshardingDialog.show(parentFragmentManager, "reshardingDialog")
+            // TODO sdk set pin code dialog， then show start reshard dialog
+
+//            reshardingDialog.show(parentFragmentManager, "reshardingDialog")
         }
     }
 }

@@ -11,7 +11,8 @@ import com.go23wallet.mpcwalletdemo.databinding.DialogForgetPswLayoutBinding
 import com.go23wallet.mpcwalletdemo.utils.ScreenUtils
 import com.go23wallet.mpcwalletdemo.view.InputCodeView.OnCodeCompleteListener
 
-class ForgetPswDialog(private val mContext: Context) : BaseDialogFragment<DialogForgetPswLayoutBinding>() {
+class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
+    BaseDialogFragment<DialogForgetPswLayoutBinding>() {
 
     override val layoutId: Int = R.layout.dialog_forget_psw_layout
 
@@ -68,6 +69,11 @@ class ForgetPswDialog(private val mContext: Context) : BaseDialogFragment<Dialog
                     }
                     // TODO
                     showProgress()
+                    if (dialogType == 0) {
+                        // recover  set pin code
+                    } else {
+                        // resharding  two set pin code
+                    }
                     mHandler.postDelayed({
                         hideProgress()
                         setPinCodeDialog.setHeight((ScreenUtils.getScreenHeight(mContext) * 0.8).toInt())

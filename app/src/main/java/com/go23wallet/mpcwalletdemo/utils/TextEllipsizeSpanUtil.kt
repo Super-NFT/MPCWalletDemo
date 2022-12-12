@@ -39,15 +39,15 @@ object TextEllipsizeSpanUtil {
                     spannableString.length,
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE
                 )
-                spannableString.setSpan(
-                    object : ClickableSpan() {
-                        override fun onClick(widget: View) {
-                            callback.invoke()
-                        }
-                    }, spannableString.length - 1,
-                    spannableString.length,
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE
-                )
+//                spannableString.setSpan(
+//                    object : ClickableSpan() {
+//                        override fun onClick(widget: View) {
+//                            callback.invoke()
+//                        }
+//                    }, spannableString.length - 1,
+//                    spannableString.length,
+//                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE
+//                )
             }
             view.text = spannableString
         }
