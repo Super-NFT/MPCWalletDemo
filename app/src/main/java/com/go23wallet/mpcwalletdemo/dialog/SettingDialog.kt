@@ -5,12 +5,19 @@ import android.view.*
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogSettingLayoutBinding
+import com.go23wallet.mpcwalletdemo.utils.ScreenUtils
 
-class SettingDialog(mContext: Context): BaseDialogFragment<DialogSettingLayoutBinding>() {
+class SettingDialog(private val mContext: Context) :
+    BaseDialogFragment<DialogSettingLayoutBinding>() {
 
 //    private val reshardingDialog: ReshardingDialog by lazy {
 //        ReshardingDialog(mContext)
 //    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        setHeight((ScreenUtils.getScreenHeight(mContext) * 0.8).toInt())
+    }
 
     override val layoutId: Int = R.layout.dialog_setting_layout
 

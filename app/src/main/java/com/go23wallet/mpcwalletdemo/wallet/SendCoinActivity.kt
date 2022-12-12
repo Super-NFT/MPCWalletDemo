@@ -75,9 +75,12 @@ class SendCoinActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 if (s.isNullOrEmpty()) {
                     binding.tvTotalValue.text = ""
+                    binding.tvInputValue.visibility = View.GONE
                     return
                 }
                 val num = s.toString().toInt()
+                binding.tvInputValue.visibility = View.VISIBLE
+                binding.tvInputValue.text = ""
                 binding.tvTotalValue.text = ""
             }
         })

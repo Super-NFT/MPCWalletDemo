@@ -71,7 +71,6 @@ class WalletActivity : AppCompatActivity() {
             finish()
         }
         binding.icMore.setOnClickListener {
-            settingDialog.setHeight((ScreenUtils.getScreenHeight(this) * 0.8).toInt())
             settingDialog.show(supportFragmentManager, "settingDialog")
         }
 
