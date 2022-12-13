@@ -2,8 +2,14 @@ package com.go23wallet.mpcwalletdemo.wallet
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import androidx.fragment.app.Fragment
+import com.coins.app.BaseCallBack
+import com.coins.app.Go23WalletInfoManage
+import com.coins.app.Go23WalletManage
+import com.coins.app.Go23WalletUserManage
+import com.coins.app.bean.user.UserResponse
+import com.coins.app.bean.walletinfo.WalletInfoResponse
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
@@ -42,6 +48,20 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     override val layoutRes: Int = R.layout.activity_wallet
 
     override fun initViews(savedInstanceState: Bundle?) {
+        val s = "v1@coins.ph"
+        Go23WalletManage.getInstance().build(applicationContext, "1", "40ad7c25")
+        Go23WalletManage.getInstance().setUniqueId(s).email = s
+        Go23WalletUserManage.getInstance().register(object : BaseCallBack<UserResponse> {
+            override fun success(data: UserResponse) {
+                Go23WalletInfoManage.getInstance()
+                    .requestWallets(object : BaseCallBack<WalletInfoResponse?> {
+                        override fun success(data: WalletInfoResponse?) {}
+                        override fun failed() {}
+                    })
+            }
+
+            override fun failed() {}
+        })
         initView()
         setListener()
     }

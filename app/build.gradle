@@ -36,6 +36,7 @@ android {
 }
 
 dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
@@ -73,4 +74,46 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    debugImplementation files('libs/debug.aar')
+    api 'org.bouncycastle:bcprov-jdk15on:1.62'
+    api 'org.slf4j:slf4j-nop:1.7.25'
+
+    api('com.fasterxml.jackson.core:jackson-core:2.9.0')
+
+    api('com.fasterxml.jackson.core:jackson-databind:2.9.10.4')
+
+    // Http client
+    api 'com.squareup.okhttp3:okhttp:4.9.3'
+
+    api('com.google.code.gson:gson:2.8.5')
+
+    api 'com.google.android.material:material:1.6.1'
+
+//    implementation ('org.web3j:core:4.8.8')
+//    implementation 'org.web3j:core:4.5.0'
+
+    // ReactiveX
+    api('io.reactivex.rxjava2:rxjava:2.2.21')
+
+    api("io.reactivex.rxjava2:rxandroid:2.1.1")
+
+    // Keyboard visibility
+    api('net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC3')
+
+    // WebKit - for WebView Dark Mode
+    api('androidx.webkit:webkit:1.4.0')
+
+    api(group: 'com.google.guava', name: 'guava', version: '30.1.1-android')
+
+//    api('com.trustwallet:wallet-core:3.0.9')
+
+    api('com.github.salomonbrys.kotson:kotson:2.5.0')
+
+    api('com.github.mailchimp:mailchimp-sdk-android:1.0.0')
+
+    api('androidx.preference:preference-ktx:1.2.0')
+
+    api('androidx.work:work-runtime:2.7.1')
+    api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    api 'com.google.android.flexbox:flexbox:3.0.0'
 }
