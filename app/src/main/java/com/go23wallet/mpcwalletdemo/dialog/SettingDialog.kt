@@ -2,10 +2,10 @@ package com.go23wallet.mpcwalletdemo.dialog
 
 import android.content.Context
 import android.view.*
+import com.blankj.utilcode.util.ScreenUtils
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogSettingLayoutBinding
-import com.go23wallet.mpcwalletdemo.utils.ScreenUtils
 
 class SettingDialog(private val mContext: Context) :
     BaseDialogFragment<DialogSettingLayoutBinding>() {
@@ -16,7 +16,7 @@ class SettingDialog(private val mContext: Context) :
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        setHeight((ScreenUtils.getScreenHeight(mContext) * 0.8).toInt())
+        setHeight((ScreenUtils.getScreenHeight() * 0.8).toInt())
     }
 
     override val layoutId: Int = R.layout.dialog_setting_layout

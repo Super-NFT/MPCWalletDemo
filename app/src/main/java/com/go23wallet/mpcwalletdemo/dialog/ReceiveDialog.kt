@@ -2,12 +2,11 @@ package com.go23wallet.mpcwalletdemo.dialog
 
 import android.content.Context
 import android.view.*
+import com.blankj.utilcode.util.ScreenUtils
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogReceiveLayoutBinding
 import com.go23wallet.mpcwalletdemo.utils.CopyUtils
-import com.go23wallet.mpcwalletdemo.utils.GlideUtils
-import com.go23wallet.mpcwalletdemo.utils.ScreenUtils
 import com.go23wallet.mpcwalletdemo.utils.TextEllipsizeSpanUtil
 import com.google.zxing.common.BitmapUtils
 
@@ -18,7 +17,7 @@ class ReceiveDialog(private val mContext: Context, private val mData: String) : 
         super.onAttach(context)
         setCanceledOnTouchOutside(true)
         isCancelable = true
-        setWidth((ScreenUtils.getScreenWidth(context) * 0.8).toInt())
+        setWidth((ScreenUtils.getScreenWidth() * 0.8).toInt())
         setGravity(Gravity.CENTER)
     }
 

@@ -5,22 +5,19 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.NFTAttributeAdapter
+import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivityNftDetailsBinding
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 
-class NFTDetailsActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityNftDetailsBinding
+class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
 
     private var mAdapter: NFTAttributeAdapter? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityNftDetailsBinding.inflate(layoutInflater)
+    override val layoutRes: Int = R.layout.activity_nft_details
 
-        setContentView(binding.root)
-
+    override fun initViews(savedInstanceState: Bundle?) {
         initView()
         setListener()
     }

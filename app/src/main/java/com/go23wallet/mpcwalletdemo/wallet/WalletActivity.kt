@@ -6,21 +6,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
+import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivityWalletBinding
 import com.go23wallet.mpcwalletdemo.dialog.*
 import com.go23wallet.mpcwalletdemo.fragment.NFTFragment
 import com.go23wallet.mpcwalletdemo.fragment.TokenFragment
 import com.go23wallet.mpcwalletdemo.utils.CopyUtils
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
-import com.go23wallet.mpcwalletdemo.utils.ScreenUtils
 
 
-class WalletActivity : AppCompatActivity() {
+class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
     private val tabList = mutableListOf<String>()
     private val fragments = mutableListOf<Fragment>()
     private var tabAdapter: TabFragmentAdapter? = null
-    private lateinit var binding: ActivityWalletBinding
 
     private val chooseMainnetDialog: ChooseMainnetDialog by lazy {
         ChooseMainnetDialog(this)
@@ -40,16 +39,9 @@ class WalletActivity : AppCompatActivity() {
 
     private var receiveDialog: ReceiveDialog? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityWalletBinding.inflate(layoutInflater)
+    override val layoutRes: Int = R.layout.activity_wallet
 
-        setContentView(binding.root)
-
-        // TODO
-        // first: set pin code
-        //or show forgetPswDialog
-
+    override fun initViews(savedInstanceState: Bundle?) {
         initView()
         setListener()
     }

@@ -3,19 +3,16 @@ package com.go23wallet.mpcwalletdemo.wallet
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.go23wallet.mpcwalletdemo.R
+import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivityChargeDetailsBinding
 import com.go23wallet.mpcwalletdemo.utils.CopyUtils
 
-class ChargeDetailsActivity : AppCompatActivity() {
+class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
 
-    private lateinit var binding: ActivityChargeDetailsBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityChargeDetailsBinding.inflate(layoutInflater)
+    override val layoutRes: Int = R.layout.activity_charge_details
 
-        setContentView(binding.root)
-
+    override fun initViews(savedInstanceState: Bundle?) {
         initView()
         setListener()
     }

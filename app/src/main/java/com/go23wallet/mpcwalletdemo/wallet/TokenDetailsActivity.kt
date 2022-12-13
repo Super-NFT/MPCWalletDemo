@@ -1,18 +1,18 @@
 package com.go23wallet.mpcwalletdemo.wallet
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
+import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivityTokenDetailsBinding
 import com.go23wallet.mpcwalletdemo.dialog.ReceiveDialog
 import com.go23wallet.mpcwalletdemo.fragment.TokenTypeFragment
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 
-class TokenDetailsActivity : AppCompatActivity() {
+class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
 
-    private lateinit var binding: ActivityTokenDetailsBinding
     private val tabList by lazy {
         mutableListOf(getString(R.string.type_all), getString(R.string.type_out), getString(R.string.type_in), getString(R.string.failed))
     }
@@ -21,12 +21,10 @@ class TokenDetailsActivity : AppCompatActivity() {
 
     private var receiveDialog: ReceiveDialog?= null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityTokenDetailsBinding.inflate(layoutInflater)
 
-        setContentView(binding.root)
+    override val layoutRes: Int = R.layout.activity_token_details
 
+    override fun initViews(savedInstanceState: Bundle?) {
         initView()
         setListener()
     }
@@ -61,7 +59,9 @@ class TokenDetailsActivity : AppCompatActivity() {
             }
         }
         binding.tvSend.setOnClickListener {
-
+            startActivity(Intent(this, SendCoinActivity::class.java).apply {
+                putExtra("data", "")
+            })
         }
     }
 }

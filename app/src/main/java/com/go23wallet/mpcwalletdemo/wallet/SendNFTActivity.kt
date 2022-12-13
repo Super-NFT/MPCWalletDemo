@@ -11,24 +11,18 @@ import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.NFTAttributeAdapter
+import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivityNftDetailsBinding
 import com.go23wallet.mpcwalletdemo.databinding.ActivitySendNftBinding
 import com.go23wallet.mpcwalletdemo.utils.CopyUtils
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 import com.google.zxing.activity.CaptureActivity
 
-class SendNFTActivity : AppCompatActivity() {
+class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
 
-    private lateinit var binding: ActivitySendNftBinding
+    override val layoutRes: Int = R.layout.activity_send_nft
 
-    private var mAdapter: NFTAttributeAdapter? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivitySendNftBinding.inflate(layoutInflater)
-
-        setContentView(binding.root)
-
+    override fun initViews(savedInstanceState: Bundle?) {
         initView()
         setListener()
     }

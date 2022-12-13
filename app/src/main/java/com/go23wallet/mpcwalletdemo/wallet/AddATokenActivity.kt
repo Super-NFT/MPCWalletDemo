@@ -10,27 +10,25 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.AddTokenListAdapter
+import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivityAddATokenBinding
 import com.go23wallet.mpcwalletdemo.livedata.TokenListLiveData
 import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class AddATokenActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityAddATokenBinding
+class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
 
     private var mAdapter: AddTokenListAdapter? = null
 
     private var selectList = mutableListOf<String>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityAddATokenBinding.inflate(layoutInflater)
 
-        setContentView(binding.root)
+    override val layoutRes: Int = R.layout.activity_add_a_token
 
+    override fun initViews(savedInstanceState: Bundle?) {
         initView()
         setListener()
     }

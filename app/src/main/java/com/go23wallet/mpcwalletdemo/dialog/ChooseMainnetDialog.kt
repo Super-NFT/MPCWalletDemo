@@ -3,14 +3,13 @@ package com.go23wallet.mpcwalletdemo.dialog
 import android.content.Context
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.ScreenUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.MainnetAdapter
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogChooseMainnetLayoutBinding
-import com.go23wallet.mpcwalletdemo.databinding.DialogSettingLayoutBinding
-import com.go23wallet.mpcwalletdemo.utils.ScreenUtils
 
 class ChooseMainnetDialog(private val mContext: Context) :
     BaseDialogFragment<DialogChooseMainnetLayoutBinding>() {
@@ -22,7 +21,7 @@ class ChooseMainnetDialog(private val mContext: Context) :
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        setHeight((ScreenUtils.getScreenHeight(context) * 0.8).toInt())
+        setHeight((ScreenUtils.getScreenHeight() * 0.8).toInt())
     }
 
     private var mSelectId = ""

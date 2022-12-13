@@ -11,26 +11,23 @@ import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
 import com.go23wallet.mpcwalletdemo.R
+import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivitySendCoinBinding
 import com.go23wallet.mpcwalletdemo.dialog.SelectTokenSendDialog
 import com.go23wallet.mpcwalletdemo.utils.CopyUtils
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 import com.google.zxing.activity.CaptureActivity
 
-class SendCoinActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivitySendCoinBinding
+class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
 
     private val selectTokenSendDialog: SelectTokenSendDialog by lazy {
         SelectTokenSendDialog(this)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivitySendCoinBinding.inflate(layoutInflater)
 
-        setContentView(binding.root)
+    override val layoutRes: Int = R.layout.activity_send_coin
 
+    override fun initViews(savedInstanceState: Bundle?) {
         initView()
         setListener()
     }

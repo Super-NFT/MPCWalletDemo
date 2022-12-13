@@ -8,7 +8,6 @@ import android.widget.Toast
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogForgetPswLayoutBinding
-import com.go23wallet.mpcwalletdemo.utils.ScreenUtils
 import com.go23wallet.mpcwalletdemo.view.InputCodeView.OnCodeCompleteListener
 
 class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
@@ -76,7 +75,6 @@ class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
                     }
                     mHandler.postDelayed({
                         hideProgress()
-                        setPinCodeDialog.setHeight((ScreenUtils.getScreenHeight(mContext) * 0.8).toInt())
                         setPinCodeDialog.show(parentFragmentManager, "setPinCodeDialog")
                         dismissAllowingStateLoss()
                     }, 2000)

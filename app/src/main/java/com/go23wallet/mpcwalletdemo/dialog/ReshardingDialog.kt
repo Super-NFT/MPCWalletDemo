@@ -40,11 +40,7 @@ class ReshardingDialog(mContext: Context) : BaseDialogFragment<DialogReshardingL
         }
         viewBinding.tvVerify.setOnClickListener {
             viewBinding.tvErrorTip.visibility = View.GONE
-            viewBinding.llProgress.visibility = View.VISIBLE
-            viewBinding.progress.show()
             mHandler.postDelayed({
-                viewBinding.llProgress.visibility = View.GONE
-                viewBinding.progress.hide()
                 startReshardDialog.show(parentFragmentManager, "startReshardDialog")
                 dismissAllowingStateLoss()
             }, 2000)

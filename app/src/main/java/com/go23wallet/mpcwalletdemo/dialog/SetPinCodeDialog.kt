@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
 import android.widget.Toast
+import com.blankj.utilcode.util.ScreenUtils
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogSetPinCodeLayoutBinding
@@ -19,6 +20,11 @@ class SetPinCodeDialog(mContext: Context) : BaseDialogFragment<DialogSetPinCodeL
 
     private var setPinCode = ""
     private var confirmPinCode = ""
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        setHeight((ScreenUtils.getScreenHeight() * 0.8).toInt())
+    }
     override fun initViews(v: View?) {
         viewBinding.ivBack.setOnClickListener {
             dismissAllowingStateLoss()

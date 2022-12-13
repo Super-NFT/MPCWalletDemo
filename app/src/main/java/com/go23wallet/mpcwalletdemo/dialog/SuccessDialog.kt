@@ -2,10 +2,10 @@ package com.go23wallet.mpcwalletdemo.dialog
 
 import android.content.Context
 import android.view.*
+import com.blankj.utilcode.util.ScreenUtils
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogSuccessLayoutBinding
-import com.go23wallet.mpcwalletdemo.utils.ScreenUtils
 
 class SuccessDialog(private val mContext: Context, private val title: String) :
     BaseDialogFragment<DialogSuccessLayoutBinding>() {
@@ -15,7 +15,7 @@ class SuccessDialog(private val mContext: Context, private val title: String) :
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        setHeight((ScreenUtils.getScreenHeight(context) * 0.8).toInt())
+        setHeight((ScreenUtils.getScreenHeight() * 0.8).toInt())
     }
 
     override fun initViews(v: View?) {

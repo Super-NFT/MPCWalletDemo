@@ -2,14 +2,11 @@ package com.go23wallet.mpcwalletdemo.dialog
 
 import android.content.Context
 import android.view.*
+import com.blankj.utilcode.util.ScreenUtils
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
-import com.go23wallet.mpcwalletdemo.databinding.DialogReceiveLayoutBinding
 import com.go23wallet.mpcwalletdemo.databinding.DialogSendNftLayoutBinding
-import com.go23wallet.mpcwalletdemo.utils.CopyUtils
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
-import com.go23wallet.mpcwalletdemo.utils.ScreenUtils
-import com.go23wallet.mpcwalletdemo.utils.TextEllipsizeSpanUtil
 
 
 class SendNftDialog(private val mContext: Context, private val mData: String) :
@@ -21,7 +18,7 @@ class SendNftDialog(private val mContext: Context, private val mData: String) :
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        setHeight((ScreenUtils.getScreenHeight(mContext) * 0.8).toInt())
+        setHeight((ScreenUtils.getScreenHeight() * 0.8).toInt())
         setGravity(Gravity.BOTTOM)
     }
 
