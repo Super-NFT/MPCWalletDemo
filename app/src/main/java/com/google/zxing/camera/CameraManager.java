@@ -223,7 +223,7 @@ public final class CameraManager {
       }
 
       int leftOffset = (screenResolution.x - width) / 2;//这里是扫描框的位置相对于左边
-      int topOffset = (screenResolution.y - height) / 5;//这里是扫描框的位置相对于顶部
+      int topOffset = (screenResolution.y - height) / 2;//这里是扫描框的位置相对于顶部
       framingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
 
     }
