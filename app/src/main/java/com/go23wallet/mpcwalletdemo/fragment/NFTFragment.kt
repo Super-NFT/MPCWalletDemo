@@ -8,9 +8,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.coins.app.BaseCallBack
+import com.coins.app.Go23WalletNftsManage
+import com.coins.app.Go23WalletTokensManage
+import com.coins.app.bean.nft.NftResponse
+import com.coins.app.bean.nft.UserNftListResponse
+import com.coins.app.bean.token.TokenListResponse
 import com.go23wallet.mpcwalletdemo.adapter.NFTAdapter
 import com.go23wallet.mpcwalletdemo.databinding.FragmentTabLayoutBinding
 import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
+import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 import com.go23wallet.mpcwalletdemo.wallet.NFTDetailsActivity
 
 class NFTFragment : Fragment() {
@@ -30,12 +37,28 @@ class NFTFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        initData()
+    }
+
+    private fun initData() {
+        Go23WalletNftsManage.getInstance().requestUserNfts(
+            UserWalletInfoManager.getUserWalletInfo().userWalletId.toString(),
+            UserWalletInfoManager.getUserWalletInfo().userChainId.toString(),
+            1, 20,
+            object : BaseCallBack<UserNftListResponse> {
+                override fun success(data: UserNftListResponse?) {
+                    mAdapter?.setNewInstance(data?.data)
+                }
+
+                override fun failed() {
+                }
+            })
     }
 
     private fun initView() {
         UpdateDataLiveData.liveData.observe(viewLifecycleOwner, Observer {
             if (it == 2) {
-
+                initData()
             }
         })
         binding.recyclerView.apply {
@@ -45,11 +68,10 @@ class NFTFragment : Fragment() {
             }
             adapter = mAdapter
         }
-        mAdapter?.setNewInstance(mutableListOf("123", "45", "35"))
         mAdapter?.setOnItemClickListener { _, _, position ->
             val itemData = mAdapter?.data?.get(position) ?: return@setOnItemClickListener
             startActivity(Intent(context, NFTDetailsActivity::class.java).apply {
-                putExtra("id", itemData)
+                putExtra("id", "")
             })
         }
     }

@@ -25,7 +25,7 @@ class ReceiveDialog(private val mContext: Context, private val mData: String) : 
 
     override fun initViews(v: View?) {
         viewBinding.tvTitle.text = mData
-        viewBinding.tvContent.text = String.format(getString(R.string.receive_tips), mData)
+        viewBinding.tvBottomTips.text = String.format(getString(R.string.receive_qrcode_tips), mData)
         val address = "qwertyuuoplkkjhgdsaasdsadfadsfdzx"
         viewBinding.ivQrcode.setImageBitmap(BitmapUtils.create2DCode(address))
         TextEllipsizeSpanUtil.setTextEndImg(mContext, viewBinding.tvAddress, address, R.drawable.icon_copy)

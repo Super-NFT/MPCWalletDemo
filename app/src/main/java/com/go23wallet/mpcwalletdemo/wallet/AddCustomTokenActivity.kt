@@ -5,14 +5,16 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.coins.app.BaseCallBack
+import com.coins.app.Go23WalletTokensManage
+import com.coins.app.bean.token.TokenResponse
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivityAddCustomTokenBinding
+import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
+import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 
 class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
-
-    private var isInput = false
-
 
     override val layoutRes: Int = R.layout.activity_add_custom_token
 
@@ -29,7 +31,7 @@ class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
         binding.ivBack.setOnClickListener {
             finish()
         }
-        binding.etTokenContact.addTextChangedListener(object: TextWatcher {
+        binding.etTokenContact.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -37,18 +39,31 @@ class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+                val address = s?.toString() ?: return
+                if (address.length >= 30) {
+                    checkTokenAddress(address)
+                }
             }
         })
         binding.tvConfirm.setOnClickListener {
-            if (isInput) {
-                isInput = false
-                binding.etTokenContact.visibility = View.GONE
-                binding.tvTokenSymbol.text = ""
-                binding.tvTokenPrecision.text = ""
-            } else {
-                // TODO
-                finish()
-            }
+            UpdateDataLiveData.setUpdateType(1)
         }
+    }
+
+    private fun checkTokenAddress(address: String) {
+        Go23WalletTokensManage.getInstance().addTokenWithAddress(address,
+            UserWalletInfoManager.getUserWalletInfo().userChainId,
+            UserWalletInfoManager.getUserWalletInfo().userWalletId,
+            object : BaseCallBack<TokenResponse> {
+                override fun success(data: TokenResponse?) {
+                    data?.data?.let {
+                        binding.tvTokenSymbol.text = it.symbol
+                        binding.tvTokenPrecision.text = it.decimal.toString()
+                    }
+                }
+
+                override fun failed() {
+                }
+            })
     }
 }

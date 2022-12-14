@@ -17,7 +17,6 @@ class AnimateProgressDialog : BaseDialogFragment<DialogBaseAnimateProgressBindin
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        setWidth((ScreenUtils.getScreenWidth() * 0.8).toInt())
         setGravity(Gravity.CENTER)
         isCancelable = true
         setCanceledOnTouchOutside(false)
@@ -47,11 +46,13 @@ class AnimateProgressDialog : BaseDialogFragment<DialogBaseAnimateProgressBindin
     private var mTip: String? = null
     fun setMessage(msg: String?) {
         mTip = msg
-        if (TextUtils.isEmpty(mTip)) {
-            viewBinding.tvTip.visibility = View.GONE
-        } else {
-            viewBinding.tvTip.text = mTip
-            viewBinding.tvTip.visibility = View.VISIBLE
+        if (isLateinited()) {
+            if (TextUtils.isEmpty(mTip)) {
+                viewBinding.tvTip.visibility = View.GONE
+            } else {
+                viewBinding.tvTip.text = mTip
+                viewBinding.tvTip.visibility = View.VISIBLE
+            }
         }
     }
 }

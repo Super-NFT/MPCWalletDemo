@@ -26,8 +26,8 @@ class SendNftDialog(private val mContext: Context, private val mData: String) :
 
     override fun initViews(v: View?) {
         viewBinding.tvTitle.text = mData
-        GlideUtils.loadImg(context, mData, viewBinding.ivNftPro)
-        GlideUtils.loadImg(context, mData, viewBinding.ivNftAvatar)
+        GlideUtils.loadImg(mContext, mData, viewBinding.ivNftPro)
+        GlideUtils.loadImg(mContext, mData, viewBinding.ivNftAvatar)
 
         viewBinding.tvNftProNo.text = mData
         viewBinding.tvNftPro.text = mData

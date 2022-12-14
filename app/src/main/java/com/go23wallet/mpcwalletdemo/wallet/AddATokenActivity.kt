@@ -10,12 +10,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.coins.app.BaseCallBack
+import com.coins.app.Go23WalletTokensManage
+import com.coins.app.bean.token.Token
+import com.coins.app.bean.token.TokenListResponse
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.AddTokenListAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivityAddATokenBinding
 import com.go23wallet.mpcwalletdemo.livedata.TokenListLiveData
 import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
+import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -23,39 +28,69 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
 
     private var mAdapter: AddTokenListAdapter? = null
 
-    private var selectList = mutableListOf<String>()
-
+    private var selectList = mutableListOf<Token>()
 
     override val layoutRes: Int = R.layout.activity_add_a_token
 
     override fun initViews(savedInstanceState: Bundle?) {
         initView()
+        initData()
         setListener()
     }
 
-    private fun initView() {
+    private fun initData() {
+        TokenListLiveData.liveData.observe(this, Observer {
+            if (it != null) {
+                selectList = it
+                Go23WalletTokensManage.getInstance().requestUserTokens(
+                    UserWalletInfoManager.getUserWalletInfo().userWalletId,
+                    UserWalletInfoManager.getUserWalletInfo().userChainId,
+                    1, 20,
+                    object : BaseCallBack<TokenListResponse> {
+                        override fun success(data: TokenListResponse?) {
+                            val list = data?.data?.list
+                            mAdapter?.let { adapter ->
+                                adapter.setTokenList(selectList)
+                                adapter.setNewInstance(list)
+                            }
+                        }
 
+                        override fun failed() {
+                        }
+                    })
+            }
+        })
+    }
+
+    private fun initView() {
         binding.recyclerView.apply {
             layoutManager =
                 LinearLayoutManager(this@AddATokenActivity)
             if (mAdapter == null) {
-                mAdapter = AddTokenListAdapter(this@AddATokenActivity, selectList)
+                mAdapter = AddTokenListAdapter(this@AddATokenActivity)
             }
             adapter = mAdapter
         }
-        mAdapter?.setNewInstance(null)
     }
 
     private fun setListener() {
-        TokenListLiveData.liveData.observe(this, Observer {
-            if (it != null) {
-                selectList = it
-            }
-        })
         mAdapter?.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
                 val item = mAdapter?.getItem(position) ?: return
-                selectList.add(item)
+                Go23WalletTokensManage.getInstance().requestUserTokens(
+                    UserWalletInfoManager.getUserWalletInfo().userWalletId,
+                    UserWalletInfoManager.getUserWalletInfo().userChainId,
+                    1, 20,
+                    object : BaseCallBack<TokenListResponse> {
+                        override fun success(data: TokenListResponse?) {
+                            val list = data?.data?.list
+                            selectList.add(item)
+                            mAdapter?.notifyItemChanged(position)
+                        }
+
+                        override fun failed() {
+                        }
+                    })
             }
         })
         binding.ivBack.setOnClickListener {

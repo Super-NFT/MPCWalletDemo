@@ -120,4 +120,8 @@ abstract class BaseDialogFragment<T : ViewBinding> : DialogFragment() {
      * @param v
      */
     protected abstract fun initViews(v: View?)
+
+    fun isLateinited(): Boolean {
+        return this::viewBinding.isInitialized
+    }
 }

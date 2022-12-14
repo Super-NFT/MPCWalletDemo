@@ -25,24 +25,24 @@ class ImportNFTDialog :
                 viewBinding.ivNftClear.visibility =
                     if (s?.isNotEmpty() == true) View.VISIBLE else View.GONE
                 viewBinding.tvImport.isEnabled =
-                    viewBinding.etNtfAddress.text?.isNotEmpty() == true && viewBinding.etTokenAddress.text?.isNotEmpty() == true
+                    viewBinding.etNtfAddress.text?.isNotEmpty() == true //&& viewBinding.etTokenAddress.text?.isNotEmpty() == true
             }
         })
 
-        viewBinding.etTokenAddress.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                viewBinding.ivTokenClear.visibility =
-                    if (s?.isNotEmpty() == true) View.VISIBLE else View.GONE
-                viewBinding.tvImport.isEnabled =
-                    viewBinding.etNtfAddress.text?.isNotEmpty() == true && viewBinding.etTokenAddress.text?.isNotEmpty() == true
-            }
-        })
+//        viewBinding.etTokenAddress.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//            }
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//            }
+//
+//            override fun afterTextChanged(s: Editable?) {
+//                viewBinding.ivTokenClear.visibility =
+//                    if (s?.isNotEmpty() == true) View.VISIBLE else View.GONE
+//                viewBinding.tvImport.isEnabled =
+//                    viewBinding.etNtfAddress.text?.isNotEmpty() == true && viewBinding.etTokenAddress.text?.isNotEmpty() == true
+//            }
+//        })
 
         viewBinding.ivClose.setOnClickListener {
             dismissAllowingStateLoss()
@@ -53,10 +53,10 @@ class ImportNFTDialog :
             viewBinding.ivNftClear.visibility = View.GONE
         }
 
-        viewBinding.ivTokenClear.setOnClickListener {
-            viewBinding.etTokenAddress.setText("")
-            viewBinding.ivTokenClear.visibility = View.GONE
-        }
+//        viewBinding.ivTokenClear.setOnClickListener {
+//            viewBinding.etTokenAddress.setText("")
+//            viewBinding.ivTokenClear.visibility = View.GONE
+//        }
 
         viewBinding.tvImport.setOnClickListener {
             dismissAllowingStateLoss()
