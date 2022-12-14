@@ -11,7 +11,7 @@ import com.go23wallet.mpcwalletdemo.utils.TextEllipsizeSpanUtil
 import com.google.zxing.common.BitmapUtils
 
 
-class ReceiveDialog(private val mContext: Context, private val mData: String) : BaseDialogFragment<DialogReceiveLayoutBinding>() {
+class ReceiveDialog(private val mContext: Context, private val mData: String, private val address: String) : BaseDialogFragment<DialogReceiveLayoutBinding>() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -26,7 +26,6 @@ class ReceiveDialog(private val mContext: Context, private val mData: String) : 
     override fun initViews(v: View?) {
         viewBinding.tvTitle.text = mData
         viewBinding.tvBottomTips.text = String.format(getString(R.string.receive_qrcode_tips), mData)
-        val address = "qwertyuuoplkkjhgdsaasdsadfadsfdzx"
         viewBinding.ivQrcode.setImageBitmap(BitmapUtils.create2DCode(address))
         TextEllipsizeSpanUtil.setTextEndImg(mContext, viewBinding.tvAddress, address, R.drawable.icon_copy)
         viewBinding.tvAddress.setOnClickListener {

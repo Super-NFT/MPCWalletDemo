@@ -130,15 +130,17 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     }
 
     private fun initView() {
-        tabList.add(getString(R.string.tokens))
-        tabList.add(getString(R.string.nfts))
-        fragments.add(TokenFragment.newInstance())
-        fragments.add(NFTFragment.newInstance())
-        tabAdapter = TabFragmentAdapter(supportFragmentManager).apply {
-            setList(fragments, tabList)
+        if (fragments.size == 0) {
+            tabList.add(getString(R.string.tokens))
+            tabList.add(getString(R.string.nfts))
+            fragments.add(TokenFragment.newInstance())
+            fragments.add(NFTFragment.newInstance())
+            tabAdapter = TabFragmentAdapter(supportFragmentManager).apply {
+                setList(fragments, tabList)
+            }
+            binding.viewPager.adapter = tabAdapter
+            binding.tab.setupWithViewPager(binding.viewPager)
         }
-        binding.viewPager.adapter = tabAdapter
-        binding.tab.setupWithViewPager(binding.viewPager)
     }
 
     private fun initData(info: WalletInfo) {
@@ -208,7 +210,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         }
 
         binding.tvReceive.setOnClickListener {
-            receiveDialog = ReceiveDialog(this, binding.tvChainAddress.text.toString()).apply {
+            receiveDialog = ReceiveDialog(this, binding.tvChainAddress.text.toString(), binding.tvAddress.text.toString()).apply {
                 show(supportFragmentManager, "receiveDialog")
             }
         }

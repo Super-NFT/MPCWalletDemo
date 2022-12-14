@@ -1,5 +1,6 @@
 package com.go23wallet.mpcwalletdemo.wallet
 
+import android.app.Activity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,6 +18,8 @@ import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
 
     override val layoutRes: Int = R.layout.activity_add_custom_token
+
+    private var tokenId = 0
 
     override fun initViews(savedInstanceState: Bundle?) {
         initView()
@@ -46,7 +49,21 @@ class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
             }
         })
         binding.tvConfirm.setOnClickListener {
-            UpdateDataLiveData.setUpdateType(1)
+            Go23WalletTokensManage.getInstance().addToken(
+                tokenId,
+                UserWalletInfoManager.getUserWalletInfo().userChainId,
+                UserWalletInfoManager.getUserWalletInfo().userWalletId,
+                object : BaseCallBack<TokenResponse> {
+                    override fun success(data: TokenResponse?) {
+                        val token = data?.data ?: return
+                        UpdateDataLiveData.liveData.postValue(1)
+                        setResult(Activity.RESULT_OK)
+                        finish()
+                    }
+
+                    override fun failed() {
+                    }
+                })
         }
     }
 
@@ -56,6 +73,7 @@ class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
             object : BaseCallBack<TokenResponse> {
                 override fun success(data: TokenResponse?) {
                     data?.data?.let {
+                        tokenId = it.token_id
                         binding.tvTokenSymbol.text = it.symbol
                         binding.tvTokenPrecision.text = it.decimal.toString()
                     }

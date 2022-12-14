@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.coins.app.BaseCallBack
 import com.coins.app.Go23WalletTokensManage
+import com.coins.app.bean.token.TokenDetail
 import com.coins.app.bean.token.TokenDetailResponse
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
@@ -31,6 +32,7 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
 
     override val layoutRes: Int = R.layout.activity_token_details
 
+    private var tokenDetail: TokenDetail? = null
     private var tokenId = 0
 
     override fun initViews(savedInstanceState: Bundle?) {
@@ -44,6 +46,7 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
             .requestTokenDetail(tokenId, object : BaseCallBack<TokenDetailResponse> {
                 override fun success(data: TokenDetailResponse?) {
                     data?.data?.let {
+                        tokenDetail = it
                         initView()
                         GlideUtils.loadImg(this@TokenDetailsActivity, it.url, binding.ivCoin)
                         GlideUtils.loadImg(this@TokenDetailsActivity, it.url, binding.ivCorner)
@@ -78,9 +81,10 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
             finish()
         }
         binding.tvReceive.setOnClickListener {
-            receiveDialog = ReceiveDialog(this, "").apply {
-                show(supportFragmentManager, "receiveDialog")
-            }
+            receiveDialog =
+                ReceiveDialog(this, tokenDetail?.name ?: "", tokenDetail?.addr ?: "").apply {
+                    show(supportFragmentManager, "receiveDialog")
+                }
         }
         binding.tvSend.setOnClickListener {
             startActivity(Intent(this, SendCoinActivity::class.java).apply {
