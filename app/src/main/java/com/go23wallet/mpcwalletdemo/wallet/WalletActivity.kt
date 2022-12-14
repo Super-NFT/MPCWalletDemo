@@ -103,6 +103,10 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                         Go23WalletInfoManage.getInstance()
                             .requestWallets(object : BaseCallBack<WalletInfoResponse?> {
                                 override fun success(data: WalletInfoResponse?) {
+//                                    Log.e("哈哈哈","666")
+//                                    Go23WalletUserManage.getInstance().createKey {
+//                                        Log.e("哈哈哈",it.msg)
+//                                    }
                                     if (data?.data == null) {
                                         Go23WalletUserManage.getInstance().createKey {
                                             Log.e("哈哈哈",it.msg)
