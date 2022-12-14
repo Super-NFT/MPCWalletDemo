@@ -77,6 +77,17 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         binding.refreshView.setOnRefreshListener {
             initData()
         }
+        binding.tvEmail.text = emailStr
+        GlideUtils.loadImg(
+            this@WalletActivity,
+            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_bt%2F0%2F14297516724%2F641&refer=http%3A%2F%2Finews.gtimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1673507770&t=02715a701dcbd42df9024be0da7c4f62",
+            binding.ivAvatar
+        )
+        showProgress()
+        initData()
+        binding.refreshView.setOnRefreshListener {
+            initData()
+        }
     }
 
     private fun initData() {
@@ -84,36 +95,35 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             delay(2000)
             binding.refreshView.isRefreshing = false
             runOnUiThread {
-                Go23WalletManage.getInstance().setUniqueId(emailStr).email = emailStr
-                GameCenterTokenUtils.updateToken(object : GameCenterTokenUtils.CallBack {
-                    override fun success(p0: GameCenterTokenResponse?) {
-                        Go23WalletUserManage.getInstance()
-                            .register(object : BaseCallBack<UserResponse> {
-                                override fun success(data: UserResponse) {
-                                    Go23WalletInfoManage.getInstance()
-                                        .requestWallets(object : BaseCallBack<WalletInfoResponse?> {
-                                            override fun success(data: WalletInfoResponse?) {
-                                                dismissProgress()
-                                                data?.data?.get(0)?.let {
-                                                    binding.tvAddress.text = it.addr
-                                                    UserWalletInfoManager.setUserWalletId(it.id)
-                                                    initData(it)
+                val s = "v1@coins.ph"
+                Go23WalletManage.getInstance().build(applicationContext, "1", "40ad7c25")
+                Go23WalletManage.getInstance().setUniqueId(s).email = s
+                Go23WalletUserManage.getInstance().register(object : BaseCallBack<UserResponse> {
+                    override fun success(data: UserResponse) {
+                        Go23WalletInfoManage.getInstance()
+                            .requestWallets(object : BaseCallBack<WalletInfoResponse?> {
+                                override fun success(data: WalletInfoResponse?) {
+                                    if (data?.data == null) {
+                                        Go23WalletUserManage.getInstance().createKey {
+                                            Log.e("哈哈哈",it.msg)
+                                        }
+                                    } else {
+                                        Go23WalletInfoManage.getInstance()
+                                            .requestWallets(object : BaseCallBack<WalletInfoResponse?> {
+                                                override fun success(data: WalletInfoResponse?) {
+                                                    data
                                                 }
-                                                setListener()
-                                            }
-
-                                            override fun failed() {
-                                                dismissProgress()
-                                            }
-                                        })
+                                                override fun failed() {}
+                                            })
+                                    }
                                 }
 
                                 override fun failed() {}
                             })
                     }
 
-                    override fun error() {
-                    }
+                    override fun failed() {}
+
                 })
             }
         }

@@ -51,9 +51,8 @@ class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
     }
 
     private fun checkTokenAddress(address: String) {
-        Go23WalletTokensManage.getInstance().addTokenWithAddress(address,
+        Go23WalletTokensManage.getInstance().checkToken(address,
             UserWalletInfoManager.getUserWalletInfo().userChainId,
-            UserWalletInfoManager.getUserWalletInfo().userWalletId,
             object : BaseCallBack<TokenResponse> {
                 override fun success(data: TokenResponse?) {
                     data?.data?.let {

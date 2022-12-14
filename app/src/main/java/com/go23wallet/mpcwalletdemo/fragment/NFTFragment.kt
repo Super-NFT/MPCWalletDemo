@@ -42,8 +42,8 @@ class NFTFragment : Fragment() {
 
     private fun initData() {
         Go23WalletNftsManage.getInstance().requestUserNfts(
-            UserWalletInfoManager.getUserWalletInfo().userWalletId.toString(),
-            UserWalletInfoManager.getUserWalletInfo().userChainId.toString(),
+            UserWalletInfoManager.getUserWalletInfo().userWalletId,
+            UserWalletInfoManager.getUserWalletInfo().userChainId,
             1, 20,
             object : BaseCallBack<UserNftListResponse> {
                 override fun success(data: UserNftListResponse?) {
