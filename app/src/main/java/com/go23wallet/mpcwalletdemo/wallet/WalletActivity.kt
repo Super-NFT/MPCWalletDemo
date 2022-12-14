@@ -43,6 +43,8 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
     private var userChains: MutableList<UserChain>? = null
 
+    private var walletInfo: WalletInfo? = null
+
     private val chooseMainnetDialog: ChooseMainnetDialog by lazy {
         ChooseMainnetDialog(this)
     }
@@ -75,7 +77,9 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         showProgress()
         initData()
         binding.refreshView.setOnRefreshListener {
-            initData()
+            walletInfo?.let {
+                loadData(it)
+            }
         }
     }
 
@@ -84,26 +88,26 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             delay(2000)
             binding.refreshView.isRefreshing = false
             runOnUiThread {
-                val s = "v1@coins.ph"
-                Go23WalletManage.getInstance().build(applicationContext, "1", "40ad7c25")
-                Go23WalletManage.getInstance().setUniqueId(s).email = s
+                Go23WalletManage.getInstance().setUniqueId(emailStr).build(applicationContext, "1", "40ad7c25")
+                Go23WalletManage.getInstance().email = emailStr
                 Go23WalletUserManage.getInstance().register(object : BaseCallBack<UserResponse> {
                     override fun success(data: UserResponse) {
                         Go23WalletInfoManage.getInstance()
                             .requestWallets(object : BaseCallBack<WalletInfoResponse?> {
                                 override fun success(data: WalletInfoResponse?) {
                                     if (data?.data == null) {
-                                        Go23WalletUserManage.getInstance().createKey {
-                                            Log.e("哈哈哈",it.msg)
-                                        }
-                                    } else {
-                                        Go23WalletInfoManage.getInstance()
-                                            .requestWallets(object : BaseCallBack<WalletInfoResponse?> {
-                                                override fun success(data: WalletInfoResponse?) {
-                                                    data
+                                        Go23WalletUserManage.getInstance()
+                                            .createKey(object : BaseCallBack<UserResponse> {
+                                                override fun success(p0: UserResponse?) {
+                                                    dismissProgress()
+//                                                geWalletInfo()
                                                 }
-                                                override fun failed() {}
+
+                                                override fun failed() {
+                                                }
                                             })
+                                    } else {
+                                        geWalletInfo()
                                     }
                                 }
 
@@ -116,6 +120,24 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                 })
             }
         }
+    }
+
+    private fun geWalletInfo() {
+        Go23WalletInfoManage.getInstance()
+            .requestWallets(object : BaseCallBack<WalletInfoResponse?> {
+                override fun success(data: WalletInfoResponse?) {
+                    dismissProgress()
+                    data?.data?.get(0)?.let {
+                        walletInfo = it
+                        binding.tvAddress.text = it.addr
+                        UserWalletInfoManager.setUserWalletId(it.id)
+                        loadData(it)
+                    }
+                    setListener()
+                }
+
+                override fun failed() {}
+            })
     }
 
     private fun initView() {
@@ -132,7 +154,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         }
     }
 
-    private fun initData(info: WalletInfo) {
+    private fun loadData(info: WalletInfo) {
         Go23WalletChainManage.getInstance()
             .requestUserChains(info.id, 1, 20, object : BaseCallBack<UserChainResponse> {
                 override fun success(data: UserChainResponse?) {
@@ -199,7 +221,11 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         }
 
         binding.tvReceive.setOnClickListener {
-            receiveDialog = ReceiveDialog(this, binding.tvChainAddress.text.toString(), binding.tvAddress.text.toString()).apply {
+            receiveDialog = ReceiveDialog(
+                this,
+                binding.tvChainAddress.text.toString(),
+                binding.tvAddress.text.toString()
+            ).apply {
                 show(supportFragmentManager, "receiveDialog")
             }
         }

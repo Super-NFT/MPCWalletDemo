@@ -91,7 +91,7 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
                             override fun success(data: TokenResponse?) {
                                 val token = data?.data ?: return
                                 hasChange = true
-                                selectList.add(token)
+                                selectList.add(item)
                                 mAdapter?.notifyItemChanged(position)
                             }
 
