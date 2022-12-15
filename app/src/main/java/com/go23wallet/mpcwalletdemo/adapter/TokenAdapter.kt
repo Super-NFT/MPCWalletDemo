@@ -16,9 +16,9 @@ class TokenAdapter(private val mContext: Context): BaseQuickAdapter<Token, BaseV
         val ivCorner = holder.getView<AppCompatImageView>(R.id.iv_corner)
         val tvTitle = holder.getView<AppCompatTextView>(R.id.tv_title)
         val tvContent = holder.getView<AppCompatTextView>(R.id.tv_content)
-        GlideUtils.loadImg(mContext, item.url, ivIcon)
-        GlideUtils.loadImg(mContext, item.url, ivCorner)
+        GlideUtils.loadImg(mContext, item.image_url, ivIcon)
+        GlideUtils.loadImg(mContext, item.chain_image_url, ivCorner)
         tvTitle.text = "${item.balance} ${item.symbol}"
-        tvContent.text = item.name
+        tvContent.text = "$${item.balance_u}"
     }
 }

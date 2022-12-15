@@ -10,6 +10,7 @@ import com.coins.app.bean.token.TokenDetailResponse
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
+import com.go23wallet.mpcwalletdemo.data.ChainTokenInfo
 import com.go23wallet.mpcwalletdemo.databinding.ActivityTokenDetailsBinding
 import com.go23wallet.mpcwalletdemo.dialog.ReceiveDialog
 import com.go23wallet.mpcwalletdemo.fragment.TokenTypeFragment
@@ -47,14 +48,18 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
                 override fun success(data: TokenDetailResponse?) {
                     data?.data?.let {
                         tokenDetail = it
-                        initView()
-                        GlideUtils.loadImg(this@TokenDetailsActivity, it.url, binding.ivCoin)
-                        GlideUtils.loadImg(this@TokenDetailsActivity, it.url, binding.ivCorner)
+                        GlideUtils.loadImg(this@TokenDetailsActivity, it.image_url, binding.ivCoin)
+                        GlideUtils.loadImg(
+                            this@TokenDetailsActivity,
+                            it.chain_image_url,
+                            binding.ivCorner
+                        )
                         binding.tvCoinNickname.text = it.name
                         binding.tvCoinName.text = it.name
 
-                        binding.tvNum.text = it.balance
+                        binding.tvBalance.text = it.balance
                         binding.tvValue.text = it.balance
+                        initView()
                     }
                 }
 
@@ -87,9 +92,22 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
                 }
         }
         binding.tvSend.setOnClickListener {
-            startActivity(Intent(this, SendCoinActivity::class.java).apply {
-                putExtra("data", "")
-            })
+            tokenDetail?.let { data ->
+                startActivity(Intent(this, SendCoinActivity::class.java).apply {
+                    putExtra("token_id", data.token_id)
+                    putExtra(
+                        "data",
+                        ChainTokenInfo(
+                            data.block_chain_id,
+                            data.addr,
+                            data.name,
+                            data.name,
+                            data.image_url
+                        )
+                    )
+                })
+            }
+
         }
     }
 }

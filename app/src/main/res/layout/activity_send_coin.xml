@@ -67,22 +67,26 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_coin_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
+                android:ellipsize="middle"
+                android:lines="1"
                 android:textColor="@color/color_262626"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@id/v_coin_type"
+                app:layout_constraintEnd_toStartOf="@id/tv_coin_mark"
                 app:layout_constraintStart_toEndOf="@id/iv_coin_icon"
                 app:layout_constraintTop_toTopOf="@id/v_coin_type" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_coin_type"
-                android:layout_width="0dp"
+                android:id="@+id/tv_coin_mark"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:gravity="end"
+                android:text="@string/coin_mark"
                 android:textColor="@color/color_35C1D8"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/v_coin_type"
@@ -238,8 +242,8 @@
                 android:layout_marginEnd="10dp"
                 android:background="@null"
                 android:gravity="center_vertical"
-                android:hint="input"
-                android:inputType="number"
+                android:inputType="numberDecimal"
+                android:text="0.00"
                 android:textColor="@color/color_262626"
                 android:textColorHint="@color/color_8C8C8C"
                 android:textSize="20sp"
@@ -286,7 +290,7 @@
                 app:layout_constraintTop_toTopOf="@id/tv_all" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_coin_nickname"
+                android:id="@+id/tv_coin_symbol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -304,7 +308,7 @@
                 android:src="@drawable/icon_clear"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/tv_all"
-                app:layout_constraintEnd_toStartOf="@id/tv_coin_nickname"
+                app:layout_constraintEnd_toStartOf="@id/tv_coin_symbol"
                 app:layout_constraintTop_toTopOf="@id/tv_all" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -332,37 +336,30 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_gas" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_gas_num"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_gas_balance"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:textColor="@color/color_595959"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@id/tv_value"
+                app:layout_constraintBottom_toTopOf="@id/tv_gas_value"
+                app:layout_constraintEnd_toEndOf="@id/v_gas_view"
                 app:layout_constraintStart_toStartOf="@id/v_gas_view"
                 app:layout_constraintTop_toTopOf="@id/v_gas_view" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/color_8C8C8C"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@id/v_gas_view"
-                app:layout_constraintStart_toStartOf="@id/v_gas_view"
-                app:layout_constraintTop_toBottomOf="@id/tv_gas_num" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_gas_value"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:textColor="@color/color_BFBFBF"
-                android:textSize="14sp"
+                android:textColor="@color/color_8C8C8C"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/v_gas_view"
                 app:layout_constraintEnd_toEndOf="@id/v_gas_view"
-                app:layout_constraintTop_toTopOf="@id/v_gas_view" />
+                app:layout_constraintStart_toStartOf="@id/v_gas_view"
+                app:layout_constraintTop_toBottomOf="@id/tv_gas_balance" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_gas_tips"
@@ -389,7 +386,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/shape_r8_35c1d8_bg"
+        android:background="@drawable/selector_btn_enable"
         android:gravity="center"
         android:text="@string/send"
         android:textColor="@color/white"
