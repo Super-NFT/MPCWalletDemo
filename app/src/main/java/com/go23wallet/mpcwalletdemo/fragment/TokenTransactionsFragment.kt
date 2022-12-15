@@ -7,23 +7,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.go23wallet.mpcwalletdemo.adapter.TokenTypeAdapter
+import com.coins.app.BaseCallBack
+import com.coins.app.Go23WalletManage
+import com.coins.app.bean.transaction.TransactionResponse
+import com.go23wallet.mpcwalletdemo.adapter.TokenTransactionsAdapter
 import com.go23wallet.mpcwalletdemo.databinding.FragmentTabLayoutBinding
 import com.go23wallet.mpcwalletdemo.wallet.ChargeDetailsActivity
 
-class TokenTypeFragment : Fragment() {
+class TokenTransactionsFragment : Fragment() {
 
     private lateinit var binding: FragmentTabLayoutBinding
 
-    private var mAdapter: TokenTypeAdapter? = null
+    private var mAdapter: TokenTransactionsAdapter? = null
 
-    private var type: Int = 0
+    private var transactionType: String = "all"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        type = arguments?.getInt("type", 0) ?: 0
+        transactionType = arguments?.getString("transactionType", "all") ?: "all"
         binding = FragmentTabLayoutBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -37,7 +40,7 @@ class TokenTypeFragment : Fragment() {
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             if (mAdapter == null) {
-                mAdapter = TokenTypeAdapter()
+                mAdapter = TokenTransactionsAdapter()
             }
             adapter = mAdapter
         }
@@ -45,17 +48,27 @@ class TokenTypeFragment : Fragment() {
         mAdapter?.setOnItemClickListener { _, _, position ->
             val item = mAdapter?.getItem(position) ?: return@setOnItemClickListener
             startActivity(Intent(context, ChargeDetailsActivity::class.java).apply {
-                putExtra("id", item)
+                putExtra("id", item.id)
             })
         }
+
+        Go23WalletManage.getInstance().requestTransactionRecords(transactionType, 0 , "", "", 1, 20, object: BaseCallBack<TransactionResponse> {
+            override fun success(data: TransactionResponse?) {
+                mAdapter?.setNewInstance(data?.data?.list)
+            }
+
+            override fun failed() {
+            }
+
+        })
     }
 
     companion object {
-        fun newInstance(type: Int): Fragment {
+        fun newInstance(transactionType: String): Fragment {
             val args = Bundle()
 
-            val fragment = TokenTypeFragment()
-            args.putInt("type", type)
+            val fragment = TokenTransactionsFragment()
+            args.putString("transactionType", transactionType)
             fragment.arguments = args
             return fragment
         }

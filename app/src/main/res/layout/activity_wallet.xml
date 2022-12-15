@@ -25,7 +25,7 @@
             android:src="@drawable/icon_more" />
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <com.go23wallet.mpcwalletdemo.view.RefreshLayout
         android:id="@+id/refresh_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -220,6 +220,6 @@
                 app:layout_constraintTop_toBottomOf="@id/tab" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </com.go23wallet.mpcwalletdemo.view.RefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

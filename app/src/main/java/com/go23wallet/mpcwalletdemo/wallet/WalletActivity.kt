@@ -2,23 +2,17 @@ package com.go23wallet.mpcwalletdemo.wallet
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletChainManage
-import com.coins.app.Go23WalletInfoManage
 import com.coins.app.Go23WalletManage
-import com.coins.app.Go23WalletUserManage
 import com.coins.app.bean.chain.UserChain
 import com.coins.app.bean.chain.UserChainResponse
 import com.coins.app.bean.user.BalanceResponse
 import com.coins.app.bean.user.UserResponse
 import com.coins.app.bean.walletinfo.WalletInfo
 import com.coins.app.bean.walletinfo.WalletInfoResponse
-import com.coins.app.entity.gamecenter.GameCenterTokenResponse
-import com.coins.app.util.GameCenterTokenUtils
+import com.coins.app.manage.Go23WalletChainManage
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
@@ -27,7 +21,6 @@ import com.go23wallet.mpcwalletdemo.databinding.ActivityWalletBinding
 import com.go23wallet.mpcwalletdemo.dialog.*
 import com.go23wallet.mpcwalletdemo.fragment.NFTFragment
 import com.go23wallet.mpcwalletdemo.fragment.TokenFragment
-import com.go23wallet.mpcwalletdemo.livedata.TokenListLiveData
 import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
 import com.go23wallet.mpcwalletdemo.utils.CopyUtils
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
@@ -93,13 +86,13 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                 Go23WalletManage.getInstance().setUniqueId(emailStr)
                     .build(applicationContext, "1", "40ad7c25")
                 Go23WalletManage.getInstance().email = emailStr
-                Go23WalletUserManage.getInstance().register(object : BaseCallBack<UserResponse> {
+                Go23WalletManage.getInstance().register(object : BaseCallBack<UserResponse> {
                     override fun success(data: UserResponse) {
-                        Go23WalletInfoManage.getInstance()
+                        Go23WalletManage.getInstance()
                             .requestWallets(object : BaseCallBack<WalletInfoResponse?> {
                                 override fun success(data: WalletInfoResponse?) {
                                     if (data?.data == null) {
-                                        Go23WalletUserManage.getInstance()
+                                        Go23WalletManage.getInstance()
                                             .createKey(object : BaseCallBack<UserResponse> {
                                                 override fun success(p0: UserResponse?) {
                                                     dismissProgress()
@@ -126,7 +119,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     }
 
     private fun geWalletInfo() {
-        Go23WalletInfoManage.getInstance()
+        Go23WalletManage.getInstance()
             .requestWallets(object : BaseCallBack<WalletInfoResponse?> {
                 override fun success(data: WalletInfoResponse?) {
                     dismissProgress()
@@ -172,7 +165,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                             this@WalletActivity, it.image_url, binding.ivChainIcon
                         )
                         initView()
-                        Go23WalletUserManage.getInstance()
+                        Go23WalletManage.getInstance()
                             .requestPlatformBalance(
                                 it.block_chain_id,
                                 info.addr,

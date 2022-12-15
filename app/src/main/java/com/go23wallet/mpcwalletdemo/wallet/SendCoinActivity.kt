@@ -33,6 +33,8 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
 
     override val layoutRes: Int = R.layout.activity_send_coin
 
+    private var isSelectGas = true
+
     private var tokenId = 0
     private var chainTokenInfo: ChainTokenInfo? = null
     private var preTokenSend: PreTokenSend? = null
@@ -40,21 +42,19 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
     override fun initViews(savedInstanceState: Bundle?) {
         tokenId = intent.getIntExtra("token_id", 0)
         chainTokenInfo = intent.getParcelableExtra("data")
-        chainTokenInfo?.let {
-            GlideUtils.loadImg(this, it.imgUrl, binding.ivCoinIcon)
-            binding.tvCoinName.text = it.name
-            binding.tvFromCoinNickname.text = it.symbol
-        } ?: kotlin.run {
+        if (chainTokenInfo == null) {
             finish()
             return
         }
-
         initData()
         setListener()
     }
 
     private fun initData() {
         chainTokenInfo?.let {
+            GlideUtils.loadImg(this, it.imgUrl, binding.ivCoinIcon)
+            binding.tvCoinName.text = it.name
+            binding.tvFromCoinNickname.text = it.symbol
             Go23WalletTransactionManage.getInstance().requestPreTokenSend(
                 tokenId,
                 it.blockChainId,
@@ -71,7 +71,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                             binding.tvAvailable.text =
                                 String.format(
                                     getString(R.string.available),
-                                    "${if (tokenId == 0) preToken.platform_balance else preToken.token_balance} ${it.symbol}"
+                                    "${if (tokenId == 0) preToken.platform_balance_sort else preToken.token_balance_sort} ${it.symbol}"
                                 )
                             binding.tvCoinSymbol.text = it.symbol
                             binding.tvGasBalance.text = "${preToken.gas} ${it.symbol}"
@@ -117,6 +117,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                 if (s.isNullOrEmpty()) {
                     binding.tvTotalValue.text = ""
                     binding.tvInputValue.text = ""
+                    binding.tvSend.isEnabled = false
                     return
                 }
                 val num = s.toString().toDouble()
@@ -128,14 +129,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                 }
                 binding.tvInputValue.text = if (uPer == null || uPer <= 0) "" else "=$${num * uPer}"
 
-                var totalValue = 1.0
-                var availableNum = 0.0
-                preTokenSend?.let {
-                    totalValue = num * (1 + it.fee)
-                    availableNum = if (tokenId == 0) it.platform_balance else it.token_balance
-                }
-                binding.tvTotalValue.text = "$totalValue ${chainTokenInfo?.symbol}"
-                binding.tvSend.isEnabled = totalValue <= availableNum
+                updateSendStatus()
             }
         })
         binding.tvPaste.setOnClickListener {
@@ -143,7 +137,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         }
         binding.tvAll.setOnClickListener {
             preTokenSend?.let {
-                val availableNum = if (tokenId == 0) it.platform_balance else it.token_balance
+                val availableNum = if (tokenId == 0) it.platform_balance_sort else it.token_balance_sort
                 val num = availableNum * (1 - it.fee)
                 binding.etInputNum.setText("$num ${chainTokenInfo?.symbol}")
             }
@@ -181,8 +175,34 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                     }
                 }).request()
         }
+        binding.tvGasTips.setOnClickListener {
+            isSelectGas = !isSelectGas
+            binding.tvGasTips.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                if (isSelectGas) R.drawable.icon_checked else R.drawable.icon_uncheck,
+                0,
+                0,
+                0
+            )
+            updateSendStatus()
+        }
         binding.tvSend.setOnClickListener {
 
         }
+    }
+
+    private fun updateSendStatus() {
+        val inputStr = binding.etInputNum.text.toString()
+        if (inputStr.isNullOrEmpty()) {
+            return
+        }
+        val num = inputStr.toDouble()
+        var totalValue = 1.0
+        var availableNum = 0.0
+        preTokenSend?.let {
+            totalValue = num * (1 + it.fee)
+            availableNum = if (tokenId == 0) it.platform_balance_sort else it.token_balance_sort
+        }
+        binding.tvTotalValue.text = "$totalValue ${chainTokenInfo?.symbol}"
+        binding.tvSend.isEnabled = totalValue <= availableNum && isSelectGas
     }
 }
