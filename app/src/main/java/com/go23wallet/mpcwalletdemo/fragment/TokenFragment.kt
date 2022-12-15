@@ -76,7 +76,8 @@ class TokenFragment : Fragment() {
         mAdapter?.setOnItemClickListener { _, _, position ->
             val itemData = mAdapter?.data?.get(position) ?: return@setOnItemClickListener
             startActivity(Intent(context, TokenDetailsActivity::class.java).apply {
-                putExtra("id", itemData.token_id)
+                putExtra("token_id", itemData.token_id)
+                putExtra("addr", itemData.addr)
             })
         }
     }

@@ -24,10 +24,10 @@ class AddTokenListAdapter(private val mContext: Context) :
         val tvTokenNum = holder.getView<AppCompatTextView>(R.id.tv_token_num)
         val tvTokenValue = holder.getView<AppCompatTextView>(R.id.tv_token_value)
         val ivStatus = holder.getView<AppCompatImageView>(R.id.iv_status)
-        GlideUtils.loadImg(mContext, item.url, ivTokenIcon)
+        GlideUtils.loadImg(mContext, item.image_url, ivTokenIcon)
         tvTokenName.text = item.name
         tvTokenNum.text = item.balance
-        tvTokenValue.text = item.name
+        tvTokenValue.text = "$${item.balance_u ?: 0.00}"
 
         ivStatus.setImageResource(if (selectList.indexOfFirst { it.token_id == item.token_id } >= 0) R.drawable.icon_checked else R.drawable.icon_uncheck)
     }

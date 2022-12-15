@@ -14,7 +14,7 @@ class NFTAdapter(private val mContext: Context): BaseQuickAdapter<Nft, BaseViewH
     override fun convert(holder: BaseViewHolder, item: Nft) {
         val ivImg = holder.getView<AppCompatImageView>(R.id.iv_img)
         val tvName = holder.getView<AppCompatTextView>(R.id.tv_name)
-        GlideUtils.loadRound(mContext, item.nft_info.url, ivImg, 8)
+        GlideUtils.loadRound(mContext, item.image, ivImg, 8)
         tvName.text = item.name
     }
 }

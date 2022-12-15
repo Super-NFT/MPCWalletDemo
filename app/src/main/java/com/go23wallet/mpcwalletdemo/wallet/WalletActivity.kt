@@ -22,6 +22,7 @@ import com.coins.app.util.GameCenterTokenUtils
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
+import com.go23wallet.mpcwalletdemo.data.ChainTokenInfo
 import com.go23wallet.mpcwalletdemo.databinding.ActivityWalletBinding
 import com.go23wallet.mpcwalletdemo.dialog.*
 import com.go23wallet.mpcwalletdemo.fragment.NFTFragment
@@ -42,6 +43,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     private var tabAdapter: TabFragmentAdapter? = null
 
     private var userChains: MutableList<UserChain>? = null
+    private var userChain: UserChain? = null
 
     private var walletInfo: WalletInfo? = null
 
@@ -88,7 +90,8 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             delay(2000)
             binding.refreshView.isRefreshing = false
             runOnUiThread {
-                Go23WalletManage.getInstance().setUniqueId(emailStr).build(applicationContext, "1", "40ad7c25")
+                Go23WalletManage.getInstance().setUniqueId(emailStr)
+                    .build(applicationContext, "1", "40ad7c25")
                 Go23WalletManage.getInstance().email = emailStr
                 Go23WalletUserManage.getInstance().register(object : BaseCallBack<UserResponse> {
                     override fun success(data: UserResponse) {
@@ -162,6 +165,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                     userChains?.find {
                         it.has_default == 1
                     }?.let {
+                        userChain = it
                         UserWalletInfoManager.setUserChainId(it.block_chain_id)
                         binding.tvChainAddress.text = it.name
                         GlideUtils.loadImg(
@@ -210,6 +214,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         }
 
         chooseMainnetDialog.callback = {
+            userChain = it
             GlideUtils.loadImg(this, it.image_url, binding.ivChainIcon)
             binding.tvChainAddress.text = it.name
             UserWalletInfoManager.setUserChainId(it.block_chain_id)
@@ -231,9 +236,13 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         }
 
         binding.tvSend.setOnClickListener {
-            startActivity(Intent(this, SendCoinActivity::class.java).apply {
-                putExtra("data", "")
-            })
+            userChain?.let {
+                startActivity(Intent(this, SendCoinActivity::class.java).apply {
+                    putExtra("token_id", 0)
+                    putExtra("data", ChainTokenInfo(it.block_chain_id, binding.tvAddress.text.toString(), it.name, it.symbol, it.image_url))
+                })
+            }
+
         }
 
         binding.ivAdd.setOnClickListener {
