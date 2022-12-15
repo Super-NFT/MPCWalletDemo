@@ -212,7 +212,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
             sign.setToAddr("0xc787b36CeEAB4372AD7755A99BF8718040012fd0")
             sign.setTransType(2)
             sign.setContract("0x71f28666bb6c10ee525b80457a129f0a031d0473")
-            sign.setToken("")
+            sign.setToken("1")
             sign.setValue("100")
             sign.setMiddleContract("0x2185C155d00ca80F9bB09bb21B682D5fa6fF81c9")
             Go23WalletManage.getInstance().sign(
