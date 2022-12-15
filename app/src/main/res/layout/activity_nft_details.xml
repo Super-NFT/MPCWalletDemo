@@ -59,7 +59,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_nft_no"
+                android:id="@+id/tv_nft_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -69,18 +69,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_nft"
                 tools:text="nft #001" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_nft_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/color_8C8C8C"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_nft_no"
-                tools:text="nft" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_description"
@@ -159,12 +147,43 @@
                 android:layout_marginEnd="20dp"
                 android:ellipsize="middle"
                 android:gravity="end"
+                android:drawablePadding="4dp"
+                android:drawableEnd="@drawable/icon_copy"
                 android:lines="1"
                 android:textColor="@color/color_262626"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_contact_address"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_contact_address"
+                tools:text="asdasasdasdadsadasdaasda" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_token"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/token_id"
+                android:textColor="@color/color_8C8C8C"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_contact_address" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_token_address"
+                android:layout_width="78dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:ellipsize="middle"
+                android:drawablePadding="4dp"
+                android:gravity="end"
+                android:drawableEnd="@drawable/icon_copy"
+                android:lines="1"
+                android:textColor="@color/color_262626"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_token"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_token"
                 tools:text="asdasasdasdadsadasdaasda" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -177,7 +196,7 @@
                 android:textColor="@color/color_8C8C8C"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_address" />
+                app:layout_constraintTop_toBottomOf="@id/tv_token" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_website_address"
@@ -188,11 +207,39 @@
                 android:gravity="end"
                 android:lines="1"
                 android:textColor="@color/color_262626"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_website"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_website"
                 app:layout_constraintTop_toTopOf="@id/tv_website"
+                tools:text="asdasasdasdadsadasdaasda" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_blockchain"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/blockchain"
+                android:textColor="@color/color_8C8C8C"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_website" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_blockchain_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="end"
+                android:lines="1"
+                android:textColor="@color/color_262626"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_blockchain"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_blockchain"
+                app:layout_constraintTop_toTopOf="@id/tv_blockchain"
                 tools:text="asdasasdasdadsadasdaasda" />
 
             <androidx.appcompat.widget.AppCompatTextView

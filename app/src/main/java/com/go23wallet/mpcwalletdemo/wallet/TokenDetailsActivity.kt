@@ -3,18 +3,16 @@ package com.go23wallet.mpcwalletdemo.wallet
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletTokensManage
-import com.coins.app.bean.token.TokenDetail
-import com.coins.app.bean.token.TokenDetailResponse
+import com.coins.app.bean.token.Token
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.data.ChainTokenInfo
 import com.go23wallet.mpcwalletdemo.databinding.ActivityTokenDetailsBinding
 import com.go23wallet.mpcwalletdemo.dialog.ReceiveDialog
-import com.go23wallet.mpcwalletdemo.fragment.TokenTypeFragment
+import com.go23wallet.mpcwalletdemo.fragment.TokenTransactionsFragment
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
+import java.util.*
 
 class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
 
@@ -33,47 +31,44 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
 
     override val layoutRes: Int = R.layout.activity_token_details
 
-    private var tokenDetail: TokenDetail? = null
+    private var token: Token? = null
     private var tokenId = 0
 
     override fun initViews(savedInstanceState: Bundle?) {
         tokenId = intent.getIntExtra("token_id", 0) ?: 0
+        token = intent.getSerializableExtra("data") as Token?
+        if (token == null) {
+            finish()
+            return
+        }
+
         initData()
         setListener()
     }
 
     private fun initData() {
-        Go23WalletTokensManage.getInstance()
-            .requestTokenDetail(tokenId, object : BaseCallBack<TokenDetailResponse> {
-                override fun success(data: TokenDetailResponse?) {
-                    data?.data?.let {
-                        tokenDetail = it
-                        GlideUtils.loadImg(this@TokenDetailsActivity, it.image_url, binding.ivCoin)
-                        GlideUtils.loadImg(
-                            this@TokenDetailsActivity,
-                            it.chain_image_url,
-                            binding.ivCorner
-                        )
-                        binding.tvCoinNickname.text = it.name
-                        binding.tvCoinName.text = it.name
+        token?.let {
+            GlideUtils.loadImg(this@TokenDetailsActivity, it.image_url, binding.ivCoin)
+            GlideUtils.loadImg(
+                this@TokenDetailsActivity,
+                it.chain_image_url,
+                binding.ivCorner
+            )
+            binding.tvCoinNickname.text = it.symbol
+            binding.tvCoinName.text = it.name
 
-                        binding.tvBalance.text = it.balance
-                        binding.tvValue.text = it.balance
-                        initView()
-                    }
-                }
-
-                override fun failed() {
-                }
-            })
+            binding.tvBalance.text = it.balance
+            binding.tvValue.text = "$${it.balance_u}"
+            initView()
+        }
 
     }
 
     private fun initView() {
-        fragments.add(TokenTypeFragment.newInstance(0))
-        fragments.add(TokenTypeFragment.newInstance(1))
-        fragments.add(TokenTypeFragment.newInstance(2))
-        fragments.add(TokenTypeFragment.newInstance(3))
+        fragments.add(TokenTransactionsFragment.newInstance(tabList[0].lowercase(Locale.ROOT)))
+        fragments.add(TokenTransactionsFragment.newInstance(tabList[1].lowercase(Locale.ROOT)))
+        fragments.add(TokenTransactionsFragment.newInstance(tabList[2].lowercase(Locale.ROOT)))
+        fragments.add(TokenTransactionsFragment.newInstance(tabList[3].lowercase(Locale.ROOT)))
         tabAdapter = TabFragmentAdapter(supportFragmentManager).apply {
             setList(fragments, tabList)
         }
@@ -87,12 +82,12 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
         }
         binding.tvReceive.setOnClickListener {
             receiveDialog =
-                ReceiveDialog(this, tokenDetail?.name ?: "", tokenDetail?.addr ?: "").apply {
+                ReceiveDialog(this, token?.name ?: "", token?.addr ?: "").apply {
                     show(supportFragmentManager, "receiveDialog")
                 }
         }
         binding.tvSend.setOnClickListener {
-            tokenDetail?.let { data ->
+            token?.let { data ->
                 startActivity(Intent(this, SendCoinActivity::class.java).apply {
                     putExtra("token_id", data.token_id)
                     putExtra(

@@ -19,7 +19,7 @@ class SelectTokenAdapter :
         val tvTokenValue = holder.getView<AppCompatTextView>(R.id.tv_token_value)
         GlideUtils.loadImg(context, item.image_url, ivIcon)
         GlideUtils.loadImg(context, item.chain_image_url, ivCorner)
-        tvName.text = item.name
+        tvName.text = item.symbol
         tvTokenNum.text = item.balance
         tvTokenValue.text = "$${item.balance_u}"
     }

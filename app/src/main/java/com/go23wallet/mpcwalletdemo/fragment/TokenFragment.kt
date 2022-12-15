@@ -6,17 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.coins.app.BaseCallBack
-import com.coins.app.BaseResponse
-import com.coins.app.Go23WalletInfoManage
 import com.coins.app.Go23WalletTokensManage
 import com.coins.app.bean.token.TokenListResponse
 import com.go23wallet.mpcwalletdemo.adapter.TokenAdapter
-import com.go23wallet.mpcwalletdemo.data.UserWalletInfo
 import com.go23wallet.mpcwalletdemo.databinding.FragmentTabLayoutBinding
 import com.go23wallet.mpcwalletdemo.livedata.TokenListLiveData
 import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
@@ -77,7 +71,7 @@ class TokenFragment : Fragment() {
             val itemData = mAdapter?.data?.get(position) ?: return@setOnItemClickListener
             startActivity(Intent(context, TokenDetailsActivity::class.java).apply {
                 putExtra("token_id", itemData.token_id)
-                putExtra("addr", itemData.addr)
+                putExtra("data", itemData)
             })
         }
     }

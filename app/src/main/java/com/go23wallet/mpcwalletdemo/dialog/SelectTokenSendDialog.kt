@@ -47,6 +47,7 @@ class SelectTokenSendDialog(private val mContext: Context) :
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
                 val item = mAdapter?.getItem(position) ?: return
                 callback.invoke(item)
+                dismissAllowingStateLoss()
             }
         })
 

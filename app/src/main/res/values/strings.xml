@@ -73,6 +73,7 @@
     <string name="attributes">Attributes</string>
     <string name="contract">Contract</string>
     <string name="contract_address">Contract address</string>
+    <string name="blockchain">Blockchain</string>
     <string name="website">Website</string>
     <string name="transfer">Transfer</string>
     <string name="paste">Paste</string>
