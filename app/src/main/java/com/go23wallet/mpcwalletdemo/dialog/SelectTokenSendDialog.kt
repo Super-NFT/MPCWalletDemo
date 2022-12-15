@@ -7,15 +7,13 @@ import com.blankj.utilcode.util.ScreenUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletTokensManage
-import com.coins.app.bean.chain.UserChain
+import com.coins.app.Go23WalletManage
 import com.coins.app.bean.token.Token
 import com.coins.app.bean.token.TokenListResponse
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.SelectTokenAdapter
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogSelectTokenSendLayoutBinding
-import com.go23wallet.mpcwalletdemo.livedata.TokenListLiveData
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 
 class SelectTokenSendDialog(private val mContext: Context) :
@@ -51,9 +49,9 @@ class SelectTokenSendDialog(private val mContext: Context) :
             }
         })
 
-        Go23WalletTokensManage.getInstance().requestUserTokens(
+        Go23WalletManage.getInstance().requestUserTokens(
             UserWalletInfoManager.getUserWalletInfo().userWalletId,
-            UserWalletInfoManager.getUserWalletInfo().userChainId,
+            UserWalletInfoManager.getUserWalletInfo().userBlockChainId,
             1, 20,
             object : BaseCallBack<TokenListResponse> {
                 override fun success(data: TokenListResponse?) {

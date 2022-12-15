@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletTokensManage
+import com.coins.app.Go23WalletManage
 import com.coins.app.bean.token.TokenListResponse
 import com.go23wallet.mpcwalletdemo.adapter.TokenAdapter
 import com.go23wallet.mpcwalletdemo.databinding.FragmentTabLayoutBinding
@@ -38,9 +38,9 @@ class TokenFragment : Fragment() {
     }
 
     private fun initData() {
-        Go23WalletTokensManage.getInstance().requestUserTokens(
+        Go23WalletManage.getInstance().requestUserTokens(
             UserWalletInfoManager.getUserWalletInfo().userWalletId,
-            UserWalletInfoManager.getUserWalletInfo().userChainId,
+            UserWalletInfoManager.getUserWalletInfo().userBlockChainId,
             1, 20,
             object : BaseCallBack<TokenListResponse> {
                 override fun success(data: TokenListResponse?) {

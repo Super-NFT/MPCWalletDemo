@@ -39,7 +39,7 @@ class NFTFragment : Fragment() {
     private fun initData() {
         Go23WalletManage.getInstance().requestUserNfts(
             UserWalletInfoManager.getUserWalletInfo().userWalletId,
-            UserWalletInfoManager.getUserWalletInfo().userChainId,
+            UserWalletInfoManager.getUserWalletInfo().userBlockChainId,
             1, 20,
             object : BaseCallBack<NftListResponse> {
                 override fun success(data: NftListResponse?) {

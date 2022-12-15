@@ -370,6 +370,7 @@
                 android:layout_marginEnd="20dp"
                 android:drawableStart="@drawable/icon_checked"
                 android:drawablePadding="8dp"
+                android:text="@string/gas_tips"
                 android:textColor="@color/color_8C8C8C"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"

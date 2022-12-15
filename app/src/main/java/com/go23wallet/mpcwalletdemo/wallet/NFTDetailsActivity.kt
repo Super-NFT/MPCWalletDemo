@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.coins.app.BaseCallBack
 import com.coins.app.Go23WalletManage
+import com.coins.app.bean.nft.Nft
 import com.coins.app.bean.nft.NftResponse
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.NFTAttributeAdapter
@@ -24,6 +25,8 @@ class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
 
     private var nftId = 0
 
+    private var nft: Nft? = null
+
     override fun initViews(savedInstanceState: Bundle?) {
         nftId = intent.getIntExtra("ndf_id", 0)
         initView()
@@ -35,6 +38,7 @@ class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
         Go23WalletManage.getInstance().requestNftDetail(nftId, object : BaseCallBack<NftResponse> {
             override fun success(data: NftResponse?) {
                 data?.data?.let {
+                    nft = it
                     GlideUtils.loadImg(this@NFTDetailsActivity, it.image, binding.ivNft)
                     binding.tvNftName.text = it.name
                     binding.tvDescriptionContent.text =
@@ -83,7 +87,7 @@ class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
         }
         binding.tvTransfer.setOnClickListener {
             startActivity(Intent(this@NFTDetailsActivity, SendNFTActivity::class.java).apply {
-                putExtra("info", "")
+                putExtra("data", nft)
             })
         }
     }

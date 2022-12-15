@@ -7,7 +7,7 @@ import com.blankj.utilcode.util.ScreenUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletChainManage
+import com.coins.app.Go23WalletManage
 import com.coins.app.bean.chain.ChainResponse
 import com.coins.app.bean.chain.UserChain
 import com.go23wallet.mpcwalletdemo.R
@@ -51,7 +51,7 @@ class ChooseMainnetDialog(private val mContext: Context) :
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
                 val item = userChains?.get(position) ?: return
 
-                Go23WalletChainManage.getInstance().setDefaultChain(
+                Go23WalletManage.getInstance().setDefaultChain(
                     item.block_chain_id,
                     item.user_wallet_id,
                     object : BaseCallBack<ChainResponse> {

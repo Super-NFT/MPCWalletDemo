@@ -5,15 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletTokensManage
+import com.coins.app.Go23WalletManage
 import com.coins.app.bean.token.Token
 import com.coins.app.bean.token.TokenListResponse
 import com.coins.app.bean.token.TokenResponse
@@ -24,8 +20,6 @@ import com.go23wallet.mpcwalletdemo.databinding.ActivityAddATokenBinding
 import com.go23wallet.mpcwalletdemo.livedata.TokenListLiveData
 import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
 
@@ -47,8 +41,8 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
         TokenListLiveData.liveData.observe(this) {
             if (it != null) {
                 selectList = it
-                Go23WalletTokensManage.getInstance().requestTokens(
-                    UserWalletInfoManager.getUserWalletInfo().userChainId,
+                Go23WalletManage.getInstance().requestTokens(
+                    UserWalletInfoManager.getUserWalletInfo().userBlockChainId,
                     1, 20,
                     object : BaseCallBack<TokenListResponse> {
                         override fun success(data: TokenListResponse?) {
@@ -83,9 +77,9 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
                 val item = mAdapter?.getItem(position) ?: return
                 val index = selectList.indexOfFirst { item.token_id == it.token_id }
                 if (index < 0) {
-                    Go23WalletTokensManage.getInstance().addToken(
+                    Go23WalletManage.getInstance().addToken(
                         item.token_id,
-                        UserWalletInfoManager.getUserWalletInfo().userChainId,
+                        UserWalletInfoManager.getUserWalletInfo().userBlockChainId,
                         UserWalletInfoManager.getUserWalletInfo().userWalletId,
                         object : BaseCallBack<TokenResponse> {
                             override fun success(data: TokenResponse?) {
@@ -99,9 +93,9 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
                             }
                         })
                 } else {
-                    Go23WalletTokensManage.getInstance().removeToken(
+                    Go23WalletManage.getInstance().removeToken(
                         item.token_id,
-                        UserWalletInfoManager.getUserWalletInfo().userChainId,
+                        UserWalletInfoManager.getUserWalletInfo().userBlockChainId,
                         UserWalletInfoManager.getUserWalletInfo().userWalletId,
                         object : BaseCallBack<TokenResponse> {
                             override fun success(data: TokenResponse?) {

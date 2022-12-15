@@ -4,10 +4,8 @@ import android.app.Activity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletTokensManage
+import com.coins.app.Go23WalletManage
 import com.coins.app.bean.token.TokenResponse
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
@@ -49,9 +47,9 @@ class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
             }
         })
         binding.tvConfirm.setOnClickListener {
-            Go23WalletTokensManage.getInstance().addToken(
+            Go23WalletManage.getInstance().addToken(
                 tokenId,
-                UserWalletInfoManager.getUserWalletInfo().userChainId,
+                UserWalletInfoManager.getUserWalletInfo().userBlockChainId,
                 UserWalletInfoManager.getUserWalletInfo().userWalletId,
                 object : BaseCallBack<TokenResponse> {
                     override fun success(data: TokenResponse?) {
@@ -68,8 +66,8 @@ class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
     }
 
     private fun checkTokenAddress(address: String) {
-        Go23WalletTokensManage.getInstance().checkToken(address,
-            UserWalletInfoManager.getUserWalletInfo().userChainId,
+        Go23WalletManage.getInstance().checkToken(address,
+            UserWalletInfoManager.getUserWalletInfo().userBlockChainId,
             object : BaseCallBack<TokenResponse> {
                 override fun success(data: TokenResponse?) {
                     data?.data?.let {

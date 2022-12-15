@@ -159,7 +159,8 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                         it.has_default == 1
                     }?.let {
                         userChain = it
-                        UserWalletInfoManager.setUserChainId(it.block_chain_id)
+                        UserWalletInfoManager.setUserBlockChainId(it.block_chain_id)
+                        UserWalletInfoManager.setUserChainId(it.chain_id)
                         binding.tvChainAddress.text = it.name
                         GlideUtils.loadImg(
                             this@WalletActivity, it.image_url, binding.ivChainIcon
@@ -210,7 +211,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             userChain = it
             GlideUtils.loadImg(this, it.image_url, binding.ivChainIcon)
             binding.tvChainAddress.text = it.name
-            UserWalletInfoManager.setUserChainId(it.block_chain_id)
+            UserWalletInfoManager.setUserBlockChainId(it.block_chain_id)
             UpdateDataLiveData.liveData.postValue(1)
         }
 
