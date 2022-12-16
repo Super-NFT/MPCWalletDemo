@@ -5,13 +5,14 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.coins.app.BaseCallBack
+import com.coins.app.Go23WalletCallBack
 import com.coins.app.Go23WalletManage
 import com.coins.app.bean.chain.UserChain
 import com.coins.app.bean.chain.UserChainResponse
 import com.coins.app.bean.user.BalanceResponse
-import com.coins.app.bean.user.UserResponse
 import com.coins.app.bean.walletinfo.WalletInfo
 import com.coins.app.bean.walletinfo.WalletInfoResponse
+import com.coins.app.callback.MPCCallBack
 import com.coins.app.manage.Go23WalletChainManage
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
@@ -56,7 +57,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         ImportAssetDialog(this)
     }
 
-    private var emailStr = "v1@coins.ph"
+    private var emailStr = "a1@coins.ph"
 
     private var receiveDialog: ReceiveDialog? = null
 
@@ -86,42 +87,37 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     }
 
     private fun initData() {
-        lifecycleScope.launch {
-            delay(2000)
-            runOnUiThread {
-                Go23WalletManage.getInstance().setUniqueId(emailStr)
-                    .build(applicationContext, "1", "40ad7c25")
-                Go23WalletManage.getInstance().email = emailStr
-                Go23WalletManage.getInstance().register(object : BaseCallBack<UserResponse> {
-                    override fun success(data: UserResponse) {
+        Go23WalletManage.getInstance().setUniqueId(emailStr).setEmail(emailStr)
+            .start(this@WalletActivity, object : Go23WalletCallBack {
+                override fun recover() {
+                    forgetPswDialog.show(supportFragmentManager, "")
+                    forgetPswDialog.callback = {
                         Go23WalletManage.getInstance()
-                            .requestWallets(object : BaseCallBack<WalletInfoResponse?> {
-                                override fun success(data: WalletInfoResponse?) {
-                                    if (data?.data == null) {
-//                                        Go23WalletManage.getInstance()
-//                                            .createKey(object : BaseCallBack<UserResponse> {
-//                                                override fun success(p0: UserResponse?) {
-//                                                    dismissProgress()
-////                                                geWalletInfo()
-//                                                }
-//
-//                                                override fun failed() {
-//                                                }
-//                                            })
-                                    } else {
-                                        geWalletInfo()
-                                    }
+                            .startRecover(this@WalletActivity, "111111", object : MPCCallBack {
+                                override fun success() {
+                                    Go23WalletManage.getInstance()
+                                        .requestWallets(object : BaseCallBack<WalletInfoResponse?> {
+                                            override fun success(data: WalletInfoResponse?) {
+                                                geWalletInfo()
+                                            }
+
+                                            override fun failed() {}
+                                        })
                                 }
 
                                 override fun failed() {}
                             })
                     }
+                }
 
-                    override fun failed() {}
+                override fun success() {
+                    geWalletInfo()
+                }
 
-                })
-            }
-        }
+                override fun failed() {
+                }
+
+            })
     }
 
     private fun geWalletInfo() {
@@ -201,6 +197,30 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         }
         binding.icMore.setOnClickListener {
             settingDialog.show(supportFragmentManager, "settingDialog")
+            settingDialog.callback = {
+                forgetPswDialog.show(supportFragmentManager, "forgetPswDialog")
+                forgetPswDialog.callback = {
+                    showProgress()
+                    Go23WalletManage.getInstance().startReShare(
+                        this@WalletActivity,
+                        Go23WalletManage.getInstance().walletAddress,
+                        "111111",
+                        object : MPCCallBack {
+                            override fun success() {
+                                dismissProgress()
+                                Go23WalletManage.getInstance()
+                                    .requestWallets(object : BaseCallBack<WalletInfoResponse?> {
+                                        override fun success(data: WalletInfoResponse?) {
+                                            geWalletInfo()
+                                        }
+                                        override fun failed() {}
+                                    })
+                            }
+
+                            override fun failed() {}
+                        })
+                }
+            }
         }
 
         binding.tvChainAddress.setOnClickListener {

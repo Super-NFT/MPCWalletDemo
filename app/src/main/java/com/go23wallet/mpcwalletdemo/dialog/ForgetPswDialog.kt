@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.*
 import android.widget.Toast
+import com.coins.app.bean.token.Token
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogForgetPswLayoutBinding
@@ -16,6 +17,8 @@ class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
     override val layoutId: Int = R.layout.dialog_forget_psw_layout
 
     private val mHandler: Handler = Handler(Looper.getMainLooper())
+
+    var callback: (code: String?) -> Unit = {}
 
     private val setPinCodeDialog: SetPinCodeDialog by lazy {
         SetPinCodeDialog(mContext)
@@ -67,17 +70,14 @@ class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
                         return@setOnClickListener
                     }
                     // TODO
-                    showProgress()
                     if (dialogType == 0) {
                         // recover  set pin code
+                        callback.invoke(verifyCode)
                     } else {
                         // resharding  two set pin code
+                        callback.invoke(verifyCode)
                     }
-                    mHandler.postDelayed({
-                        hideProgress()
-                        setPinCodeDialog.show(parentFragmentManager, "setPinCodeDialog")
-                        dismissAllowingStateLoss()
-                    }, 2000)
+                    dismiss()
                 }
             }
         }
