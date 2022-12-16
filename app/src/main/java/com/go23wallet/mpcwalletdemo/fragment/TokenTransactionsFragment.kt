@@ -12,6 +12,7 @@ import com.coins.app.Go23WalletManage
 import com.coins.app.bean.transaction.TransactionResponse
 import com.go23wallet.mpcwalletdemo.adapter.TokenTransactionsAdapter
 import com.go23wallet.mpcwalletdemo.databinding.FragmentTabLayoutBinding
+import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 import com.go23wallet.mpcwalletdemo.wallet.ChargeDetailsActivity
 
 class TokenTransactionsFragment : Fragment() {
@@ -21,12 +22,14 @@ class TokenTransactionsFragment : Fragment() {
     private var mAdapter: TokenTransactionsAdapter? = null
 
     private var transactionType: String = "all"
+    private var contract: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         transactionType = arguments?.getString("transactionType", "all") ?: "all"
+        contract = arguments?.getString("contract", "") ?: ""
         binding = FragmentTabLayoutBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -52,23 +55,31 @@ class TokenTransactionsFragment : Fragment() {
             })
         }
 
-        Go23WalletManage.getInstance().requestTransactionRecords(transactionType, 0 , "", "", 1, 20, object: BaseCallBack<TransactionResponse> {
-            override fun success(data: TransactionResponse?) {
-                mAdapter?.setNewInstance(data?.data?.list)
-            }
+        Go23WalletManage.getInstance().requestTransactionRecords(
+            transactionType,
+            UserWalletInfoManager.getUserWalletInfo().userChainId,
+            UserWalletInfoManager.getUserWalletInfo().walletAddress,
+            contract,
+            1,
+            20,
+            object : BaseCallBack<TransactionResponse> {
+                override fun success(data: TransactionResponse?) {
+                    mAdapter?.setNewInstance(data?.data?.list)
+                }
 
-            override fun failed() {
-            }
+                override fun failed() {
+                }
 
-        })
+            })
     }
 
     companion object {
-        fun newInstance(transactionType: String): Fragment {
+        fun newInstance(transactionType: String, contract: String): Fragment {
             val args = Bundle()
 
             val fragment = TokenTransactionsFragment()
             args.putString("transactionType", transactionType)
+            args.putString("contract", contract)
             fragment.arguments = args
             return fragment
         }

@@ -65,10 +65,30 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
     }
 
     private fun initView() {
-        fragments.add(TokenTransactionsFragment.newInstance(tabList[0].lowercase(Locale.ROOT)))
-        fragments.add(TokenTransactionsFragment.newInstance(tabList[1].lowercase(Locale.ROOT)))
-        fragments.add(TokenTransactionsFragment.newInstance(tabList[2].lowercase(Locale.ROOT)))
-        fragments.add(TokenTransactionsFragment.newInstance(tabList[3].lowercase(Locale.ROOT)))
+        fragments.add(
+            TokenTransactionsFragment.newInstance(
+                tabList[0].lowercase(Locale.ROOT),
+                token?.addr ?: ""
+            )
+        )
+        fragments.add(
+            TokenTransactionsFragment.newInstance(
+                tabList[1].lowercase(Locale.ROOT),
+                token?.addr ?: ""
+            )
+        )
+        fragments.add(
+            TokenTransactionsFragment.newInstance(
+                tabList[2].lowercase(Locale.ROOT),
+                token?.addr ?: ""
+            )
+        )
+        fragments.add(
+            TokenTransactionsFragment.newInstance(
+                tabList[3].lowercase(Locale.ROOT),
+                token?.addr ?: ""
+            )
+        )
         tabAdapter = TabFragmentAdapter(supportFragmentManager).apply {
             setList(fragments, tabList)
         }

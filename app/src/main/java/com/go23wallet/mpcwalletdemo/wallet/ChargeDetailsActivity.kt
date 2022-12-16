@@ -1,7 +1,6 @@
 package com.go23wallet.mpcwalletdemo.wallet
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivityChargeDetailsBinding
@@ -9,10 +8,12 @@ import com.go23wallet.mpcwalletdemo.utils.CopyUtils
 
 class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
 
-
     override val layoutRes: Int = R.layout.activity_charge_details
 
+    private var transactionId = 0
+
     override fun initViews(savedInstanceState: Bundle?) {
+        transactionId = intent.getIntExtra("transaction_id", 0)
         initView()
         setListener()
     }
@@ -27,7 +28,7 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
         binding.tvNetworkContent.text = ""
         binding.tvAmountValue.text = ""
         binding.tvGasValue.text = ""
-        binding.tvTotalValue.text = ""
+//        binding.tvTotalValue.text = ""
     }
 
     private fun setListener() {

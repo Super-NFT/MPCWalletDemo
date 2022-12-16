@@ -121,7 +121,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                 if (s.isNullOrEmpty()) {
                     binding.tvTotalValue.text = ""
                     binding.tvInputValue.text = ""
-//                    binding.tvSend.isEnabled = false
+                    binding.tvSend.isEnabled = false
                     return
                 }
                 val num = s.toString().toDouble()
@@ -223,6 +223,6 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
             availableNum = if (tokenId == 0) it.platform_balance_sort else it.token_balance_sort
         }
         binding.tvTotalValue.text = "$totalValue ${chainTokenInfo?.symbol}"
-//        binding.tvSend.isEnabled = totalValue > 0 && totalValue <= availableNum && isSelectGas
+        binding.tvSend.isEnabled = totalValue > 0 && totalValue <= availableNum && isSelectGas
     }
 }

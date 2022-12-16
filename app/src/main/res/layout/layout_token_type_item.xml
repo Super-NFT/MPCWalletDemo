@@ -23,7 +23,7 @@
         android:textColor="@color/color_262626"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/tv_time"
-        app:layout_constraintEnd_toStartOf="@id/tv_charge_num"
+        app:layout_constraintEnd_toStartOf="@id/tv_charge_balance"
         app:layout_constraintStart_toEndOf="@id/iv_icon"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
@@ -40,7 +40,7 @@
         app:layout_constraintVertical_chainStyle="packed" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_charge_num"
+        android:id="@+id/tv_charge_balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="9dp"

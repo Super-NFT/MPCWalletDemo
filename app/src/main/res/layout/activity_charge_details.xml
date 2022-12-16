@@ -60,6 +60,66 @@
         app:layout_constraintTop_toBottomOf="@id/tv_type"
         tools:text="2022-12-9" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/nft_view"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/shape_r8_border_d9_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_time">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_nft"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_nft_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/color_262626"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_token_id_content"
+            app:layout_constraintStart_toEndOf="@id/iv_nft"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_token_id_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/token_id"
+            android:textColor="@color/color_8C8C8C"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_nft"
+            app:layout_constraintTop_toBottomOf="@id/tv_nft_name"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_token_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/color_262626"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_token_id_content"
+            app:layout_constraintStart_toEndOf="@id/tv_token_id_content"
+            app:layout_constraintTop_toTopOf="@id/tv_token_id_content" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <View
         android:id="@+id/v_from_to"
         android:layout_width="0dp"
@@ -70,7 +130,7 @@
         android:background="@drawable/shape_r8_border_d9_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_time" />
+        app:layout_constraintTop_toBottomOf="@id/nft_view" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_from"
@@ -232,110 +292,114 @@
         app:layout_constraintTop_toTopOf="@id/v_network"
         tools:text="Polygon" />
 
-    <View
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/v_amount"
         android:layout_width="0dp"
-        android:layout_height="124dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/shape_r8_border_d9_bg"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/v_network" />
+        app:layout_constraintTop_toBottomOf="@id/v_network">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="12dp"
-        android:text="@string/amount"
-        android:textColor="@color/color_8C8C8C"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@id/v_amount"
-        app:layout_constraintTop_toTopOf="@id/v_amount" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:text="@string/amount"
+            android:textColor="@color/color_8C8C8C"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_gas_free"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:text="@string/gas_free"
-        android:textColor="@color/color_8C8C8C"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@id/v_amount"
-        app:layout_constraintTop_toBottomOf="@id/tv_amount" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_gas_free"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:text="@string/gas_free"
+            android:textColor="@color/color_8C8C8C"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_amount" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_amount_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="18dp"
-        android:textColor="@color/color_8C8C8C"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_amount"
-        app:layout_constraintEnd_toEndOf="@id/v_amount"
-        app:layout_constraintTop_toTopOf="@id/tv_amount"
-        tools:text="asdas" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_amount_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:textColor="@color/color_8C8C8C"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_amount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_amount"
+            tools:text="asdas" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_gas_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="18dp"
-        android:textColor="@color/color_8C8C8C"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_gas_free"
-        app:layout_constraintEnd_toEndOf="@id/v_amount"
-        app:layout_constraintTop_toTopOf="@id/tv_gas_free"
-        tools:text="asdas" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_gas_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:textColor="@color/color_8C8C8C"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_gas_free"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_gas_free"
+            tools:text="asdas" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="18dp"
-        android:textColor="@color/color_8C8C8C"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@id/v_amount"
-        app:layout_constraintTop_toBottomOf="@id/tv_gas_value"
-        tools:text="asdas" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <View
-        android:id="@+id/line"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="18dp"
-        android:background="@color/color_D9D9D9"
-        app:layout_constraintEnd_toEndOf="@id/v_amount"
-        app:layout_constraintStart_toStartOf="@id/v_amount"
-        app:layout_constraintTop_toBottomOf="@id/tv_value" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_total"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:text="@string/total"
-        android:textColor="@color/color_262626"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@id/v_amount"
-        app:layout_constraintStart_toStartOf="@id/v_amount"
-        app:layout_constraintTop_toBottomOf="@id/line" />
+    <!--    <androidx.appcompat.widget.AppCompatTextView-->
+    <!--        android:id="@+id/tv_value"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginEnd="18dp"-->
+    <!--        android:textColor="@color/color_8C8C8C"-->
+    <!--        android:textSize="12sp"-->
+    <!--        app:layout_constraintEnd_toEndOf="@id/v_amount"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/tv_gas_value"-->
+    <!--        tools:text="asdas" />-->
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_total_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="18dp"
-        android:textColor="@color/color_262626"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@id/v_amount"
-        app:layout_constraintEnd_toEndOf="@id/v_amount"
-        app:layout_constraintTop_toBottomOf="@id/line"
-        tools:text="123456" />
+    <!--    <View-->
+    <!--        android:id="@+id/line"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="1dp"-->
+    <!--        android:layout_marginStart="18dp"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        android:layout_marginEnd="18dp"-->
+    <!--        android:background="@color/color_D9D9D9"-->
+    <!--        app:layout_constraintEnd_toEndOf="@id/v_amount"-->
+    <!--        app:layout_constraintStart_toStartOf="@id/v_amount"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/tv_value" />-->
+
+    <!--    <androidx.appcompat.widget.AppCompatTextView-->
+    <!--        android:id="@+id/tv_total"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="18dp"-->
+    <!--        android:text="@string/total"-->
+    <!--        android:textColor="@color/color_262626"-->
+    <!--        android:textSize="16sp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@id/v_amount"-->
+    <!--        app:layout_constraintStart_toStartOf="@id/v_amount"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/line" />-->
+
+    <!--    <androidx.appcompat.widget.AppCompatTextView-->
+    <!--        android:id="@+id/tv_total_value"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginEnd="18dp"-->
+    <!--        android:textColor="@color/color_262626"-->
+    <!--        android:textSize="16sp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@id/v_amount"-->
+    <!--        app:layout_constraintEnd_toEndOf="@id/v_amount"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/line"-->
+    <!--        tools:text="123456" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

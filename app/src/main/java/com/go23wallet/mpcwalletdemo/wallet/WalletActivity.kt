@@ -127,6 +127,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                         walletInfo = it
                         binding.tvAddress.text = it.addr
                         UserWalletInfoManager.setUserWalletId(it.id)
+                        UserWalletInfoManager.setWalletAddr(it.addr)
                         loadData(it)
                     }
                     setListener()

@@ -13,6 +13,10 @@ object UserWalletInfoManager {
         userWalletInfo.userBlockChainId = id
     }
 
+    fun setWalletAddr(addr: String) {
+        userWalletInfo.walletAddress = addr
+    }
+
     fun setUserChainId(id: Int) {
         userWalletInfo.userChainId = id
     }
