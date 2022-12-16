@@ -57,7 +57,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         ImportAssetDialog(this)
     }
 
-    private var emailStr = "a1@coins.ph"
+    private var emailStr = "v1@coins.ph"
 
     private var receiveDialog: ReceiveDialog? = null
 
