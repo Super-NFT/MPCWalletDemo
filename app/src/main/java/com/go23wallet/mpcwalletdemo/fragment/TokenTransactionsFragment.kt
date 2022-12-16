@@ -51,13 +51,13 @@ class TokenTransactionsFragment : Fragment() {
         mAdapter?.setOnItemClickListener { _, _, position ->
             val item = mAdapter?.getItem(position) ?: return@setOnItemClickListener
             startActivity(Intent(context, ChargeDetailsActivity::class.java).apply {
-                putExtra("id", item.id)
+                putExtra("transaction_id", item.transaction_id)
             })
         }
 
         Go23WalletManage.getInstance().requestTransactionRecords(
             transactionType,
-            UserWalletInfoManager.getUserWalletInfo().userChainId,
+            UserWalletInfoManager.getUserWalletInfo().userChain.block_chain_id,
             UserWalletInfoManager.getUserWalletInfo().walletAddress,
             contract,
             1,

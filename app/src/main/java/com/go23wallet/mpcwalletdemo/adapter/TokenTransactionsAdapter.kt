@@ -22,23 +22,25 @@ class TokenTransactionsAdapter :
                 ivIcon.setImageResource(R.drawable.icon_type_in)
                 tvTitle.text = "Receive ${item.from_addr}"
                 tvBalance.setTextColor(context.getColor(R.color.color_35C1D8))
+                tvBalance.text = "+${item.value}${item.symbol}"
             }
             "out" -> {
                 ivIcon.setImageResource(R.drawable.icon_type_out)
                 tvTitle.text = "Send ${item.to_addr}"
+                tvBalance.text = "-${item.value}${item.symbol}"
             }
             "fail" -> {
                 ivIcon.setImageResource(R.drawable.icon_type_failed)
-                tvTitle.text = "Receive ${item.from_addr}"
+                tvTitle.text = "Send ${item.to_addr}"
+                tvBalance.text = "-${item.value}${item.symbol}"
             }
             else -> {
                 ivIcon.setImageResource(R.drawable.icon_type_failed)
-                tvTitle.text = "Receive ${item.from_addr}"
+                tvTitle.text = "Send ${item.to_addr}"
+                tvBalance.text = "-${item.value}${item.symbol}"
             }
         }
-        ivIcon.setImageResource(R.drawable.icon_type_out)
-        tvTime.text = item.contract
-        tvBalance.text = item.contract
-        tvValue.text = item.contract
+        tvTime.text = item.time
+        tvValue.text = "$${item.balance_u}"
     }
 }

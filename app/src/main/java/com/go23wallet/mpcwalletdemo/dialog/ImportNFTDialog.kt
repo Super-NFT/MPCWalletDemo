@@ -47,26 +47,11 @@ class ImportNFTDialog :
         viewBinding.tvImport.setOnClickListener {
             Go23WalletManage.getInstance().checkNft(
                 viewBinding.etNtfAddress.text.toString(),
-                UserWalletInfoManager.getUserWalletInfo().userChainId,
+                UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
                 object : BaseCallBack<NftResponse> {
                     override fun success(data: NftResponse?) {
-                        data?.data?.let {
-                            Go23WalletManage.getInstance().addNft(
-                                it.nft_id,
-                                UserWalletInfoManager.getUserWalletInfo().userChainId,
-                                UserWalletInfoManager.getUserWalletInfo().userWalletId,
-                                object : BaseCallBack<NftResponse> {
-                                    override fun success(p0: NftResponse?) {
-                                        UpdateDataLiveData.liveData.postValue(2)
-                                        dismissAllowingStateLoss()
-                                    }
-
-                                    override fun failed() {
-                                        ToastUtils.showShort("add fail")
-                                    }
-
-                                })
-                        }
+                        UpdateDataLiveData.liveData.postValue(2)
+                        dismissAllowingStateLoss()
                     }
 
                     override fun failed() {

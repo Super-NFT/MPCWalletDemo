@@ -42,7 +42,7 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
             if (it != null) {
                 selectList = it
                 Go23WalletManage.getInstance().requestTokens(
-                    UserWalletInfoManager.getUserWalletInfo().userBlockChainId,
+                    UserWalletInfoManager.getUserWalletInfo().userChain.block_chain_id,
                     1, 20,
                     object : BaseCallBack<TokenListResponse> {
                         override fun success(data: TokenListResponse?) {
@@ -79,8 +79,8 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
                 if (index < 0) {
                     Go23WalletManage.getInstance().addToken(
                         item.token_id,
-                        UserWalletInfoManager.getUserWalletInfo().userBlockChainId,
-                        UserWalletInfoManager.getUserWalletInfo().userWalletId,
+                        UserWalletInfoManager.getUserWalletInfo().userChain.block_chain_id,
+                        UserWalletInfoManager.getUserWalletInfo().walletId,
                         object : BaseCallBack<TokenResponse> {
                             override fun success(data: TokenResponse?) {
                                 val token = data?.data ?: return
@@ -95,8 +95,8 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
                 } else {
                     Go23WalletManage.getInstance().removeToken(
                         item.token_id,
-                        UserWalletInfoManager.getUserWalletInfo().userBlockChainId,
-                        UserWalletInfoManager.getUserWalletInfo().userWalletId,
+                        UserWalletInfoManager.getUserWalletInfo().userChain.block_chain_id,
+                        UserWalletInfoManager.getUserWalletInfo().walletId,
                         object : BaseCallBack<TokenResponse> {
                             override fun success(data: TokenResponse?) {
                                 hasChange = true

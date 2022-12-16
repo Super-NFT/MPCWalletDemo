@@ -74,6 +74,13 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         binding.refreshView.setOnRefreshListener {
             walletInfo?.let {
                 loadData(it)
+                tabAdapter?.notifyDataSetChanged()
+            }
+            lifecycleScope.launch {
+                delay(1500)
+                runOnUiThread {
+                    binding.refreshView.isRefreshing = false
+                }
             }
         }
     }
@@ -81,7 +88,6 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     private fun initData() {
         lifecycleScope.launch {
             delay(2000)
-            binding.refreshView.isRefreshing = false
             runOnUiThread {
                 Go23WalletManage.getInstance().setUniqueId(emailStr)
                     .build(applicationContext, "1", "40ad7c25")
@@ -92,16 +98,16 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                             .requestWallets(object : BaseCallBack<WalletInfoResponse?> {
                                 override fun success(data: WalletInfoResponse?) {
                                     if (data?.data == null) {
-                                        Go23WalletManage.getInstance()
-                                            .createKey(object : BaseCallBack<UserResponse> {
-                                                override fun success(p0: UserResponse?) {
-                                                    dismissProgress()
-//                                                geWalletInfo()
-                                                }
-
-                                                override fun failed() {
-                                                }
-                                            })
+//                                        Go23WalletManage.getInstance()
+//                                            .createKey(object : BaseCallBack<UserResponse> {
+//                                                override fun success(p0: UserResponse?) {
+//                                                    dismissProgress()
+////                                                geWalletInfo()
+//                                                }
+//
+//                                                override fun failed() {
+//                                                }
+//                                            })
                                     } else {
                                         geWalletInfo()
                                     }
@@ -126,7 +132,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                     data?.data?.get(0)?.let {
                         walletInfo = it
                         binding.tvAddress.text = it.addr
-                        UserWalletInfoManager.setUserWalletId(it.id)
+                        UserWalletInfoManager.setWalletId(it.id)
                         UserWalletInfoManager.setWalletAddr(it.addr)
                         loadData(it)
                     }
@@ -160,8 +166,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                         it.has_default == 1
                     }?.let {
                         userChain = it
-                        UserWalletInfoManager.setUserBlockChainId(it.block_chain_id)
-                        UserWalletInfoManager.setUserChainId(it.chain_id)
+                        UserWalletInfoManager.serUserChain(it)
                         binding.tvChainAddress.text = it.name
                         GlideUtils.loadImg(
                             this@WalletActivity, it.image_url, binding.ivChainIcon
@@ -212,7 +217,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             userChain = it
             GlideUtils.loadImg(this, it.image_url, binding.ivChainIcon)
             binding.tvChainAddress.text = it.name
-            UserWalletInfoManager.setUserBlockChainId(it.block_chain_id)
+            UserWalletInfoManager.serUserChain(it)
             UpdateDataLiveData.liveData.postValue(1)
         }
 
@@ -234,7 +239,17 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             userChain?.let {
                 startActivity(Intent(this, SendCoinActivity::class.java).apply {
                     putExtra("token_id", 0)
-                    putExtra("data", ChainTokenInfo(it.block_chain_id, binding.tvAddress.text.toString(), it.name, it.symbol, it.image_url))
+                    putExtra(
+                        "data",
+                        ChainTokenInfo(
+                            it.block_chain_id,
+                            binding.tvAddress.text.toString(),
+                            it.name,
+                            it.symbol,
+                            it.image_url,
+                            ""
+                        )
+                    )
                 })
             }
 

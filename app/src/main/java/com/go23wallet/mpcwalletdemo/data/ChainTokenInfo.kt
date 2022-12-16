@@ -10,4 +10,5 @@ data class ChainTokenInfo(
     val name: String,
     val symbol: String,
     val imgUrl: String,
+    val contract: String,
 ) : Parcelable

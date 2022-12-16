@@ -12,6 +12,7 @@ import com.go23wallet.mpcwalletdemo.databinding.ActivityTokenDetailsBinding
 import com.go23wallet.mpcwalletdemo.dialog.ReceiveDialog
 import com.go23wallet.mpcwalletdemo.fragment.TokenTransactionsFragment
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
+import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 import java.util.*
 
 class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
@@ -114,10 +115,11 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
                         "data",
                         ChainTokenInfo(
                             data.block_chain_id,
-                            data.addr,
+                            UserWalletInfoManager.getUserWalletInfo().walletAddress,
                             data.name,
                             data.name,
-                            data.image_url
+                            data.image_url,
+                            data.addr
                         )
                     )
                 })

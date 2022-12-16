@@ -1,8 +1,9 @@
 package com.go23wallet.mpcwalletdemo.data
 
+import com.coins.app.bean.chain.UserChain
+
 data class UserWalletInfo(
-    var userWalletId: Int = 0,
-    var userBlockChainId: Int = 0,
-    var userChainId: Int = 0,
-    var walletAddress: String = ""
+    var walletId: Int = 0,
+    var walletAddress: String = "",
+    var userChain: UserChain = UserChain()
 )
