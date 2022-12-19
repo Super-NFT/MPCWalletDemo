@@ -117,7 +117,7 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
                             data.block_chain_id,
                             UserWalletInfoManager.getUserWalletInfo().walletAddress,
                             data.name,
-                            data.name,
+                            data.symbol,
                             data.image_url,
                             data.addr
                         )
