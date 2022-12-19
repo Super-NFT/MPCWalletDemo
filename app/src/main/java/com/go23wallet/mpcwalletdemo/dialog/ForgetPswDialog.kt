@@ -9,6 +9,7 @@ import com.coins.app.bean.token.Token
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogForgetPswLayoutBinding
+import com.go23wallet.mpcwalletdemo.utils.Constant
 import com.go23wallet.mpcwalletdemo.view.InputCodeView.OnCodeCompleteListener
 
 class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
@@ -34,6 +35,7 @@ class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
     }
 
     override fun initViews(v: View?) {
+        viewBinding.tvEmail.text = Constant.emailStr
         viewBinding.ivBack.setOnClickListener {
             dismissAllowingStateLoss()
         }
@@ -59,7 +61,7 @@ class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
                     viewBinding.bottomGroup.visibility = View.VISIBLE
                     viewBinding.llVerify.visibility = View.VISIBLE
                     viewBinding.tvVerify.text = getString(R.string.verify)
-                }, 2000)
+                }, 1000)
             } else {
                 if (verifyCode.isNullOrEmpty()) {
                     Toast.makeText(context, R.string.verify_error, Toast.LENGTH_SHORT).show()
@@ -77,7 +79,7 @@ class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
                         // resharding  two set pin code
                         callback.invoke(verifyCode)
                     }
-                    dismiss()
+                    dismissAllowingStateLoss()
                 }
             }
         }
@@ -95,6 +97,12 @@ class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
     private fun hideProgress() {
         viewBinding.progress.visibility = View.GONE
         viewBinding.progress.hide()
+    }
+
+    override fun dismissAllowingStateLoss() {
+        super.dismissAllowingStateLoss()
+        type = TYPE_SEND
+        viewBinding.llVerify.setText("")
     }
 
     companion object {

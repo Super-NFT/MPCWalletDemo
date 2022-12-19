@@ -1,5 +1,6 @@
 package com.go23wallet.mpcwalletdemo.dialog
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.*
@@ -8,7 +9,7 @@ import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogSendCoinResultLayoutBinding
 import com.go23wallet.mpcwalletdemo.wallet.ChargeDetailsActivity
 
-class SendCoinResultDialog(private val mContext: Context, private val isSuccess: Boolean, private val transactionId: String) :
+class SendCoinResultDialog(private val mContext: Activity, private val isSuccess: Boolean, private val transactionId: String) :
     BaseDialogFragment<DialogSendCoinResultLayoutBinding>() {
 
     override val layoutId: Int = R.layout.dialog_send_coin_result_layout
@@ -36,6 +37,7 @@ class SendCoinResultDialog(private val mContext: Context, private val isSuccess:
 
         viewBinding.tvConfirm.setOnClickListener {
             dismissAllowingStateLoss()
+            mContext.finish()
         }
         viewBinding.tvOk.setOnClickListener {
             dismissAllowingStateLoss()

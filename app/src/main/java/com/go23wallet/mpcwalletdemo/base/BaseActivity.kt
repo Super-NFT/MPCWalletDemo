@@ -54,6 +54,10 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
     private fun getProgressDialog(msg: String?): AnimateProgressDialog? {
         if (mProgressDialog == null) {
             mProgressDialog = AnimateProgressDialog()
+        } else {
+            if (mProgressDialog?.isAdded == true) {
+                mProgressDialog?.dismissAllowingStateLoss()
+            }
         }
         mProgressDialog?.setMessage(msg)
         return mProgressDialog

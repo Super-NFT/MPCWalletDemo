@@ -12,6 +12,7 @@ class SuccessDialog(private val mContext: Context, private val title: String) :
 
     override val layoutId: Int = R.layout.dialog_success_layout
 
+    var callback: () -> Unit = {}
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -27,5 +28,10 @@ class SuccessDialog(private val mContext: Context, private val title: String) :
         viewBinding.tvConfirm.setOnClickListener {
             dismissAllowingStateLoss()
         }
+    }
+
+    override fun dismissAllowingStateLoss() {
+        super.dismissAllowingStateLoss()
+        callback.invoke()
     }
 }

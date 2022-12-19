@@ -243,7 +243,7 @@
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:inputType="numberDecimal"
-                android:text="0.00"
+                android:hint="@string/input_amount"
                 android:textColor="@color/color_262626"
                 android:textColorHint="@color/color_8C8C8C"
                 android:textSize="20sp"

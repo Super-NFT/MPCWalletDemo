@@ -76,6 +76,7 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
                 val item = mAdapter?.getItem(position) ?: return
                 val index = selectList.indexOfFirst { item.token_id == it.token_id }
+                showProgress()
                 if (index < 0) {
                     Go23WalletManage.getInstance().addToken(
                         item.token_id,
@@ -83,6 +84,7 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
                         UserWalletInfoManager.getUserWalletInfo().walletId,
                         object : BaseCallBack<TokenResponse> {
                             override fun success(data: TokenResponse?) {
+                                dismissProgress()
                                 val token = data?.data ?: return
                                 hasChange = true
                                 selectList.add(item)
@@ -90,6 +92,7 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
                             }
 
                             override fun failed() {
+                                dismissProgress()
                             }
                         })
                 } else {
@@ -99,12 +102,14 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
                         UserWalletInfoManager.getUserWalletInfo().walletId,
                         object : BaseCallBack<TokenResponse> {
                             override fun success(data: TokenResponse?) {
+                                dismissProgress()
                                 hasChange = true
                                 selectList.removeAt(index)
                                 mAdapter?.notifyItemChanged(position)
                             }
 
                             override fun failed() {
+                                dismissProgress()
                             }
                         })
                 }

@@ -43,7 +43,7 @@ class ReshardingDialog(mContext: Context) : BaseDialogFragment<DialogReshardingL
             mHandler.postDelayed({
                 startReshardDialog.show(parentFragmentManager, "startReshardDialog")
                 dismissAllowingStateLoss()
-            }, 2000)
+            }, 1000)
         }
 
         viewBinding.etPinCode.addTextChangedListener(object : TextWatcher {

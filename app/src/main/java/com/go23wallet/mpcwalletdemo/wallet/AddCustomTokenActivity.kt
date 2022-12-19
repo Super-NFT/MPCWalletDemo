@@ -47,12 +47,14 @@ class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
             }
         })
         binding.tvConfirm.setOnClickListener {
+            showProgress()
             Go23WalletManage.getInstance().addToken(
                 tokenId,
                 UserWalletInfoManager.getUserWalletInfo().userChain.block_chain_id,
                 UserWalletInfoManager.getUserWalletInfo().walletId,
                 object : BaseCallBack<TokenResponse> {
                     override fun success(data: TokenResponse?) {
+                        dismissProgress()
                         val token = data?.data ?: return
                         UpdateDataLiveData.liveData.postValue(1)
                         setResult(Activity.RESULT_OK)
@@ -60,6 +62,7 @@ class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
                     }
 
                     override fun failed() {
+                        dismissProgress()
                     }
                 })
         }
