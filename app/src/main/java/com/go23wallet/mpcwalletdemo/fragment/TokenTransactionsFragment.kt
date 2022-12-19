@@ -51,7 +51,7 @@ class TokenTransactionsFragment : Fragment() {
         mAdapter?.setOnItemClickListener { _, _, position ->
             val item = mAdapter?.getItem(position) ?: return@setOnItemClickListener
             startActivity(Intent(context, ChargeDetailsActivity::class.java).apply {
-                putExtra("transaction_id", item.transaction_id)
+                putExtra("transaction_id", item.hash)
             })
         }
 

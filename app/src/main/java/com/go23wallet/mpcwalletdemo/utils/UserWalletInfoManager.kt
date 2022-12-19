@@ -10,6 +10,10 @@ object UserWalletInfoManager {
         userWalletInfo.walletId = id
     }
 
+    fun setAccountId(id: Int) {
+        userWalletInfo.accountId = id
+    }
+
     fun serUserChain(userChain: UserChain) {
         userWalletInfo.userChain = userChain
     }

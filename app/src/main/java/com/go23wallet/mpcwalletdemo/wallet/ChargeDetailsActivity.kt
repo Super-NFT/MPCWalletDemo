@@ -15,10 +15,10 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
 
     override val layoutRes: Int = R.layout.activity_charge_details
 
-    private var transactionId = 0
+    private var transactionId = ""
 
     override fun initViews(savedInstanceState: Bundle?) {
-        transactionId = intent.getIntExtra("transaction_id", 0)
+        transactionId = intent.getStringExtra("transaction_id") ?: ""
         initView()
         setListener()
     }
