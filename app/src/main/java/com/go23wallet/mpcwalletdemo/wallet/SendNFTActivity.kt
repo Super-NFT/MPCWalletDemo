@@ -141,7 +141,7 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
         Go23WalletManage.getInstance().sign(
             key1, Gson().toJson(sign).toByteArray()
         ) { response ->
-            sendCoinResultDialog = SendCoinResultDialog(this, true, response.addr)
+            sendCoinResultDialog = SendCoinResultDialog(this, true, response.data)
             sendCoinResultDialog?.show(supportFragmentManager, "sendCoinResultDialog")
         }
     }
