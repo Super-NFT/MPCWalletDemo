@@ -204,30 +204,16 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         }
         binding.tvSend.setOnClickListener {
             preTokenSend?.let {
-                if (it.trans_type == 4) {
-                    Go23WalletManage.getInstance().showApproveDialog(
-                        this,
-                        supportFragmentManager,
-                        "approveDialog",
-                        object : ApproveDialog.CallBack {
-                            override fun approve() {
-                                toSign(it)
-                            }
-
-                            override fun cancel() {
-                            }
-                        })
-                } else {
-                    showProgress()
-                    toSign(it)
-                }
+                showProgress()
+                toSign(it)
             }
         }
     }
 
     private fun toSign(data: PreTokenSend) {
         val sign = Sign()
-        val key1 = Go23WalletManage.getInstance().getLocalMpcKey(Go23WalletManage.getInstance().walletAddress)
+        val key1 = Go23WalletManage.getInstance()
+            .getLocalMpcKey(Go23WalletManage.getInstance().walletAddress)
         sign.type = 1
         sign.chainId = data.chain_id.toInt()
         sign.chainUrl = data.chain_url
@@ -239,13 +225,40 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         sign.token = tokenId.toString()
         sign.value = binding.etInputNum.text.toString()
         sign.middleContract = data.middle_contract
-        Go23WalletManage.getInstance().sign(
-            key1, Gson().toJson(sign).toByteArray()
-        ) { response ->
-            dismissProgress()
-            sendCoinResultDialog = SendCoinResultDialog(this, true, response.addr)
-            sendCoinResultDialog?.show(supportFragmentManager, "sendCoinResultDialog")
+        if (data.trans_type == 4) {
+            Go23WalletManage.getInstance().showApproveDialog(
+                this,
+                supportFragmentManager,
+                "approveDialog",
+                sign,
+                object : ApproveDialog.CallBack {
+                    override fun approve() {
+                        Go23WalletManage.getInstance().sign(
+                            key1, Gson().toJson(sign).toByteArray()
+                        ) { response ->
+                            dismissProgress()
+                            sendCoinResultDialog =
+                                SendCoinResultDialog(this@SendCoinActivity, true, response.data)
+                            sendCoinResultDialog?.show(
+                                supportFragmentManager,
+                                "sendCoinResultDialog"
+                            )
+                        }
+                    }
+
+                    override fun cancel() {
+                    }
+                })
+        } else {
+            Go23WalletManage.getInstance().sign(
+                key1, Gson().toJson(sign).toByteArray()
+            ) { response ->
+                dismissProgress()
+                sendCoinResultDialog = SendCoinResultDialog(this, true, response.data)
+                sendCoinResultDialog?.show(supportFragmentManager, "sendCoinResultDialog")
+            }
         }
+
     }
 
     private fun updateSendStatus() {
