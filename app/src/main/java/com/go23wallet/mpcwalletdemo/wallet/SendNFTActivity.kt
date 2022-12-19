@@ -125,6 +125,7 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
     }
 
     private fun toSign(nft: Nft) {
+        showProgress()
         val sign = Sign()
         val key1 = Go23WalletManage.getInstance().getLocalMpcKey(Go23WalletManage.getInstance().walletAddress)
         sign.type = 1
@@ -141,6 +142,7 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
         Go23WalletManage.getInstance().sign(
             key1, Gson().toJson(sign).toByteArray()
         ) { response ->
+            dismissProgress()
             sendCoinResultDialog = SendCoinResultDialog(this, true, response.data)
             sendCoinResultDialog?.show(supportFragmentManager, "sendCoinResultDialog")
         }

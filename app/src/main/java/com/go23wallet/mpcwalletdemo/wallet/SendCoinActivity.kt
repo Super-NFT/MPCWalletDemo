@@ -218,6 +218,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                             }
                         })
                 } else {
+                    showProgress()
                     toSign(it)
                 }
             }
@@ -241,6 +242,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         Go23WalletManage.getInstance().sign(
             key1, Gson().toJson(sign).toByteArray()
         ) { response ->
+            dismissProgress()
             sendCoinResultDialog = SendCoinResultDialog(this, true, response.addr)
             sendCoinResultDialog?.show(supportFragmentManager, "sendCoinResultDialog")
         }

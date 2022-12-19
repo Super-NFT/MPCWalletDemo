@@ -103,7 +103,7 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
         }
         binding.tvReceive.setOnClickListener {
             receiveDialog =
-                ReceiveDialog(this, token?.name ?: "", token?.addr ?: "").apply {
+                ReceiveDialog(this, token?.symbol ?: "", token?.addr ?: "").apply {
                     show(supportFragmentManager, "receiveDialog")
                 }
         }
