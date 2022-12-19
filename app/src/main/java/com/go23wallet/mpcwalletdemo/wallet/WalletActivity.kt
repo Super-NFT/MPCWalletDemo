@@ -5,15 +5,18 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.coins.app.BaseCallBack
+import com.coins.app.C
 import com.coins.app.Go23WalletCallBack
 import com.coins.app.Go23WalletManage
 import com.coins.app.bean.chain.UserChain
 import com.coins.app.bean.chain.UserChainResponse
 import com.coins.app.bean.user.BalanceResponse
+import com.coins.app.bean.user.UserResponse
 import com.coins.app.bean.walletinfo.WalletInfo
 import com.coins.app.bean.walletinfo.WalletInfoResponse
 import com.coins.app.callback.MPCCallBack
 import com.coins.app.manage.Go23WalletChainManage
+import com.coins.app.util.OkhttpUtil
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
@@ -26,8 +29,20 @@ import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
 import com.go23wallet.mpcwalletdemo.utils.CopyUtils
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import io.reactivex.Observable
+import io.reactivex.ObservableEmitter
+import io.reactivex.ObservableOnSubscribe
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.Request
+import okhttp3.RequestBody
 
 
 class WalletActivity : BaseActivity<ActivityWalletBinding>() {
@@ -90,24 +105,68 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         Go23WalletManage.getInstance().setUniqueId(emailStr).setEmail(emailStr)
             .start(this@WalletActivity, object : Go23WalletCallBack {
                 override fun recover() {
-                    forgetPswDialog.show(supportFragmentManager, "")
-                    forgetPswDialog.callback = {
-                        Go23WalletManage.getInstance()
-                            .startRecover(this@WalletActivity, "111111", object : MPCCallBack {
-                                override fun success() {
+                    Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<UserResponse?> ->
+                        val `object` = JsonObject()
+                        `object`.addProperty("data", "recover")
+                        val body = RequestBody.create(
+                            "application/json".toMediaTypeOrNull(), `object`.toString()
+                        )
+                        val request: Request = Request.Builder()
+                            .url(C.GAME_CENTER_URL + "/v1/common/email_code")
+                            .addHeader(
+                                "Authorization",
+                                "Bearer " + Go23WalletManage.getInstance().gameCenterToken
+                                    .access_token
+                            )
+                            .addHeader("Uuid", Go23WalletManage.getInstance().user.uuid)
+                            .post(body)
+                            .build()
+                        try {
+                            val response =
+                                OkhttpUtil.getInstance().okHttpClient.newCall(request)
+                                    .execute()
+                            val result =
+                                if (response.body != null) response.body!!.string() else ""
+                            val userResponse =
+                                Gson().fromJson(result, UserResponse::class.java)
+                            emitter.onNext(userResponse)
+                        } catch (e: Exception) {
+                            emitter.onError(e)
+                        } finally {
+                            emitter.onComplete()
+                        }
+                    } as ObservableOnSubscribe<UserResponse?>).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(object : Observer<UserResponse?> {
+                            override fun onSubscribe(d: Disposable) {}
+                            override fun onError(e: Throwable) {}
+                            override fun onComplete() {}
+                            override fun onNext(t: UserResponse) {
+                                forgetPswDialog.show(supportFragmentManager, "")
+                                forgetPswDialog.callback = {
                                     Go23WalletManage.getInstance()
-                                        .requestWallets(object : BaseCallBack<WalletInfoResponse?> {
-                                            override fun success(data: WalletInfoResponse?) {
-                                                geWalletInfo()
-                                            }
+                                        .startRecover(
+                                            this@WalletActivity,
+                                            "111111",
+                                            object : MPCCallBack {
+                                                override fun success() {
+                                                    Go23WalletManage.getInstance()
+                                                        .requestWallets(object :
+                                                            BaseCallBack<WalletInfoResponse?> {
+                                                            override fun success(data: WalletInfoResponse?) {
+                                                                geWalletInfo()
+                                                            }
 
-                                            override fun failed() {}
-                                        })
+                                                            override fun failed() {}
+                                                        })
+                                                }
+
+                                                override fun failed() {}
+                                            })
                                 }
+                            }
+                        })
 
-                                override fun failed() {}
-                            })
-                    }
                 }
 
                 override fun success() {
@@ -199,28 +258,71 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         binding.icMore.setOnClickListener {
             settingDialog.show(supportFragmentManager, "settingDialog")
             settingDialog.callback = {
-                forgetPswDialog.show(supportFragmentManager, "forgetPswDialog")
-                forgetPswDialog.callback = {
-                    showProgress()
-                    Go23WalletManage.getInstance().startReShare(
-                        this@WalletActivity,
-                        Go23WalletManage.getInstance().walletAddress,
-                        "111111",
-                        object : MPCCallBack {
-                            override fun success() {
-                                dismissProgress()
-                                Go23WalletManage.getInstance()
-                                    .requestWallets(object : BaseCallBack<WalletInfoResponse?> {
-                                        override fun success(data: WalletInfoResponse?) {
-                                            geWalletInfo()
+                showProgress()
+                Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<UserResponse?> ->
+                    val `object` = JsonObject()
+                    `object`.addProperty("data", "reshare")
+                    val body = RequestBody.create(
+                        "application/json".toMediaTypeOrNull(), `object`.toString()
+                    )
+                    val request: Request = Request.Builder()
+                        .url(C.GAME_CENTER_URL + "/v1/common/email_code")
+                        .addHeader(
+                            "Authorization",
+                            "Bearer " + Go23WalletManage.getInstance().gameCenterToken
+                                .access_token
+                        )
+                        .addHeader("Uuid", Go23WalletManage.getInstance().user.uuid)
+                        .post(body)
+                        .build()
+                    try {
+                        val response =
+                            OkhttpUtil.getInstance().okHttpClient.newCall(request)
+                                .execute()
+                        val result =
+                            if (response.body != null) response.body!!.string() else ""
+                        val userResponse =
+                            Gson().fromJson(result, UserResponse::class.java)
+                        emitter.onNext(userResponse)
+                    } catch (e: Exception) {
+                        emitter.onError(e)
+                    } finally {
+                        emitter.onComplete()
+                    }
+                } as ObservableOnSubscribe<UserResponse?>).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : Observer<UserResponse?> {
+                        override fun onSubscribe(d: Disposable) {}
+                        override fun onError(e: Throwable) {}
+                        override fun onComplete() {}
+                        override fun onNext(t: UserResponse) {
+                            forgetPswDialog.show(supportFragmentManager, "forgetPswDialog")
+                            forgetPswDialog.callback = {
+                                Go23WalletManage.getInstance().startReShare(
+                                    this@WalletActivity,
+                                    Go23WalletManage.getInstance().walletAddress,
+                                    "111111",
+                                    object : MPCCallBack {
+                                        override fun success() {
+                                            dismissProgress()
+                                            Go23WalletManage.getInstance()
+                                                .requestWallets(object :
+                                                    BaseCallBack<WalletInfoResponse?> {
+                                                    override fun success(data: WalletInfoResponse?) {
+                                                        geWalletInfo()
+                                                    }
+
+                                                    override fun failed() {}
+                                                })
                                         }
-                                        override fun failed() {}
+
+                                        override fun failed() {
+                                            dismissProgress()
+                                        }
                                     })
                             }
-
-                            override fun failed() {}
-                        })
-                }
+                        }
+                    })
             }
         }
 

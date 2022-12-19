@@ -50,7 +50,7 @@ class ImportNFTDialog :
                 UserWalletInfoManager.getUserWalletInfo().accountId,
                 UserWalletInfoManager.getUserWalletInfo().userChain.user_wallet_id,
                 s,
-                UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
+                UserWalletInfoManager.getUserWalletInfo().userChain.block_chain_id,
                 object : BaseCallBack<NftResponse> {
                     override fun success(data: NftResponse?) {
                         UpdateDataLiveData.liveData.postValue(2)
