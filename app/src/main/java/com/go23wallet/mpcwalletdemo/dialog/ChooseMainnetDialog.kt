@@ -51,22 +51,22 @@ class ChooseMainnetDialog(private val mContext: Context) :
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
                 val item = userChains?.get(position) ?: return
 
-                Go23WalletManage.getInstance().setDefaultChain(
-                    item.block_chain_id,
-                    item.user_wallet_id,
-                    object : BaseCallBack<ChainResponse> {
-                        override fun success(p0: ChainResponse?) {
+//                Go23WalletManage.getInstance().setDefaultChain(
+//                    item.block_chain_id,
+//                    item.user_wallet_id,
+//                    object : BaseCallBack<ChainResponse> {
+//                        override fun success(p0: ChainResponse?) {
                             userChains.forEach {
                                 it.has_default = 2
                             }
                             item.has_default = 1
                             callback.invoke(item)
                             dismissAllowingStateLoss()
-                        }
-
-                        override fun failed() {
-                        }
-                    })
+//                        }
+//
+//                        override fun failed() {
+//                        }
+//                    })
             }
         })
     }
