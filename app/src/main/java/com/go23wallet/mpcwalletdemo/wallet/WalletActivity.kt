@@ -183,10 +183,8 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                     dismissProgress()
                     data?.data?.get(0)?.let {
                         walletInfo = it
-                        binding.tvAddress.text = it.addr
-                        UserWalletInfoManager.setWalletId(it.id)
-                        UserWalletInfoManager.setAccountId(it.account_id)
-                        UserWalletInfoManager.setWalletAddr(it.addr)
+                        binding.tvAddress.text = it.wallet_address
+                        UserWalletInfoManager.setWalletInfo(it)
                         loadData(it)
                     }
                     setListener()
@@ -212,7 +210,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
     private fun loadData(info: WalletInfo) {
         Go23WalletChainManage.getInstance()
-            .requestUserChains(info.id, 1, 20, object : BaseCallBack<UserChainResponse> {
+            .requestUserChains(info.wallet_address, 1, 20, object : BaseCallBack<UserChainResponse> {
                 override fun success(data: UserChainResponse?) {
                     userChains = data?.data?.list
                     userChains?.find {
@@ -227,8 +225,8 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                         initView()
                         Go23WalletManage.getInstance()
                             .requestPlatformBalance(
-                                it.block_chain_id,
-                                info.addr,
+                                it.chain_id,
+                                info.wallet_address,
                                 object : BaseCallBack<BalanceResponse> {
                                     override fun success(data: BalanceResponse?) {
                                         binding.tvTotalBalanceValue.text =
@@ -357,7 +355,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                     putExtra(
                         "data",
                         ChainTokenInfo(
-                            it.block_chain_id,
+                            it.chain_id,
                             binding.tvAddress.text.toString(),
                             it.name,
                             it.symbol,

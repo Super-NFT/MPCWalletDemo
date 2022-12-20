@@ -39,8 +39,8 @@ class TokenFragment : Fragment() {
 
     private fun initData() {
         Go23WalletManage.getInstance().requestUserTokens(
-            UserWalletInfoManager.getUserWalletInfo().walletId,
-            UserWalletInfoManager.getUserWalletInfo().userChain.block_chain_id,
+            UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
+            UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
             1, 20,
             object : BaseCallBack<TokenListResponse> {
                 override fun success(data: TokenListResponse?) {
@@ -70,7 +70,6 @@ class TokenFragment : Fragment() {
         mAdapter?.setOnItemClickListener { _, _, position ->
             val itemData = mAdapter?.data?.get(position) ?: return@setOnItemClickListener
             startActivity(Intent(context, TokenDetailsActivity::class.java).apply {
-                putExtra("token_id", itemData.token_id)
                 putExtra("data", itemData)
             })
         }

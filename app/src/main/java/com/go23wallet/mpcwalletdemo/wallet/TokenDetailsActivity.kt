@@ -33,10 +33,8 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
     override val layoutRes: Int = R.layout.activity_token_details
 
     private var token: Token? = null
-    private var tokenId = 0
 
     override fun initViews(savedInstanceState: Bundle?) {
-        tokenId = intent.getIntExtra("token_id", 0) ?: 0
         token = intent.getSerializableExtra("data") as Token?
         if (token == null) {
             finish()
@@ -69,25 +67,25 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
         fragments.add(
             TokenTransactionsFragment.newInstance(
                 tabList[0].lowercase(Locale.ROOT),
-                token?.addr ?: ""
+                token?.contract_address ?: ""
             )
         )
         fragments.add(
             TokenTransactionsFragment.newInstance(
                 tabList[1].lowercase(Locale.ROOT),
-                token?.addr ?: ""
+                token?.contract_address ?: ""
             )
         )
         fragments.add(
             TokenTransactionsFragment.newInstance(
                 tabList[2].lowercase(Locale.ROOT),
-                token?.addr ?: ""
+                token?.contract_address ?: ""
             )
         )
         fragments.add(
             TokenTransactionsFragment.newInstance(
                 tabList[3].lowercase(Locale.ROOT),
-                token?.addr ?: ""
+                token?.contract_address ?: ""
             )
         )
         tabAdapter = TabFragmentAdapter(supportFragmentManager).apply {
@@ -103,23 +101,23 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
         }
         binding.tvReceive.setOnClickListener {
             receiveDialog =
-                ReceiveDialog(this, token?.symbol ?: "", token?.addr ?: "").apply {
+                ReceiveDialog(this, token?.symbol ?: "", token?.contract_address ?: "").apply {
                     show(supportFragmentManager, "receiveDialog")
                 }
         }
         binding.tvSend.setOnClickListener {
             token?.let { data ->
                 startActivity(Intent(this, SendCoinActivity::class.java).apply {
-                    putExtra("token_id", data.token_id)
+//                    putExtra("token_id", data.token_id)
                     putExtra(
                         "data",
                         ChainTokenInfo(
-                            data.block_chain_id,
-                            UserWalletInfoManager.getUserWalletInfo().walletAddress,
+                            data.chain_id,
+                            UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
                             data.name,
                             data.symbol,
                             data.image_url,
-                            data.addr
+                            data.contract_address
                         )
                     )
                 })

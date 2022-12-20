@@ -17,7 +17,7 @@ class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
 
     override val layoutRes: Int = R.layout.activity_add_custom_token
 
-    private var tokenId = 0
+    private var contractAddress = ""
 
     override fun initViews(savedInstanceState: Bundle?) {
         initView()
@@ -49,9 +49,9 @@ class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
         binding.tvConfirm.setOnClickListener {
             showProgress()
             Go23WalletManage.getInstance().addToken(
-                tokenId,
-                UserWalletInfoManager.getUserWalletInfo().userChain.block_chain_id,
-                UserWalletInfoManager.getUserWalletInfo().walletId,
+                contractAddress,
+                UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
+                UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
                 object : BaseCallBack<TokenResponse> {
                     override fun success(data: TokenResponse?) {
                         dismissProgress()
@@ -70,11 +70,11 @@ class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
 
     private fun checkTokenAddress(address: String) {
         Go23WalletManage.getInstance().checkToken(address,
-            UserWalletInfoManager.getUserWalletInfo().userChain.block_chain_id,
+            UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
             object : BaseCallBack<TokenResponse> {
                 override fun success(data: TokenResponse?) {
                     data?.data?.let {
-                        tokenId = it.token_id
+                        contractAddress = it.contract_address
                         binding.tvTokenSymbol.text = it.symbol
                         binding.tvTokenPrecision.text = it.decimal.toString()
                     }

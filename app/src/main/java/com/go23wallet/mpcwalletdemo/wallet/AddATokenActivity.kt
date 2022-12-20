@@ -42,7 +42,7 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
             if (it != null) {
                 selectList = it
                 Go23WalletManage.getInstance().requestTokens(
-                    UserWalletInfoManager.getUserWalletInfo().userChain.block_chain_id,
+                    UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
                     1, 20,
                     object : BaseCallBack<TokenListResponse> {
                         override fun success(data: TokenListResponse?) {
@@ -75,13 +75,13 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
         mAdapter?.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
                 val item = mAdapter?.getItem(position) ?: return
-                val index = selectList.indexOfFirst { item.token_id == it.token_id }
+                val index = selectList.indexOfFirst { item.chain_id == it.chain_id }
                 showProgress()
                 if (index < 0) {
                     Go23WalletManage.getInstance().addToken(
-                        item.token_id,
-                        UserWalletInfoManager.getUserWalletInfo().userChain.block_chain_id,
-                        UserWalletInfoManager.getUserWalletInfo().walletId,
+                        item.contract_address,
+                        UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
+                        UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
                         object : BaseCallBack<TokenResponse> {
                             override fun success(data: TokenResponse?) {
                                 dismissProgress()
@@ -97,9 +97,9 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
                         })
                 } else {
                     Go23WalletManage.getInstance().removeToken(
-                        item.token_id,
-                        UserWalletInfoManager.getUserWalletInfo().userChain.block_chain_id,
-                        UserWalletInfoManager.getUserWalletInfo().walletId,
+                        item.contract_address,
+                        UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
+                        UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
                         object : BaseCallBack<TokenResponse> {
                             override fun success(data: TokenResponse?) {
                                 dismissProgress()

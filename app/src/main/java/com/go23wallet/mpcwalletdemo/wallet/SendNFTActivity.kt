@@ -129,16 +129,15 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
         val sign = Sign()
         val key1 = Go23WalletManage.getInstance().getLocalMpcKey(Go23WalletManage.getInstance().walletAddress)
         sign.type = 1
-        sign.chainId = UserWalletInfoManager.getUserWalletInfo().userChain.chain_id
-        sign.chainUrl = UserWalletInfoManager.getUserWalletInfo().userChain.rpc //rpc
-        sign.blockId = UserWalletInfoManager.getUserWalletInfo().userChain.block_chain_id
-        sign.fromAddr = UserWalletInfoManager.getUserWalletInfo().walletAddress
+        sign.chainId = UserWalletInfoManager.getUserWalletInfo().userChain.chain_id.toString()
+        sign.rpc = UserWalletInfoManager.getUserWalletInfo().userChain.rpc
+        sign.fromAddr = UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address
         sign.toAddr = binding.etAddress.text.toString()
         sign.transType = 3
-        sign.contract = nft.addr
-        sign.token = nft.token_id.toString()
+        sign.contractAddress = nft.contract_address
+//        sign.token = nft.token_id.toString()
         sign.value = ""
-        sign.middleContract = ""
+        sign.middleContractAddress = ""
         Go23WalletManage.getInstance().sign(
             key1, Gson().toJson(sign).toByteArray()
         ) { response ->
