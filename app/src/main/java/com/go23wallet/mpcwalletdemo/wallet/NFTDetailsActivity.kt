@@ -16,6 +16,7 @@ import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivityNftDetailsBinding
 import com.go23wallet.mpcwalletdemo.utils.CopyUtils
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
+import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 
 class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
 
@@ -23,44 +24,50 @@ class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
 
     override val layoutRes: Int = R.layout.activity_nft_details
 
-    private var nftId = 0
+    private var contractAddress = ""
+    private var tokenId = ""
 
     private var nft: Nft? = null
 
     override fun initViews(savedInstanceState: Bundle?) {
-        nftId = intent.getIntExtra("ndf_id", 0)
+        contractAddress = intent.getStringExtra("contract_address") ?: ""
+        tokenId = intent.getStringExtra("token_id") ?: ""
         initView()
         initData()
         setListener()
     }
 
     private fun initData() {
-        Go23WalletManage.getInstance().requestNftDetail(nftId, object : BaseCallBack<NftResponse> {
-            override fun success(data: NftResponse?) {
-                data?.data?.let {
-                    nft = it
-                    GlideUtils.loadImg(this@NFTDetailsActivity, it.image, binding.ivNft)
-                    binding.tvNftName.text = it.name
-                    binding.tvDescriptionContent.text =
-                        if (it.description.isNullOrEmpty()) "none" else it.description
-                    if (it.attributes.isNullOrEmpty()) {
-                        binding.tvAttributes.visibility = View.GONE
-                        binding.recyclerView.visibility = View.GONE
-                    } else {
-                        mAdapter?.setNewInstance(it.attributes)
+        Go23WalletManage.getInstance().requestNftDetail(contractAddress,
+            UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
+            UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
+            tokenId,
+            object : BaseCallBack<NftResponse> {
+                override fun success(data: NftResponse?) {
+                    data?.data?.let {
+                        nft = it
+                        GlideUtils.loadImg(this@NFTDetailsActivity, it.image, binding.ivNft)
+                        binding.tvNftName.text = it.name
+                        binding.tvDescriptionContent.text =
+                            if (it.description.isNullOrEmpty()) "none" else it.description
+                        if (it.attributes.isNullOrEmpty()) {
+                            binding.tvAttributes.visibility = View.GONE
+                            binding.recyclerView.visibility = View.GONE
+                        } else {
+                            mAdapter?.setNewInstance(it.attributes)
+                        }
+                        binding.tvAddress.text = it.contract_address
+                        binding.tvTokenAddress.text = it.token_id.toString()
+                        binding.tvWebsiteAddress.text =
+                            if (it.external_url.isNullOrEmpty()) "none" else it.external_url
+                        binding.tvBlockchainAddress.text = it.block_chain_name.toString()
                     }
-                    binding.tvAddress.text = it.addr
-                    binding.tvTokenAddress.text = it.token_id.toString()
-                    binding.tvWebsiteAddress.text =
-                        if (it.external_url.isNullOrEmpty()) "none" else it.external_url
-                    binding.tvBlockchainAddress.text = it.block_chain_id.toString()
                 }
-            }
 
-            override fun failed() {
-            }
+                override fun failed() {
+                }
 
-        })
+            })
 
     }
 

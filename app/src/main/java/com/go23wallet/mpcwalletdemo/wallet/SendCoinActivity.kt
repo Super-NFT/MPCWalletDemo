@@ -40,14 +40,14 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
 
     private var isSelectGas = true
 
-    private var tokenId = 0
+    //    private var tokenId = 0
     private var chainTokenInfo: ChainTokenInfo? = null
     private var preTokenSend: PreTokenSend? = null
 
     private var sendCoinResultDialog: SendCoinResultDialog? = null
 
     override fun initViews(savedInstanceState: Bundle?) {
-        tokenId = intent.getIntExtra("token_id", 0)
+//        tokenId = intent.getIntExtra("token_id", 0)
         chainTokenInfo = intent.getParcelableExtra("data")
         if (chainTokenInfo == null) {
             finish()
@@ -63,24 +63,23 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
             binding.tvCoinName.text = it.name
             binding.tvFromCoinNickname.text = it.symbol
             Go23WalletTransactionManage.getInstance().requestPreTokenSend(
-                tokenId,
-                it.blockChainId,
-                it.addr,
+                UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
+                it.contract_address,
+                it.user_wallet_address,
                 object : BaseCallBack<PreTokenSendResponse> {
                     override fun success(data: PreTokenSendResponse?) {
                         data?.data?.let { preToken ->
                             preTokenSend = preToken
-                            binding.etInputNum.setText("0.00")
                             binding.etToAddress.setText("")
                             binding.tvGasTips.text =
                                 String.format(getString(R.string.gas_tips), chainTokenInfo?.symbol)
                             binding.tvGasTips.visibility =
                                 if (preToken.isIs_lending_gas) View.VISIBLE else View.GONE
-                            binding.tvFromAddress.text = it.addr
+                            binding.tvFromAddress.text = it.user_wallet_address
                             binding.tvAvailable.text =
                                 String.format(
                                     getString(R.string.available),
-                                    "${if (tokenId == 0) preToken.platform_balance_sort else preToken.token_balance_sort} ${it.symbol}"
+                                    "${if (it.contract_address.isEmpty()) preToken.platform_balance_sort else preToken.token_balance_sort} ${it.symbol}"
                                 )
                             binding.tvCoinSymbol.text = it.symbol
                             binding.tvGasBalance.text = "${preToken.gas} ${it.symbol}"
@@ -106,15 +105,15 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
             finish()
         }
         selectTokenSendDialog.callback = {
-            tokenId = it.token_id
+//            tokenId = it.token_id
             chainTokenInfo =
                 ChainTokenInfo(
-                    it.block_chain_id,
-                    UserWalletInfoManager.getUserWalletInfo().walletAddress,
+                    it.chain_id,
+                    it.user_wallet_address,
                     it.name,
                     it.symbol,
                     it.image_url,
-                    it.addr,
+                    it.contract_address,
                 )
             initData()
         }
@@ -138,7 +137,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                 }
                 val num = s.toString().toDouble()
 
-                val uPer = if (tokenId == 0) {
+                val uPer = if (chainTokenInfo?.contract_address.isNullOrEmpty()) {
                     preTokenSend?.platform_u_per
                 } else {
                     preTokenSend?.token_u_per
@@ -154,7 +153,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         binding.tvAll.setOnClickListener {
             preTokenSend?.let {
                 val availableNum =
-                    if (tokenId == 0) it.platform_balance_sort else it.token_balance_sort
+                    if (chainTokenInfo?.contract_address.isNullOrEmpty()) it.platform_balance_sort else it.token_balance_sort
                 val num = availableNum * (1 - it.fee)
                 binding.etInputNum.setText("$num")
             }
@@ -215,16 +214,15 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         val key1 = Go23WalletManage.getInstance()
             .getLocalMpcKey(Go23WalletManage.getInstance().walletAddress)
         sign.type = 1
-        sign.chainId = data.chain_id.toInt()
-        sign.chainUrl = data.chain_url
-        sign.blockId = data.block_id
-        sign.fromAddr = chainTokenInfo?.addr
+        sign.chainId = UserWalletInfoManager.getUserWalletInfo().userChain.chain_id.toString()
+        sign.rpc = UserWalletInfoManager.getUserWalletInfo().userChain.rpc.toString()
+        sign.fromAddr = chainTokenInfo?.user_wallet_address
         sign.toAddr = binding.etToAddress.text.toString()
         sign.transType = data.trans_type
-        sign.contract = chainTokenInfo?.contract
-        sign.token = tokenId.toString()
+        sign.contractAddress = chainTokenInfo?.contract_address
+//        sign.tokenId = tokenId.toString()
         sign.value = binding.etInputNum.text.toString()
-        sign.middleContract = data.middle_contract
+        sign.middleContractAddress = data.middle_contract
         if (data.trans_type == 4) {
             Go23WalletManage.getInstance().showApproveDialog(
                 this,
@@ -271,7 +269,8 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         var availableNum = 0.0
         preTokenSend?.let {
             totalValue = num * (1 + it.fee)
-            availableNum = if (tokenId == 0) it.platform_balance_sort else it.token_balance_sort
+            availableNum =
+                if (chainTokenInfo?.contract_address.isNullOrEmpty()) it.platform_balance_sort else it.token_balance_sort
         }
         binding.tvTotalValue.text = "$totalValue ${chainTokenInfo?.symbol}"
         binding.tvSend.isEnabled = totalValue > 0 && totalValue <= availableNum && isSelectGas

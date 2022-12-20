@@ -46,11 +46,10 @@ class ImportNFTDialog :
 
         viewBinding.tvImport.setOnClickListener {
             var s = viewBinding.etNtfAddress.text.toString()
-            Go23WalletManage.getInstance().checkNft(
-                UserWalletInfoManager.getUserWalletInfo().accountId,
-                UserWalletInfoManager.getUserWalletInfo().userChain.user_wallet_id,
+            Go23WalletManage.getInstance().addNft(
+                UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
+                UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
                 s,
-                UserWalletInfoManager.getUserWalletInfo().userChain.block_chain_id,
                 object : BaseCallBack<NftResponse> {
                     override fun success(data: NftResponse?) {
                         UpdateDataLiveData.liveData.postValue(2)

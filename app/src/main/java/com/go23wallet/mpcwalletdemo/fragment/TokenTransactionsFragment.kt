@@ -22,14 +22,14 @@ class TokenTransactionsFragment : Fragment() {
     private var mAdapter: TokenTransactionsAdapter? = null
 
     private var transactionType: String = "all"
-    private var contract: String = ""
+    private var contractAddress: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         transactionType = arguments?.getString("transactionType", "all") ?: "all"
-        contract = arguments?.getString("contract", "") ?: ""
+        contractAddress = arguments?.getString("contract_address", "") ?: ""
         binding = FragmentTabLayoutBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -51,15 +51,15 @@ class TokenTransactionsFragment : Fragment() {
         mAdapter?.setOnItemClickListener { _, _, position ->
             val item = mAdapter?.getItem(position) ?: return@setOnItemClickListener
             startActivity(Intent(context, ChargeDetailsActivity::class.java).apply {
-                putExtra("transaction_id", item.hash)
+                putExtra("hash", item.hash)
             })
         }
 
         Go23WalletManage.getInstance().requestTransactionRecords(
             transactionType,
-            UserWalletInfoManager.getUserWalletInfo().userChain.block_chain_id,
-            UserWalletInfoManager.getUserWalletInfo().walletAddress,
-            contract,
+            UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
+            UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
+            contractAddress,
             1,
             20,
             object : BaseCallBack<TransactionResponse> {
@@ -74,12 +74,12 @@ class TokenTransactionsFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(transactionType: String, contract: String): Fragment {
+        fun newInstance(transactionType: String, contractAddress: String): Fragment {
             val args = Bundle()
 
             val fragment = TokenTransactionsFragment()
             args.putString("transactionType", transactionType)
-            args.putString("contract", contract)
+            args.putString("contract_address", contractAddress)
             fragment.arguments = args
             return fragment
         }

@@ -5,10 +5,10 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ChainTokenInfo(
-    val blockChainId: Int,
-    val addr: String,
+    val chain_id: Int,
+    val user_wallet_address: String,
     val name: String,
     val symbol: String,
     val imgUrl: String,
-    val contract: String,
+    val contract_address: String,
 ) : Parcelable

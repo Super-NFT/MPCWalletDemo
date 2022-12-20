@@ -29,6 +29,6 @@ class AddTokenListAdapter(private val mContext: Context) :
         tvTokenNum.text = item.balance
         tvTokenValue.text = "$${item.balance_u ?: 0.00}"
 
-        ivStatus.setImageResource(if (selectList.indexOfFirst { it.token_id == item.token_id } >= 0) R.drawable.icon_checked else R.drawable.icon_uncheck)
+        ivStatus.setImageResource(if (selectList.indexOfFirst { it.chain_id == item.chain_id } >= 0) R.drawable.icon_checked else R.drawable.icon_uncheck)
     }
 }

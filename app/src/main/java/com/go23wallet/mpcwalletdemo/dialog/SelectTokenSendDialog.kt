@@ -50,8 +50,8 @@ class SelectTokenSendDialog(private val mContext: Context) :
         })
 
         Go23WalletManage.getInstance().requestUserTokens(
-            UserWalletInfoManager.getUserWalletInfo().walletId,
-            UserWalletInfoManager.getUserWalletInfo().userChain.block_chain_id,
+            UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
+            UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
             1, 20,
             object : BaseCallBack<TokenListResponse> {
                 override fun success(data: TokenListResponse?) {

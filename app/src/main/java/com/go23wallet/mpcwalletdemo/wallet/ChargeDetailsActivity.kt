@@ -15,17 +15,17 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
 
     override val layoutRes: Int = R.layout.activity_charge_details
 
-    private var transactionId = ""
+    private var hash = ""
 
     override fun initViews(savedInstanceState: Bundle?) {
-        transactionId = intent.getStringExtra("transaction_id") ?: ""
+        hash = intent.getStringExtra("hash") ?: ""
         initView()
         setListener()
     }
 
     private fun initView() {
         Go23WalletManage.getInstance().requestTransactionDetail(
-            transactionId,
+            hash,
             object : BaseCallBack<TransactionDetailResponse> {
                 override fun success(data: TransactionDetailResponse?) {
                     data?.data?.let {

@@ -38,8 +38,8 @@ class NFTFragment : Fragment() {
 
     private fun initData() {
         Go23WalletManage.getInstance().requestUserNfts(
-            UserWalletInfoManager.getUserWalletInfo().walletId,
-            UserWalletInfoManager.getUserWalletInfo().userChain.block_chain_id,
+            UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
+            UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
             1, 20,
             object : BaseCallBack<NftListResponse> {
                 override fun success(data: NftListResponse?) {
@@ -67,7 +67,8 @@ class NFTFragment : Fragment() {
         mAdapter?.setOnItemClickListener { _, _, position ->
             val itemData = mAdapter?.data?.get(position) ?: return@setOnItemClickListener
             startActivity(Intent(context, NFTDetailsActivity::class.java).apply {
-                putExtra("id", itemData.nft_id)
+                putExtra("contract_address", itemData.contract_address)
+//                putExtra("token_id", itemData.token_id)
             })
         }
     }
