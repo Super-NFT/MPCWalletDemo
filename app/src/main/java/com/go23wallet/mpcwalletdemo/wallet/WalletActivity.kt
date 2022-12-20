@@ -93,7 +93,8 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         binding.refreshView.setOnRefreshListener {
             walletInfo?.let {
                 loadData(it)
-                tabAdapter?.notifyDataSetChanged()
+                UpdateDataLiveData.liveData.postValue(1)
+                UpdateDataLiveData.liveData.postValue(2)
             }
             lifecycleScope.launch {
                 delay(1500)

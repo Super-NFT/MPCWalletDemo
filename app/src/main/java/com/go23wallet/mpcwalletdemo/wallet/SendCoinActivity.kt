@@ -252,11 +252,14 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                 key1, Gson().toJson(sign).toByteArray()
             ) { response ->
                 dismissProgress()
-                sendCoinResultDialog = SendCoinResultDialog(this, true, response.data)
-                sendCoinResultDialog?.show(supportFragmentManager, "sendCoinResultDialog")
+                if (response.code.toString() == "200") {
+                    sendCoinResultDialog = SendCoinResultDialog(this, true, response.data ?: "")
+                    sendCoinResultDialog?.show(supportFragmentManager, "sendCoinResultDialog")
+                } else {
+                    Toast.makeText(this, "Transaction failed", Toast.LENGTH_SHORT).show()
+                }
             }
         }
-
     }
 
     private fun updateSendStatus() {
