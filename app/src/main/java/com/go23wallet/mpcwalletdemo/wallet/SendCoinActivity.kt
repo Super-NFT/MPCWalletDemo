@@ -214,7 +214,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         val key1 = Go23WalletManage.getInstance()
             .getLocalMpcKey(Go23WalletManage.getInstance().walletAddress)
         sign.type = 1
-        sign.chainId = UserWalletInfoManager.getUserWalletInfo().userChain.chain_id.toString()
+        sign.chainId = UserWalletInfoManager.getUserWalletInfo().userChain.chain_id
         sign.rpc = UserWalletInfoManager.getUserWalletInfo().userChain.rpc.toString()
         sign.fromAddr = chainTokenInfo?.user_wallet_address
         sign.toAddr = binding.etToAddress.text.toString()
