@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.coins.app.BaseCallBack
@@ -75,7 +76,7 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
         mAdapter?.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
                 val item = mAdapter?.getItem(position) ?: return
-                val index = selectList.indexOfFirst { item.chain_id == it.chain_id }
+                val index = selectList.indexOfFirst { item.contract_address == it.contract_address }
                 showProgress()
                 if (index < 0) {
                     Go23WalletManage.getInstance().addToken(
@@ -89,6 +90,7 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
                                 hasChange = true
                                 selectList.add(item)
                                 mAdapter?.notifyItemChanged(position)
+                                ToastUtils.showShort(getString(R.string.add_success))
                             }
 
                             override fun failed() {
@@ -106,6 +108,7 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
                                 hasChange = true
                                 selectList.removeAt(index)
                                 mAdapter?.notifyItemChanged(position)
+                                ToastUtils.showShort(getString(R.string.remove_success))
                             }
 
                             override fun failed() {

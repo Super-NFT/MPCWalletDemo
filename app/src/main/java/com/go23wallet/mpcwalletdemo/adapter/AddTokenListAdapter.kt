@@ -1,6 +1,7 @@
 package com.go23wallet.mpcwalletdemo.adapter
 
 import android.content.Context
+import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -26,9 +27,11 @@ class AddTokenListAdapter(private val mContext: Context) :
         val ivStatus = holder.getView<AppCompatImageView>(R.id.iv_status)
         GlideUtils.loadImg(mContext, item.image_url, ivTokenIcon)
         tvTokenName.text = item.name
+        tvTokenNum.visibility = if (item.balance.isNullOrEmpty()) View.GONE else View.VISIBLE
         tvTokenNum.text = item.balance
+        tvTokenValue.visibility = if (item.balance_u.isNullOrEmpty()) View.GONE else View.VISIBLE
         tvTokenValue.text = "$${item.balance_u ?: 0.00}"
 
-        ivStatus.setImageResource(if (selectList.indexOfFirst { it.chain_id == item.chain_id } >= 0) R.drawable.icon_checked else R.drawable.icon_uncheck)
+        ivStatus.setImageResource(if (selectList.indexOfFirst { it.contract_address == item.contract_address } >= 0) R.drawable.icon_checked else R.drawable.icon_uncheck)
     }
 }

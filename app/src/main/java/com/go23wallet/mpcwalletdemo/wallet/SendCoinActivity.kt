@@ -220,9 +220,9 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         sign.toAddr = binding.etToAddress.text.toString()
         sign.transType = data.trans_type
         sign.contractAddress = chainTokenInfo?.contract_address
-//        sign.tokenId = tokenId.toString()
+        sign.tokenId = ""
         sign.value = binding.etInputNum.text.toString()
-        sign.middleContractAddress = data.middle_contract
+        sign.middleContractAddress = UserWalletInfoManager.getUserWalletInfo().userChain.middle_contract_address
         if (data.trans_type == 4) {
             Go23WalletManage.getInstance().showApproveDialog(
                 this,

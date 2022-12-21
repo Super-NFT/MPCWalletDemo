@@ -135,7 +135,7 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
         sign.toAddr = binding.etAddress.text.toString()
         sign.transType = 3
         sign.contractAddress = nft.contract_address
-//        sign.token = nft.token_id.toString()
+        sign.tokenId = nft.token_id.toString()
         sign.value = ""
         sign.middleContractAddress = ""
         Go23WalletManage.getInstance().sign(

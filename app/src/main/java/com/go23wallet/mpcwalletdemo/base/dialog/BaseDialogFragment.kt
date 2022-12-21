@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.Color
 import android.view.*
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.ParameterizedType
 
@@ -120,6 +121,13 @@ abstract class BaseDialogFragment<T : ViewBinding> : DialogFragment() {
      * @param v
      */
     protected abstract fun initViews(v: View?)
+
+    override fun show(manager: FragmentManager, tag: String?) {
+        if (isAdded) {
+            dismissAllowingStateLoss()
+        }
+        super.show(manager, tag)
+    }
 
     fun isLateinited(): Boolean {
         return this::viewBinding.isInitialized

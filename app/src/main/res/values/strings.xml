@@ -107,4 +107,7 @@
     <string name="view_details">View Details</string>
     <string name="gas_tips">%s support to lend users gas for trading</string>
     <string name="input_amount">input amount</string>
+
+    <string name="add_success">Add Success</string>
+    <string name="remove_success">Remove Success</string>
 </resources>
