@@ -142,7 +142,7 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
             key1, Gson().toJson(sign).toByteArray()
         ) { response ->
             dismissProgress()
-            if (response.code.toString() == "200") {
+            if (response.code.toString() == "0") {
                 sendCoinResultDialog = SendCoinResultDialog(this, true, response.data ?: "")
                 sendCoinResultDialog?.show(supportFragmentManager, "sendCoinResultDialog")
             } else {
