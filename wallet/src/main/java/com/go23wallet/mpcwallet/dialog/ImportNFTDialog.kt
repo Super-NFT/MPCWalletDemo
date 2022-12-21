@@ -1,0 +1,65 @@
+package com.go23wallet.mpcwallet.dialog
+
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.*
+import com.blankj.utilcode.util.ToastUtils
+import com.coins.app.BaseCallBack
+import com.coins.app.Go23WalletManage
+import com.coins.app.bean.nft.NftResponse
+import com.go23wallet.mpcwallet.R
+import com.go23wallet.mpcwallet.base.dialog.BaseDialogFragment
+import com.go23wallet.mpcwallet.databinding.DialogImportNftLayoutBinding
+import com.go23wallet.mpcwallet.livedata.UpdateDataLiveData
+import com.go23wallet.mpcwallet.utils.UserWalletInfoManager
+
+class ImportNFTDialog :
+    BaseDialogFragment<DialogImportNftLayoutBinding>() {
+
+    override val layoutId: Int = R.layout.dialog_import_nft_layout
+
+    override fun initViews(v: View?) {
+
+        viewBinding.etNtfAddress.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                viewBinding.ivNftClear.visibility =
+                    if (s?.isNotEmpty() == true) View.VISIBLE else View.GONE
+                viewBinding.tvImport.isEnabled =
+                    (viewBinding.etNtfAddress.text?.length ?: 0) >= 30
+            }
+        })
+
+        viewBinding.ivClose.setOnClickListener {
+            dismissAllowingStateLoss()
+        }
+
+        viewBinding.ivNftClear.setOnClickListener {
+            viewBinding.etNtfAddress.setText("")
+            viewBinding.ivNftClear.visibility = View.GONE
+        }
+
+        viewBinding.tvImport.setOnClickListener {
+            var s = viewBinding.etNtfAddress.text.toString()
+            Go23WalletManage.getInstance().addNft(
+                UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
+                UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
+                s,
+                object : BaseCallBack<NftResponse> {
+                    override fun success(data: NftResponse?) {
+                        UpdateDataLiveData.liveData.postValue(2)
+                        dismissAllowingStateLoss()
+                    }
+
+                    override fun failed() {
+                        ToastUtils.showShort("add fail")
+                    }
+                })
+        }
+    }
+}

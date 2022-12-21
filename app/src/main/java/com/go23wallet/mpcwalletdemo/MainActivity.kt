@@ -11,7 +11,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import com.go23wallet.mpcwalletdemo.databinding.ActivityMainBinding
-import com.go23wallet.mpcwalletdemo.wallet.WalletActivity
+import com.go23wallet.mpcwallet.wallet.WalletActivity
 
 class MainActivity : AppCompatActivity() {
 

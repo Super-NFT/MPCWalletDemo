@@ -1,0 +1,113 @@
+package com.go23wallet.mpcwallet.dialog
+
+import android.content.Context
+import android.os.Handler
+import android.os.Looper
+import android.view.*
+import android.widget.Toast
+import com.coins.app.bean.token.Token
+import com.go23wallet.mpcwallet.R
+import com.go23wallet.mpcwallet.base.dialog.BaseDialogFragment
+import com.go23wallet.mpcwallet.databinding.DialogForgetPswLayoutBinding
+import com.go23wallet.mpcwallet.utils.Constant
+import com.go23wallet.mpcwallet.view.InputCodeView.OnCodeCompleteListener
+
+class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
+    BaseDialogFragment<DialogForgetPswLayoutBinding>() {
+
+    override val layoutId: Int = R.layout.dialog_forget_psw_layout
+
+    private val mHandler: Handler = Handler(Looper.getMainLooper())
+
+    var callback: (code: String?) -> Unit = {}
+
+    private val setPinCodeDialog: SetPinCodeDialog by lazy {
+        SetPinCodeDialog(mContext)
+    }
+
+    private var type = TYPE_SEND
+
+    private var verifyCode: String? = ""
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        setGravity(Gravity.CENTER)
+    }
+
+    override fun initViews(v: View?) {
+        viewBinding.tvEmail.text = Constant.emailStr
+        viewBinding.ivBack.setOnClickListener {
+            dismissAllowingStateLoss()
+        }
+        viewBinding.llVerify.setOnCodeCompleteListener(object : OnCodeCompleteListener {
+            override fun inputCodeComplete(verificationCode: String?) {
+                verifyCode = verificationCode
+            }
+
+            override fun inputCodeInput(verificationCode: String?) {
+            }
+        })
+        viewBinding.tvVerify.setOnClickListener {
+            if (type == TYPE_SEND) {
+                if (viewBinding.progress.visibility == View.VISIBLE) {
+                    Toast.makeText(context, R.string.sending, Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                showProgress()
+                mHandler.postDelayed({
+                    type = TYPE_VERITY
+                    hideProgress()
+                    viewBinding.tvSendTips.visibility = View.GONE
+                    viewBinding.bottomGroup.visibility = View.VISIBLE
+                    viewBinding.llVerify.visibility = View.VISIBLE
+                    viewBinding.tvVerify.text = getString(R.string.verify)
+                }, 1000)
+            } else {
+                if (verifyCode.isNullOrEmpty()) {
+                    Toast.makeText(context, R.string.verify_error, Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                } else {
+                    if (viewBinding.progress.visibility == View.VISIBLE) {
+                        Toast.makeText(context, R.string.verifying, Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+                    // TODO
+                    if (dialogType == 0) {
+                        // recover  set pin code
+                        callback.invoke(verifyCode)
+                    } else {
+                        // resharding  two set pin code
+                        callback.invoke(verifyCode)
+                    }
+                    dismissAllowingStateLoss()
+                }
+            }
+        }
+
+        viewBinding.tvResend.setOnClickListener {
+            viewBinding.llVerify.setText("")
+        }
+    }
+
+    private fun showProgress() {
+        viewBinding.progress.visibility = View.VISIBLE
+        viewBinding.progress.show()
+    }
+
+    private fun hideProgress() {
+        viewBinding.progress.visibility = View.GONE
+        viewBinding.progress.hide()
+    }
+
+    override fun dismissAllowingStateLoss() {
+        super.dismissAllowingStateLoss()
+        type = TYPE_SEND
+        viewBinding.llVerify.setText("")
+    }
+
+    companion object {
+        const val TYPE_SEND = 0
+        const val TYPE_VERITY = 1
+    }
+
+}
