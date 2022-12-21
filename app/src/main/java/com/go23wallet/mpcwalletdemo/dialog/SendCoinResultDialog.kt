@@ -9,7 +9,7 @@ import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogSendCoinResultLayoutBinding
 import com.go23wallet.mpcwalletdemo.wallet.ChargeDetailsActivity
 
-class SendCoinResultDialog(private val mContext: Activity, private val isSuccess: Boolean, private val transactionId: String) :
+class SendCoinResultDialog(private val mContext: Activity, private val isSuccess: Boolean, private val hash: String) :
     BaseDialogFragment<DialogSendCoinResultLayoutBinding>() {
 
     override val layoutId: Int = R.layout.dialog_send_coin_result_layout
@@ -31,7 +31,7 @@ class SendCoinResultDialog(private val mContext: Activity, private val isSuccess
 
         viewBinding.tvDetails.setOnClickListener {
             startActivity(Intent(mContext, ChargeDetailsActivity::class.java).apply {
-                putExtra("transaction_id", transactionId)
+                putExtra("hash", hash)
             })
         }
 

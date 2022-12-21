@@ -62,12 +62,14 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
             GlideUtils.loadImg(this, it.imgUrl, binding.ivCoinIcon)
             binding.tvCoinName.text = it.name
             binding.tvFromCoinNickname.text = it.symbol
+            showProgress()
             Go23WalletTransactionManage.getInstance().requestPreTokenSend(
                 UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
                 it.contract_address,
                 it.user_wallet_address,
                 object : BaseCallBack<PreTokenSendResponse> {
                     override fun success(data: PreTokenSendResponse?) {
+                        dismissProgress()
                         data?.data?.let { preToken ->
                             preTokenSend = preToken
                             binding.etToAddress.setText("")
@@ -83,12 +85,14 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                                 )
                             binding.tvCoinSymbol.text = it.symbol
                             binding.tvGasBalance.text = "${preToken.gas} ${it.symbol}"
+                            binding.tvGasValue.visibility = if (preToken.platform_u_per > 0) View.VISIBLE else View.GONE
                             binding.tvGasValue.text =
                                 "=$${preToken.platform_u_per * (preToken.gas ?: "0.00").toDouble()}"
                         }
                     }
 
                     override fun failed() {
+                        dismissProgress()
                     }
                 })
         }
@@ -222,7 +226,8 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         sign.contractAddress = chainTokenInfo?.contract_address
         sign.tokenId = ""
         sign.value = binding.etInputNum.text.toString()
-        sign.middleContractAddress = UserWalletInfoManager.getUserWalletInfo().userChain.middle_contract_address
+        sign.middleContractAddress =
+            UserWalletInfoManager.getUserWalletInfo().userChain.middle_contract_address
         if (data.trans_type == 4) {
             Go23WalletManage.getInstance().showApproveDialog(
                 this,
@@ -236,7 +241,11 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                         ) { response ->
                             dismissProgress()
                             sendCoinResultDialog =
-                                SendCoinResultDialog(this@SendCoinActivity, true, response.data)
+                                SendCoinResultDialog(
+                                    this@SendCoinActivity,
+                                    true,
+                                    response.data ?: ""
+                                )
                             sendCoinResultDialog?.show(
                                 supportFragmentManager,
                                 "sendCoinResultDialog"
