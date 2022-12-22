@@ -22,7 +22,6 @@ import com.go23wallet.mpcwallet.adapter.TabFragmentAdapter
 import com.go23wallet.mpcwallet.base.BaseActivity
 import com.go23wallet.mpcwallet.data.ChainTokenInfo
 import com.go23wallet.mpcwallet.databinding.ActivityMpcwalletBinding
-import com.go23wallet.mpcwallet.databinding.ActivityWalletBinding
 import com.go23wallet.mpcwallet.dialog.*
 import com.go23wallet.mpcwallet.fragment.NFTFragment
 import com.go23wallet.mpcwallet.fragment.TokenFragment
@@ -45,7 +44,6 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Request
 import okhttp3.RequestBody
-
 
 class WalletActivity : BaseActivity<ActivityMpcwalletBinding>() {
 
