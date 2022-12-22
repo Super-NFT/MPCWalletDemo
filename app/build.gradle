@@ -18,6 +18,24 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            storePassword "111111"
+            keyAlias "coins"
+            keyPassword "111111"
+            storeFile file("coins")
+
+            enableV3Signing true
+            enableV4Signing true
+        }
+        debug {
+            storePassword "111111"
+            keyAlias "coins"
+            keyPassword "111111"
+            storeFile file("coins.keystore")
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
