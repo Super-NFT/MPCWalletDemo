@@ -81,6 +81,9 @@ class WalletActivity : BaseActivity<ActivityMpcwalletBinding>() {
     override val layoutRes: Int = R.layout.activity_mpcwallet
 
     override fun initViews(savedInstanceState: Bundle?) {
+        binding.toolbar.setNavigationOnClickListener {
+            finish()
+        }
         binding.tvEmail.text = Constant.emailStr
         GlideUtils.loadImg(
             this@WalletActivity,
@@ -247,9 +250,6 @@ class WalletActivity : BaseActivity<ActivityMpcwalletBinding>() {
     }
 
     private fun setListener() {
-        binding.toolbar.setNavigationOnClickListener {
-            finish()
-        }
         successDialog.callback = {
             geWalletInfo()
         }
