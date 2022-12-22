@@ -111,7 +111,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                 override fun recover() {
                     Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<UserResponse?> ->
                         val `object` = JsonObject()
-                        `object`.addProperty("data", "recover")
+                        `object`.addProperty("type", "recover")
                         val body = RequestBody.create(
                             "application/json".toMediaTypeOrNull(), `object`.toString()
                         )
@@ -260,7 +260,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                 showProgress()
                 Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<UserResponse?> ->
                     val `object` = JsonObject()
-                    `object`.addProperty("data", "reshare")
+                    `object`.addProperty("type", "reshare")
                     val body = RequestBody.create(
                         "application/json".toMediaTypeOrNull(), `object`.toString()
                     )
