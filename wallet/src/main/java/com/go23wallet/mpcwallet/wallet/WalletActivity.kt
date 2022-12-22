@@ -21,6 +21,7 @@ import com.go23wallet.mpcwallet.R
 import com.go23wallet.mpcwallet.adapter.TabFragmentAdapter
 import com.go23wallet.mpcwallet.base.BaseActivity
 import com.go23wallet.mpcwallet.data.ChainTokenInfo
+import com.go23wallet.mpcwallet.databinding.ActivityMpcwalletBinding
 import com.go23wallet.mpcwallet.databinding.ActivityWalletBinding
 import com.go23wallet.mpcwallet.dialog.*
 import com.go23wallet.mpcwallet.fragment.NFTFragment
@@ -46,7 +47,7 @@ import okhttp3.Request
 import okhttp3.RequestBody
 
 
-class WalletActivity : BaseActivity<ActivityWalletBinding>() {
+class WalletActivity : BaseActivity<ActivityMpcwalletBinding>() {
 
     private val tabList = mutableListOf<String>()
     private val fragments = mutableListOf<Fragment>()
@@ -79,7 +80,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
     private var receiveDialog: ReceiveDialog? = null
 
-    override val layoutRes: Int = R.layout.activity_wallet
+    override val layoutRes: Int = R.layout.activity_mpcwallet
 
     override fun initViews(savedInstanceState: Bundle?) {
         binding.tvEmail.text = Constant.emailStr
