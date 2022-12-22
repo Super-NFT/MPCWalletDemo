@@ -58,8 +58,8 @@ class TokenTransactionsFragment : Fragment() {
         Go23WalletManage.getInstance().requestTransactionRecords(
             transactionType,
             UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
-            UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
             contractAddress,
+            UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
             1,
             20,
             object : BaseCallBack<TransactionResponse> {
