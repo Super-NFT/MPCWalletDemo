@@ -84,7 +84,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                                     "${if (it.contract_address.isEmpty()) preToken.platform_balance_sort else preToken.token_balance_sort} ${it.symbol}"
                                 )
                             binding.tvCoinSymbol.text = it.symbol
-                            binding.tvGasBalance.text = "${preToken.gas} ${it.symbol}"
+                            binding.tvGasBalance.text = "${preToken.gas} ${UserWalletInfoManager.getUserWalletInfo().userChain.symbol}"
                             binding.tvGasValue.visibility = if (preToken.platform_u_per > 0) View.VISIBLE else View.GONE
                             binding.tvGasValue.text =
                                 "=$${preToken.platform_u_per * (preToken.gas ?: "0.00").toDouble()}"
