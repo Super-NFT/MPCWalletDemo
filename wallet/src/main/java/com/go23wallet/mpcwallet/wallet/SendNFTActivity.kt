@@ -50,7 +50,12 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
             ActivityResultContracts.StartActivityForResult()
         ) {
             val data = it.data?.getStringExtra("result") ?: ""
-            binding.etAddress.setText(data)
+            val content = if (data.contains(":")) {
+                data.split(":")[1]
+            } else {
+                data
+            }
+            binding.etAddress.setText(content)
         }
         binding.ivBack.setOnClickListener {
             finish()
@@ -127,7 +132,8 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
     private fun toSign(nft: Nft) {
         showProgress()
         val sign = Sign()
-        val key1 = Go23WalletManage.getInstance().getLocalMpcKey(Go23WalletManage.getInstance().walletAddress)
+        val key1 = Go23WalletManage.getInstance()
+            .getLocalMpcKey(Go23WalletManage.getInstance().walletAddress)
         sign.type = 1
         sign.chainId = UserWalletInfoManager.getUserWalletInfo().userChain.chain_id
         sign.rpc = UserWalletInfoManager.getUserWalletInfo().userChain.rpc
