@@ -50,7 +50,12 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
             ActivityResultContracts.StartActivityForResult()
         ) {
             val data = it.data?.getStringExtra("result") ?: ""
-            binding.etAddress.setText(data)
+            val content = if (data.contains(":")) {
+                data.split(":")[1]
+            } else {
+                data
+            }
+            binding.etAddress.setText(content)
         }
         binding.ivBack.setOnClickListener {
             finish()
