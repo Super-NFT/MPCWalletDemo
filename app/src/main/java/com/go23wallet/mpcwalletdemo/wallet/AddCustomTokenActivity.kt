@@ -77,6 +77,9 @@ class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
                         contractAddress = it.contract_address ?: ""
                         binding.tvTokenSymbol.text = it.symbol
                         binding.tvTokenPrecision.text = it.decimal.toString()
+                    } ?: kotlin.run {
+                        binding.tvTokenSymbol.text = ""
+                        binding.tvTokenPrecision.text = ""
                     }
                 }
 
