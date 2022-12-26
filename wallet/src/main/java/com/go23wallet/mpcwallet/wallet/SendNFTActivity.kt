@@ -13,6 +13,7 @@ import com.coins.app.Go23WalletManage
 import com.coins.app.bean.Sign
 import com.coins.app.bean.nft.Nft
 import com.coins.app.bean.token.TokenResponse
+import com.coins.app.bean.transaction.PreNFTSendResponse
 import com.go23wallet.mpcwallet.R
 import com.go23wallet.mpcwallet.base.BaseActivity
 import com.go23wallet.mpcwallet.databinding.ActivitySendNftBinding
@@ -43,6 +44,25 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
 
     private fun initView() {
         GlideUtils.loadImg(this, nftInfo?.image, binding.ivNft)
+        showProgress()
+        Go23WalletManage.getInstance().requestPreNFTSend(
+            UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
+            UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
+            object : BaseCallBack<PreNFTSendResponse> {
+                override fun success(data: PreNFTSendResponse?) {
+                    dismissProgress()
+                    data?.data?.let {
+                        binding.tvConfirm.isEnabled = it.isIs_ok
+                    } ?: kotlin.run {
+                        binding.tvConfirm.isEnabled = false
+                    }
+                }
+
+                override fun failed() {
+                    dismissProgress()
+                }
+            }
+        )
     }
 
     private fun setListener() {
@@ -145,7 +165,7 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
         sign.value = ""
         sign.middleContractAddress = ""
         Go23WalletManage.getInstance().sign(
-            key1, Gson().toJson(sign).toByteArray()
+            key1, sign
         ) { response ->
             dismissProgress()
             if (response.code.toString() == "0") {

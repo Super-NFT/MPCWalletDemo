@@ -38,7 +38,7 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
                             binding.tvAmount.visibility = View.GONE
                         } else {
                             binding.nftView.visibility = View.GONE
-                            binding.tvAmountValue.text = it.amount
+                            binding.tvAmountValue.text = "${it.amount}${it.symbol}"
                         }
                         when (it.status) {
                             1 -> {
@@ -59,7 +59,7 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
                         binding.tvToAddress.text = it.to_addr
                         binding.tvTxIdAddress.text = it.hash
                         binding.tvNetworkContent.text = it.network
-                        binding.tvGasValue.text = it.gas_fee
+                        binding.tvGasValue.text = "${it.gas_fee}${it.symbol}"
                     }
                 }
 

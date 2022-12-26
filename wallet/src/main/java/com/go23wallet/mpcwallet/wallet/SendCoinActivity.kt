@@ -84,8 +84,10 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                                     "${if (it.contract_address.isEmpty()) preToken.platform_balance_sort else preToken.token_balance_sort} ${it.symbol}"
                                 )
                             binding.tvCoinSymbol.text = it.symbol
-                            binding.tvGasBalance.text = "${preToken.gas} ${UserWalletInfoManager.getUserWalletInfo().userChain.symbol}"
-                            binding.tvGasValue.visibility = if (preToken.platform_u_per > 0) View.VISIBLE else View.GONE
+                            binding.tvGasBalance.text =
+                                "${preToken.gas} ${UserWalletInfoManager.getUserWalletInfo().userChain.symbol}"
+                            binding.tvGasValue.visibility =
+                                if (preToken.platform_u_per > 0) View.VISIBLE else View.GONE
                             binding.tvGasValue.text =
                                 "=$${preToken.platform_u_per * (preToken.gas ?: "0.00").toDouble()}"
                         }
@@ -223,6 +225,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         val key1 = Go23WalletManage.getInstance()
             .getLocalMpcKey(Go23WalletManage.getInstance().walletAddress)
         sign.type = 1
+        sign.decimal = data.decimal
         sign.chainId = UserWalletInfoManager.getUserWalletInfo().userChain.chain_id
         sign.rpc = UserWalletInfoManager.getUserWalletInfo().userChain.rpc.toString()
         sign.fromAddr = chainTokenInfo?.user_wallet_address
@@ -242,7 +245,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                 object : ApproveDialog.CallBack {
                     override fun approve() {
                         Go23WalletManage.getInstance().sign(
-                            key1, Gson().toJson(sign).toByteArray()
+                            key1, sign
                         ) { response ->
                             dismissProgress()
                             sendCoinResultDialog =
@@ -263,7 +266,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                 })
         } else {
             Go23WalletManage.getInstance().sign(
-                key1, Gson().toJson(sign).toByteArray()
+                key1, sign
             ) { response ->
                 dismissProgress()
                 if (response.code.toString() == "0") {
