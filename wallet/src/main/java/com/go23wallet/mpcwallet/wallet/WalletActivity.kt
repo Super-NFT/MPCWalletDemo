@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.blankj.utilcode.util.ToastUtils
 import com.coins.app.BaseCallBack
 import com.coins.app.C
 import com.coins.app.Go23WalletCallBack
@@ -160,7 +161,10 @@ class WalletActivity : BaseActivity<ActivityMpcwalletBinding>() {
                                                     geWalletInfo()
                                                 }
 
-                                                override fun failed() {}
+                                                override fun failed() {
+                                                    ToastUtils.showShort("Verify code error， please reenter")
+                                                    forgetPswDialog.show(supportFragmentManager, "")
+                                                }
                                             })
                                 }
                             }

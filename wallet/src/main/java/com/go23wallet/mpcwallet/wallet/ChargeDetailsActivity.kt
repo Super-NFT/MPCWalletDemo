@@ -57,7 +57,7 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
                         binding.tvTime.text = it.time
                         binding.tvFromAddress.text = it.from_addr
                         binding.tvToAddress.text = it.to_addr
-                        binding.tvTxIdAddress.text = it.tx_id
+                        binding.tvTxIdAddress.text = it.hash
                         binding.tvNetworkContent.text = it.network
                         binding.tvGasValue.text = it.gas_fee
                     }

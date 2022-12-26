@@ -74,9 +74,12 @@ class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
             object : BaseCallBack<TokenResponse> {
                 override fun success(data: TokenResponse?) {
                     data?.data?.let {
-                        contractAddress = it.contract_address
+                        contractAddress = it.contract_address ?: ""
                         binding.tvTokenSymbol.text = it.symbol
                         binding.tvTokenPrecision.text = it.decimal.toString()
+                    } ?: kotlin.run {
+                        binding.tvTokenSymbol.text = ""
+                        binding.tvTokenPrecision.text = ""
                     }
                 }
 
