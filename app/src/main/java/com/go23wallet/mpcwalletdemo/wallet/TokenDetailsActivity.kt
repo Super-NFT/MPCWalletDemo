@@ -84,7 +84,7 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
         )
         fragments.add(
             TokenTransactionsFragment.newInstance(
-                tabList[3].lowercase(Locale.ROOT),
+                "fail",
                 token?.contract_address ?: ""
             )
         )
