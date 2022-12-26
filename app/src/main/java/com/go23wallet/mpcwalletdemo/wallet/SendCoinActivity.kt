@@ -103,7 +103,12 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
             ActivityResultContracts.StartActivityForResult()
         ) {
             val data = it.data?.getStringExtra("result") ?: ""
-            binding.etToAddress.setText(data)
+            val content = if (data.contains(":")) {
+                data.split(":")[1]
+            } else {
+                data
+            }
+            binding.etToAddress.setText(content)
         }
         binding.ivBack.setOnClickListener {
             finish()
