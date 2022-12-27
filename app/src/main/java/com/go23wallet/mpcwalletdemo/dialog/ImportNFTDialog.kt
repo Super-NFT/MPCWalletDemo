@@ -52,7 +52,7 @@ class ImportNFTDialog :
                 s,
                 object : BaseCallBack<NftResponse> {
                     override fun success(data: NftResponse?) {
-                        UpdateDataLiveData.liveData.postValue(2)
+                        UpdateDataLiveData.setUpdateType(2)
                         dismissAllowingStateLoss()
                     }
 

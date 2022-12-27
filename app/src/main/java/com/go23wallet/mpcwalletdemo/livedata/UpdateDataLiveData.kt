@@ -9,7 +9,7 @@ object UpdateDataLiveData {
      */
     val liveData = MutableLiveData<Int>()
     fun setUpdateType(type: Int) {
-        liveData.value = type
+        liveData.postValue(type)
     }
 
     fun clearType() {

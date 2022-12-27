@@ -143,7 +143,7 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
     override fun finish() {
         super.finish()
         if (hasChange) {
-            UpdateDataLiveData.liveData.postValue(1)
+            UpdateDataLiveData.setUpdateType(1)
         }
     }
 }

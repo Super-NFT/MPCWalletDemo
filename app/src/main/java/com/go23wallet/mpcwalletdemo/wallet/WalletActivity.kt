@@ -94,8 +94,9 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         binding.refreshView.setOnRefreshListener {
             walletInfo?.let {
                 loadData(it)
-                UpdateDataLiveData.liveData.postValue(1)
-                UpdateDataLiveData.liveData.postValue(2)
+//                UpdateDataLiveData.setUpdateType(1)
+//                UpdateDataLiveData.setUpdateType(2)
+                tabAdapter?.notifyDataSetChanged()
             }
             lifecycleScope.launch {
                 delay(1500)
@@ -356,7 +357,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             GlideUtils.loadImg(this, it.image_url, binding.ivChainIcon)
             binding.tvChainAddress.text = it.name
             UserWalletInfoManager.serUserChain(it)
-            UpdateDataLiveData.liveData.postValue(1)
+            UpdateDataLiveData.setUpdateType(1)
         }
 
         binding.tvAddress.setOnClickListener {

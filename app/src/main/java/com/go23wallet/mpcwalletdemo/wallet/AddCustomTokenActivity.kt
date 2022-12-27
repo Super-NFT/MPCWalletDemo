@@ -56,7 +56,7 @@ class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
                     override fun success(data: TokenResponse?) {
                         dismissProgress()
                         val token = data?.data ?: return
-                        UpdateDataLiveData.liveData.postValue(1)
+                        UpdateDataLiveData.setUpdateType(1)
                         setResult(Activity.RESULT_OK)
                         finish()
                     }
