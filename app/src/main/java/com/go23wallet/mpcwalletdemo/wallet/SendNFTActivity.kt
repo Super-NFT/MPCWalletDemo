@@ -165,6 +165,7 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
         sign.contractAddress = nft.contract_address
         sign.tokenId = nft.token_id.toString()
         sign.value = ""
+        sign.nft_name = nft.name
         sign.middleContractAddress = ""
         Go23WalletManage.getInstance().sign(
             this, supportFragmentManager, key1, sign, object : MpcUtil.SignCallBack {
