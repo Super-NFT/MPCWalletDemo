@@ -12,7 +12,6 @@ import com.coins.app.Go23WalletManage
 import com.coins.app.bean.token.TokenListResponse
 import com.go23wallet.mpcwalletdemo.adapter.TokenAdapter
 import com.go23wallet.mpcwalletdemo.databinding.FragmentTabLayoutBinding
-import com.go23wallet.mpcwalletdemo.livedata.TokenListLiveData
 import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 import com.go23wallet.mpcwalletdemo.wallet.TokenDetailsActivity
@@ -45,7 +44,6 @@ class TokenFragment : Fragment() {
             object : BaseCallBack<TokenListResponse> {
                 override fun success(data: TokenListResponse?) {
                     val list = data?.data?.list
-                    TokenListLiveData.setTokenList(list)
                     mAdapter?.setNewInstance(list)
                 }
 

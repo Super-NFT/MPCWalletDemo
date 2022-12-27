@@ -11,22 +11,18 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.coins.app.BaseCallBack
 import com.coins.app.Go23WalletManage
-import com.coins.app.bean.token.Token
 import com.coins.app.bean.token.TokenListResponse
 import com.coins.app.bean.token.TokenResponse
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.AddTokenListAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivityAddATokenBinding
-import com.go23wallet.mpcwalletdemo.livedata.TokenListLiveData
 import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 
 class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
 
     private var mAdapter: AddTokenListAdapter? = null
-
-    private var selectList = mutableListOf<Token>()
 
     override val layoutRes: Int = R.layout.activity_add_a_token
 
@@ -39,26 +35,18 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
     }
 
     private fun initData() {
-        TokenListLiveData.liveData.observe(this) {
-            if (it != null) {
-                selectList = it
-                Go23WalletManage.getInstance().requestTokens(
-                    UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
-                    1, 20,
-                    object : BaseCallBack<TokenListResponse> {
-                        override fun success(data: TokenListResponse?) {
-                            val list = data?.data?.list
-                            mAdapter?.let { adapter ->
-                                adapter.setTokenList(selectList)
-                                adapter.setNewInstance(list)
-                            }
-                        }
+        Go23WalletManage.getInstance().requestTokens(
+            UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
+            1, 20,
+            object : BaseCallBack<TokenListResponse> {
+                override fun success(data: TokenListResponse?) {
+                    val list = data?.data?.list
+                    mAdapter?.setNewInstance(list)
+                }
 
-                        override fun failed() {
-                        }
-                    })
-            }
-        }
+                override fun failed() {
+                }
+            })
     }
 
     private fun initView() {
@@ -76,9 +64,26 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
         mAdapter?.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
                 val item = mAdapter?.getItem(position) ?: return
-                val index = selectList.indexOfFirst { item.contract_address == it.contract_address }
                 showProgress()
-                if (index < 0) {
+                if (item.isIs_selected) {
+                    Go23WalletManage.getInstance().removeToken(
+                        item.contract_address,
+                        UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
+                        UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
+                        object : BaseCallBack<TokenResponse> {
+                            override fun success(data: TokenResponse?) {
+                                dismissProgress()
+                                item.isIs_selected = !item.isIs_selected
+                                hasChange = true
+                                mAdapter?.notifyItemChanged(position)
+                                ToastUtils.showShort(getString(R.string.remove_success))
+                            }
+
+                            override fun failed() {
+                                dismissProgress()
+                            }
+                        })
+                } else {
                     Go23WalletManage.getInstance().addToken(
                         item.contract_address,
                         UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
@@ -88,27 +93,9 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
                                 dismissProgress()
                                 val token = data?.data ?: return
                                 hasChange = true
-                                selectList.add(item)
+                                item.isIs_selected = !item.isIs_selected
                                 mAdapter?.notifyItemChanged(position)
                                 ToastUtils.showShort(getString(R.string.add_success))
-                            }
-
-                            override fun failed() {
-                                dismissProgress()
-                            }
-                        })
-                } else {
-                    Go23WalletManage.getInstance().removeToken(
-                        item.contract_address,
-                        UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
-                        UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
-                        object : BaseCallBack<TokenResponse> {
-                            override fun success(data: TokenResponse?) {
-                                dismissProgress()
-                                hasChange = true
-                                selectList.removeAt(index)
-                                mAdapter?.notifyItemChanged(position)
-                                ToastUtils.showShort(getString(R.string.remove_success))
                             }
 
                             override fun failed() {

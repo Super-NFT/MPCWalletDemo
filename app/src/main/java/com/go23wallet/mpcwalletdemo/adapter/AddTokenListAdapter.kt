@@ -9,16 +9,9 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.coins.app.bean.token.Token
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
-import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 
 class AddTokenListAdapter(private val mContext: Context) :
     BaseQuickAdapter<Token, BaseViewHolder>(R.layout.item_add_token_layout) {
-
-    private var selectList: MutableList<Token> = mutableListOf()
-
-    fun setTokenList(list: MutableList<Token>) {
-        selectList = list
-    }
 
     override fun convert(holder: BaseViewHolder, item: Token) {
         val ivTokenIcon = holder.getView<AppCompatImageView>(R.id.iv_token_icon)
@@ -28,11 +21,11 @@ class AddTokenListAdapter(private val mContext: Context) :
         val ivStatus = holder.getView<AppCompatImageView>(R.id.iv_status)
         GlideUtils.loadImg(mContext, item.image_url, ivTokenIcon)
         tvTokenName.text = item.symbol
-        tvTokenNum.visibility = if (item.balance.isNullOrEmpty()) View.GONE else View.VISIBLE
-        tvTokenNum.text = item.balance
-        tvTokenValue.visibility = if (item.balance_u.isNullOrEmpty()) View.GONE else View.VISIBLE
-        tvTokenValue.text = "$${item.balance_u ?: 0.00}"
-        ivStatus.visibility = if (item.contract_address.isNullOrEmpty()) View.GONE else View.VISIBLE
-        ivStatus.setImageResource(if (selectList.indexOfFirst { it.contract_address == item.contract_address } >= 0) R.drawable.icon_checked else R.drawable.icon_uncheck)
+//        tvTokenNum.visibility = if (item.balance.isNullOrEmpty()) View.GONE else View.VISIBLE
+//        tvTokenNum.text = item.balance
+//        tvTokenValue.visibility = if (item.balance_u.isNullOrEmpty()) View.GONE else View.VISIBLE
+//        tvTokenValue.text = "$${item.balance_u ?: 0.00}"
+        ivStatus.visibility = if (item.isIs_platform) View.GONE else View.VISIBLE
+        ivStatus.setImageResource(if (item.isIs_selected) R.drawable.icon_checked else R.drawable.icon_uncheck)
     }
 }
