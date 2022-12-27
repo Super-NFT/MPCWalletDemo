@@ -150,24 +150,30 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                 dismissProgress()
                                 forgetPswDialog.show(supportFragmentManager, "")
                                 forgetPswDialog.callback = {
-                                    Go23WalletManage.getInstance()
-                                        .startRecover(
-                                            this@WalletActivity,
-                                            "111111",
-                                            object : MPCCallBack {
-                                                override fun success() {
-                                                    geWalletInfo()
-                                                }
+                                    it?.let {
+                                        Go23WalletManage.getInstance()
+                                            .startRecover(
+                                                this@WalletActivity,
+                                                "111111",
+                                                object : MPCCallBack {
+                                                    override fun success() {
+                                                        geWalletInfo()
+                                                    }
 
-                                                override fun failed() {
-                                                    ToastUtils.showShort("Verify code error， please reenter")
-                                                    forgetPswDialog.show(supportFragmentManager, "")
-                                                }
-                                            })
+                                                    override fun failed() {
+                                                        ToastUtils.showShort("Verify code error， please reenter")
+                                                        forgetPswDialog.show(
+                                                            supportFragmentManager,
+                                                            ""
+                                                        )
+                                                    }
+                                                })
+                                    } ?: kotlin.run {
+                                        dismissProgress()
+                                    }
                                 }
                             }
                         })
-
                 }
 
                 override fun success() {
@@ -215,38 +221,42 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
     private fun loadData(info: WalletInfo) {
         Go23WalletChainManage.getInstance()
-            .requestUserChains(info.wallet_address, 1, 20, object : BaseCallBack<UserChainResponse> {
-                override fun success(data: UserChainResponse?) {
-                    userChains = data?.data?.list
-                    userChains?.find {
-                        it.has_default == 1
-                    }?.let {
-                        userChain = it
-                        UserWalletInfoManager.serUserChain(it)
-                        binding.tvChainAddress.text = it.name
-                        GlideUtils.loadImg(
-                            this@WalletActivity, it.image_url, binding.ivChainIcon
-                        )
-                        initView()
-                        Go23WalletManage.getInstance()
-                            .requestPlatformBalance(
-                                it.chain_id,
-                                info.wallet_address,
-                                object : BaseCallBack<BalanceResponse> {
-                                    override fun success(data: BalanceResponse?) {
-                                        binding.tvTotalBalanceValue.text =
-                                            "$${data?.data?.balance ?: 0.00}"
-                                    }
+            .requestUserChains(
+                info.wallet_address,
+                1,
+                20,
+                object : BaseCallBack<UserChainResponse> {
+                    override fun success(data: UserChainResponse?) {
+                        userChains = data?.data?.list
+                        userChains?.find {
+                            it.has_default == 1
+                        }?.let {
+                            userChain = it
+                            UserWalletInfoManager.serUserChain(it)
+                            binding.tvChainAddress.text = it.name
+                            GlideUtils.loadImg(
+                                this@WalletActivity, it.image_url, binding.ivChainIcon
+                            )
+                            initView()
+                            Go23WalletManage.getInstance()
+                                .requestPlatformBalance(
+                                    it.chain_id,
+                                    info.wallet_address,
+                                    object : BaseCallBack<BalanceResponse> {
+                                        override fun success(data: BalanceResponse?) {
+                                            binding.tvTotalBalanceValue.text =
+                                                "$${data?.data?.balance_u ?: 0.00}"
+                                        }
 
-                                    override fun failed() {
-                                    }
-                                })
+                                        override fun failed() {
+                                        }
+                                    })
+                        }
                     }
-                }
 
-                override fun failed() {
-                }
-            })
+                    override fun failed() {
+                    }
+                })
 
 
     }
@@ -296,25 +306,35 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(object : Observer<UserResponse?> {
                         override fun onSubscribe(d: Disposable) {}
-                        override fun onError(e: Throwable) {}
+                        override fun onError(e: Throwable) {
+                            dismissProgress()
+                        }
+
                         override fun onComplete() {}
                         override fun onNext(t: UserResponse) {
                             forgetPswDialog.show(supportFragmentManager, "forgetPswDialog")
                             forgetPswDialog.callback = {
-                                Go23WalletManage.getInstance().startReShare(
-                                    this@WalletActivity,
-                                    Go23WalletManage.getInstance().walletAddress,
-                                    "111111",
-                                    object : MPCCallBack {
-                                        override fun success() {
-                                            dismissProgress()
-                                            successDialog.show(supportFragmentManager, "successDialog")
-                                        }
+                                it?.let {
+                                    Go23WalletManage.getInstance().startReShare(
+                                        this@WalletActivity,
+                                        Go23WalletManage.getInstance().walletAddress,
+                                        "111111",
+                                        object : MPCCallBack {
+                                            override fun success() {
+                                                dismissProgress()
+                                                successDialog.show(
+                                                    supportFragmentManager,
+                                                    "successDialog"
+                                                )
+                                            }
 
-                                        override fun failed() {
-                                            dismissProgress()
-                                        }
-                                    })
+                                            override fun failed() {
+                                                dismissProgress()
+                                            }
+                                        })
+                                } ?: kotlin.run {
+                                    dismissProgress()
+                                }
                             }
                         }
                     })

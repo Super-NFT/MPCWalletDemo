@@ -37,6 +37,7 @@ class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
     override fun initViews(v: View?) {
         viewBinding.tvEmail.text = Constant.emailStr
         viewBinding.ivBack.setOnClickListener {
+            callback.invoke(null)
             dismissAllowingStateLoss()
         }
         viewBinding.llVerify.setOnCodeCompleteListener(object : OnCodeCompleteListener {

@@ -37,9 +37,11 @@ class AnimateProgressDialog : BaseDialogFragment<DialogBaseAnimateProgressBindin
 
     override fun onCancel(dialog: DialogInterface) {
         viewBinding.progress.hide()
+        dismissAllowingStateLoss()
     }
 
-    override fun onDismiss(dialog: DialogInterface) {
+    override fun dismissAllowingStateLoss() {
+        super.dismissAllowingStateLoss()
         viewBinding.progress.hide()
     }
 
