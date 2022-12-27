@@ -73,6 +73,11 @@ class NFTFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        UpdateDataLiveData.clearType()
+    }
+
     companion object {
         fun newInstance(): Fragment {
             val args = Bundle()
