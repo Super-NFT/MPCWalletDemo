@@ -14,6 +14,8 @@ import com.coins.app.bean.Sign
 import com.coins.app.bean.nft.Nft
 import com.coins.app.bean.token.TokenResponse
 import com.coins.app.bean.transaction.PreNFTSendResponse
+import com.coins.app.entity.mpc.SignResponse
+import com.coins.app.util.MpcUtil
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivitySendNftBinding
@@ -48,7 +50,7 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
         Go23WalletManage.getInstance().requestPreNFTSend(
             UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
             UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
-            object: BaseCallBack<PreNFTSendResponse> {
+            object : BaseCallBack<PreNFTSendResponse> {
                 override fun success(data: PreNFTSendResponse?) {
                     dismissProgress()
                     data?.data?.let {
@@ -152,7 +154,8 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
     private fun toSign(nft: Nft) {
         showProgress()
         val sign = Sign()
-        val key1 = Go23WalletManage.getInstance().getLocalMpcKey(Go23WalletManage.getInstance().walletAddress)
+        val key1 = Go23WalletManage.getInstance()
+            .getLocalMpcKey(Go23WalletManage.getInstance().walletAddress)
         sign.type = 1
         sign.chainId = UserWalletInfoManager.getUserWalletInfo().userChain.chain_id
         sign.rpc = UserWalletInfoManager.getUserWalletInfo().userChain.rpc
@@ -164,15 +167,24 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
         sign.value = ""
         sign.middleContractAddress = ""
         Go23WalletManage.getInstance().sign(
-            key1, sign
-        ) { response ->
-            dismissProgress()
-            if (response.code.toString() == "0") {
-                sendCoinResultDialog = SendCoinResultDialog(this, true, response.data ?: "")
-                sendCoinResultDialog?.show(supportFragmentManager, "sendCoinResultDialog")
-            } else {
-                Toast.makeText(this, "Transaction failed", Toast.LENGTH_SHORT).show()
+            this, supportFragmentManager, key1, sign, object : MpcUtil.SignCallBack {
+                override fun success(response: SignResponse?) {
+                    dismissProgress()
+                    if (response?.code.toString() == "0") {
+                        sendCoinResultDialog =
+                            SendCoinResultDialog(this@SendNFTActivity, true, response?.data ?: "")
+                        sendCoinResultDialog?.show(supportFragmentManager, "sendCoinResultDialog")
+                    } else {
+                        Toast.makeText(baseContext, "Transaction failed", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun failed() {
+                    dismissProgress()
+                    Toast.makeText(baseContext, "Transaction failed", Toast.LENGTH_SHORT).show()
+                }
             }
-        }
+        )
+
     }
 }

@@ -15,8 +15,10 @@ import com.coins.app.Go23WalletManage
 import com.coins.app.bean.Sign
 import com.coins.app.bean.transaction.PreTokenSend
 import com.coins.app.bean.transaction.PreTokenSendResponse
+import com.coins.app.entity.mpc.SignResponse
 import com.coins.app.manage.Go23WalletTransactionManage
 import com.coins.app.ui.gamecenter.ApproveDialog
+import com.coins.app.util.MpcUtil
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.data.ChainTokenInfo
@@ -236,47 +238,33 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         sign.value = binding.etInputNum.text.toString()
         sign.middleContractAddress =
             UserWalletInfoManager.getUserWalletInfo().userChain.middle_contract_address
-        if (data.trans_type == 4) {
-            Go23WalletManage.getInstance().showApproveDialog(
-                this,
-                supportFragmentManager,
-                "approveDialog",
-                sign,
-                object : ApproveDialog.CallBack {
-                    override fun approve() {
-                        Go23WalletManage.getInstance().sign(
-                            key1, sign
-                        ) { response ->
-                            dismissProgress()
-                            sendCoinResultDialog =
-                                SendCoinResultDialog(
-                                    this@SendCoinActivity,
-                                    true,
-                                    response.data ?: ""
-                                )
-                            sendCoinResultDialog?.show(
-                                supportFragmentManager,
-                                "sendCoinResultDialog"
+        Go23WalletManage.getInstance().sign(
+            this, supportFragmentManager, key1, sign, object : MpcUtil.SignCallBack {
+                override fun success(response: SignResponse?) {
+                    dismissProgress()
+                    if (response?.code.toString() == "0") {
+                        dismissProgress()
+                        sendCoinResultDialog =
+                            SendCoinResultDialog(
+                                this@SendCoinActivity,
+                                true,
+                                response?.data ?: ""
                             )
-                        }
+                        sendCoinResultDialog?.show(
+                            supportFragmentManager,
+                            "sendCoinResultDialog"
+                        )
+                    } else {
+                        Toast.makeText(baseContext, "Transaction failed", Toast.LENGTH_SHORT).show()
                     }
+                }
 
-                    override fun cancel() {
-                    }
-                })
-        } else {
-            Go23WalletManage.getInstance().sign(
-                key1, sign
-            ) { response ->
-                dismissProgress()
-                if (response.code.toString() == "0") {
-                    sendCoinResultDialog = SendCoinResultDialog(this, true, response.data ?: "")
-                    sendCoinResultDialog?.show(supportFragmentManager, "sendCoinResultDialog")
-                } else {
-                    Toast.makeText(this, "Transaction failed", Toast.LENGTH_SHORT).show()
+                override fun failed() {
+                    dismissProgress()
+                    Toast.makeText(baseContext, "Transaction failed", Toast.LENGTH_SHORT).show()
                 }
             }
-        }
+        )
     }
 
     private fun updateSendStatus() {
