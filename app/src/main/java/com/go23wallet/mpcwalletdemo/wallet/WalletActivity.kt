@@ -246,7 +246,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                     object : BaseCallBack<BalanceResponse> {
                                         override fun success(data: BalanceResponse?) {
                                             binding.tvTotalBalanceValue.text =
-                                                "$${data?.data?.balance_u ?: 0.00}"
+                                                data?.data?.balance ?: "0"
                                         }
 
                                         override fun failed() {
