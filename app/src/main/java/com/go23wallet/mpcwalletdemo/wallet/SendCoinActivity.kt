@@ -3,6 +3,7 @@ package com.go23wallet.mpcwalletdemo.wallet
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
@@ -281,6 +282,9 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                 if (chainTokenInfo?.contract_address.isNullOrEmpty()) it.platform_balance_sort else it.token_balance_sort
         }
         binding.tvTotalValue.text = "$totalValue ${chainTokenInfo?.symbol}"
-        binding.tvSend.isEnabled = totalValue > 0 && totalValue <= availableNum && isSelectGas
+        binding.tvSend.isEnabled =
+            totalValue > 0 && totalValue <= availableNum && isSelectGas && !TextUtils.isEmpty(
+                binding.tvTotalValue.text
+            )
     }
 }

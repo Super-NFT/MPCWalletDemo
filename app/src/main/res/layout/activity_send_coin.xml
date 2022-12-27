@@ -392,6 +392,7 @@
         android:background="@drawable/selector_btn_enable"
         android:gravity="center"
         android:text="@string/send"
+        android:enabled="false"
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
