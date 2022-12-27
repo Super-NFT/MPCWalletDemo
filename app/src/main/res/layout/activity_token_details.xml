@@ -68,98 +68,115 @@
         app:layout_constraintTop_toBottomOf="@id/tv_coin_nickname"
         app:layout_constraintVertical_chainStyle="packed" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_balance"
-        android:layout_width="wrap_content"
+    <com.go23wallet.mpcwalletdemo.view.RefreshLayout
+        android:id="@+id/refresh_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/color_262626"
-        android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        tools:text="123" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/color_8C8C8C"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_balance"
-        tools:text="$123" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_receive"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="25dp"
-        android:drawableTop="@drawable/icon_scan"
-        android:drawablePadding="6dp"
-        android:text="@string/receive"
-        android:textColor="@color/color_848484"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@id/tv_send"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_value" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/color_262626"
+                android:textSize="32sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="123" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/color_8C8C8C"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_balance"
+                tools:text="$123" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_receive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="34dp"
+                android:layout_marginTop="25dp"
+                android:drawableTop="@drawable/icon_scan"
+                android:drawablePadding="6dp"
+                android:text="@string/receive"
+                android:textColor="@color/color_848484"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@id/tv_send"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_value" />
 
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="34dp"
-        android:drawableTop="@drawable/icon_send"
-        android:drawablePadding="6dp"
-        android:gravity="center"
-        android:text="@string/send"
-        android:textColor="@color/color_848484"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_receive"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tv_receive"
-        app:layout_constraintTop_toTopOf="@id/tv_receive" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="34dp"
+                android:drawableTop="@drawable/icon_send"
+                android:drawablePadding="6dp"
+                android:gravity="center"
+                android:text="@string/send"
+                android:textColor="@color/color_848484"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_receive"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_receive"
+                app:layout_constraintTop_toTopOf="@id/tv_receive" />
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/color_F5F5F5"
-        app:layout_constraintBottom_toBottomOf="@id/tab"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/color_F5F5F5"
+                app:layout_constraintBottom_toBottomOf="@id/tab"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="13dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_receive"
-        app:tabBackground="@android:color/transparent"
-        app:tabIndicator="@drawable/shape_r4_bg"
-        app:tabIndicatorColor="@color/color_35C1D8"
-        app:tabIndicatorFullWidth="true"
-        app:tabIndicatorHeight="2dp"
-        app:tabRippleColor="@android:color/transparent"
-        app:tabSelectedTextColor="@color/color_35C1D8"
-        app:tabTextAppearance="@style/TabTextAppearance"
-        app:tabTextColor="@color/color_8C8C8C" />
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="13dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_receive"
+                app:tabBackground="@android:color/transparent"
+                app:tabIndicator="@drawable/shape_r4_bg"
+                app:tabIndicatorColor="@color/color_35C1D8"
+                app:tabIndicatorFullWidth="true"
+                app:tabIndicatorHeight="2dp"
+                app:tabRippleColor="@android:color/transparent"
+                app:tabSelectedTextColor="@color/color_35C1D8"
+                app:tabTextAppearance="@style/TabTextAppearance"
+                app:tabTextColor="@color/color_8C8C8C" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tab" />
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tab" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.go23wallet.mpcwalletdemo.view.RefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

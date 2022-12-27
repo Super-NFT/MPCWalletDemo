@@ -18,7 +18,7 @@ class MainnetAdapter :
         val ivSelect = holder.getView<AppCompatImageView>(R.id.iv_select)
         GlideUtils.loadImg(context, item.image_url, ivAvatar)
         tvTitle.text = item.name
-        ivSelect.visibility = if (item.has_default == 1) View.VISIBLE else View.GONE
+        ivSelect.visibility = if (item.isHas_default) View.VISIBLE else View.GONE
     }
 
 }

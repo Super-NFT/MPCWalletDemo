@@ -230,7 +230,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                     override fun success(data: UserChainResponse?) {
                         userChains = data?.data?.list
                         userChains?.find {
-                            it.has_default == 1
+                            it.isHas_default
                         }?.let {
                             userChain = it
                             UserWalletInfoManager.serUserChain(it)
@@ -357,7 +357,8 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             GlideUtils.loadImg(this, it.image_url, binding.ivChainIcon)
             binding.tvChainAddress.text = it.name
             UserWalletInfoManager.serUserChain(it)
-            UpdateDataLiveData.setUpdateType(1)
+            walletInfo?.let { it1 -> loadData(it1) }
+            tabAdapter?.notifyDataSetChanged()
         }
 
         binding.tvAddress.setOnClickListener {

@@ -3,7 +3,12 @@ package com.go23wallet.mpcwalletdemo.wallet
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.coins.app.BaseCallBack
+import com.coins.app.Go23WalletManage
 import com.coins.app.bean.token.Token
+import com.coins.app.bean.token.TokenDetailResponse
+import com.coins.app.bean.token.TokenResponse
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
@@ -13,6 +18,8 @@ import com.go23wallet.mpcwalletdemo.dialog.ReceiveDialog
 import com.go23wallet.mpcwalletdemo.fragment.TokenTransactionsFragment
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
 
 class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
@@ -60,10 +67,28 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
             binding.tvValue.text = "$${it.balance_u}"
             initView()
         }
+    }
 
+    private fun refreshData() {
+        Go23WalletManage.getInstance().requestTokenDetail(
+            token?.chain_id ?: 0,
+            token?.contract_address ?: "",
+            object : BaseCallBack<TokenResponse> {
+                override fun success(data: TokenResponse?) {
+                    data?.data?.let {
+                        binding.tvBalance.text = it.balance
+                        binding.tvValue.text = "$${it.balance_u}"
+                        tabAdapter?.notifyDataSetChanged()
+                    }
+                }
+
+                override fun failed() {
+                }
+            })
     }
 
     private fun initView() {
+        if (fragments.size > 0) return
         fragments.add(
             TokenTransactionsFragment.newInstance(
                 tabList[0].lowercase(Locale.ROOT),
@@ -98,6 +123,15 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
     private fun setListener() {
         binding.ivBack.setOnClickListener {
             finish()
+        }
+        binding.refreshView.setOnRefreshListener {
+            refreshData()
+            lifecycleScope.launch {
+                delay(1000)
+                runOnUiThread {
+                    binding.refreshView.isRefreshing = false
+                }
+            }
         }
         binding.tvReceive.setOnClickListener {
             receiveDialog =

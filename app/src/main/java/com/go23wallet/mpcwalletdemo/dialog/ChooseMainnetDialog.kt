@@ -14,6 +14,7 @@ import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.MainnetAdapter
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogChooseMainnetLayoutBinding
+import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 
 class ChooseMainnetDialog(private val mContext: Context) :
     BaseDialogFragment<DialogChooseMainnetLayoutBinding>() {
@@ -51,22 +52,22 @@ class ChooseMainnetDialog(private val mContext: Context) :
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
                 val item = userChains?.get(position) ?: return
 
-//                Go23WalletManage.getInstance().setDefaultChain(
-//                    item.block_chain_id,
-//                    item.user_wallet_id,
-//                    object : BaseCallBack<ChainResponse> {
-//                        override fun success(p0: ChainResponse?) {
-                            userChains.forEach {
-                                it.has_default = 2
+                Go23WalletManage.getInstance().setDefaultChain(
+                    item.chain_id,
+                    UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
+                    object : BaseCallBack<ChainResponse> {
+                        override fun success(p0: ChainResponse?) {
+                            userChains?.forEach {
+                                it.isHas_default = false
                             }
-                            item.has_default = 1
+                            item.isHas_default = true
                             callback.invoke(item)
                             dismissAllowingStateLoss()
-//                        }
-//
-//                        override fun failed() {
-//                        }
-//                    })
+                        }
+
+                        override fun failed() {
+                        }
+                    })
             }
         })
     }
