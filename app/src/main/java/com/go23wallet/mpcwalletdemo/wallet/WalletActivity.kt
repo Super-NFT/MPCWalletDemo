@@ -192,7 +192,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                     dismissProgress()
                 }
 
-                override fun createKeySuccess(userResponse: UserResponse?, key3: String?) {
+                override fun createKeySuccess(p0: String?, p1: String?) {
                 }
 
             })
