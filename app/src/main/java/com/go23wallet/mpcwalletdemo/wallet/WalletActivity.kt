@@ -18,6 +18,7 @@ import com.coins.app.bean.walletinfo.WalletInfo
 import com.coins.app.bean.walletinfo.WalletInfoResponse
 import com.coins.app.callback.MPCCallBack
 import com.coins.app.callback.RecoverCallBack
+import com.coins.app.callback.ResharedingCallBack
 import com.coins.app.manage.Go23WalletChainManage
 import com.coins.app.util.OkhttpUtil
 import com.go23wallet.mpcwalletdemo.R
@@ -324,10 +325,13 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                 it?.let {
                                     Go23WalletManage.getInstance().startReShare(
                                         this@WalletActivity,
+                                        "key3",
                                         Go23WalletManage.getInstance().walletAddress,
                                         "111111",
-                                        object : MPCCallBack {
-                                            override fun success() {
+                                        object : ResharedingCallBack {
+
+                                            override fun success(key3: String?) {
+                                                //上传第三方key
                                                 dismissProgress()
                                                 successDialog.show(
                                                     supportFragmentManager,
@@ -338,6 +342,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                             override fun failed() {
                                                 dismissProgress()
                                             }
+
                                         })
                                 } ?: kotlin.run {
                                     dismissProgress()
