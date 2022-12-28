@@ -1,6 +1,7 @@
 package com.go23wallet.mpcwalletdemo.wallet
 
 import android.content.Intent
+import android.media.tv.TvRecordingClient.RecordingCallback
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +17,7 @@ import com.coins.app.bean.user.UserResponse
 import com.coins.app.bean.walletinfo.WalletInfo
 import com.coins.app.bean.walletinfo.WalletInfoResponse
 import com.coins.app.callback.MPCCallBack
+import com.coins.app.callback.RecoverCallBack
 import com.coins.app.manage.Go23WalletChainManage
 import com.coins.app.util.OkhttpUtil
 import com.go23wallet.mpcwalletdemo.R
@@ -156,7 +158,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                             .startRecover(
                                                 this@WalletActivity,
                                                 "111111",
-                                                object : MPCCallBack {
+                                                object : RecoverCallBack {
                                                     override fun success() {
                                                         geWalletInfo()
                                                     }
@@ -167,6 +169,10 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                                             supportFragmentManager,
                                                             ""
                                                         )
+                                                    }
+
+                                                    override fun reSharding() {
+
                                                     }
                                                 })
                                     } ?: kotlin.run {
