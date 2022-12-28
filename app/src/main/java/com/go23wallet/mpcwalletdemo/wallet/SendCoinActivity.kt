@@ -256,7 +256,11 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                             "sendCoinResultDialog"
                         )
                     } else {
-                        Toast.makeText(baseContext, "Transaction failed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            baseContext,
+                            response?.msg ?: "Transaction failed",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
 
@@ -283,7 +287,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         }
         binding.tvTotalValue.text = "$totalValue ${chainTokenInfo?.symbol}"
         binding.tvSend.isEnabled =
-            totalValue > 0 && totalValue <= availableNum && isSelectGas && !TextUtils.isEmpty(
+            totalValue > 0 && totalValue <= availableNum && !TextUtils.isEmpty(binding.etToAddress.text) && isSelectGas && !TextUtils.isEmpty(
                 binding.tvTotalValue.text
             )
     }

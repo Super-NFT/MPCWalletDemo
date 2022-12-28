@@ -2,6 +2,7 @@ package com.go23wallet.mpcwalletdemo.wallet
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.coins.app.BaseCallBack
@@ -64,6 +65,7 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
             binding.tvCoinName.text = it.name
 
             binding.tvBalance.text = it.balance
+            binding.tvValue.visibility = if (it.balance_u.toDouble() > 0) View.VISIBLE else View.GONE
             binding.tvValue.text = "$${it.balance_u}"
             initView()
         }
@@ -76,6 +78,7 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
             object : BaseCallBack<TokenResponse> {
                 override fun success(data: TokenResponse?) {
                     data?.data?.let {
+                        binding.tvValue.visibility = if (it.balance_u.toDouble() > 0) View.VISIBLE else View.GONE
                         binding.tvBalance.text = it.balance
                         binding.tvValue.text = "$${it.balance_u}"
                         tabAdapter?.notifyDataSetChanged()
@@ -135,7 +138,7 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
         }
         binding.tvReceive.setOnClickListener {
             receiveDialog =
-                ReceiveDialog(this, token?.symbol ?: "", token?.contract_address ?: "").apply {
+                ReceiveDialog(this, token?.symbol ?: "", token?.user_wallet_address ?: "").apply {
                     show(supportFragmentManager, "receiveDialog")
                 }
         }

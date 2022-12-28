@@ -17,29 +17,41 @@ class TokenTransactionsAdapter :
         val tvBalance = holder.getView<AppCompatTextView>(R.id.tv_charge_balance)
         val tvValue = holder.getView<AppCompatTextView>(R.id.tv_value)
         tvBalance.setTextColor(context.getColor(R.color.color_262626))
-        when (item.transaction_type.toString()) {
-            "in" -> {
-                ivIcon.setImageResource(R.drawable.icon_type_in)
-                tvTitle.text = "Receive ${item.from_addr}"
-                tvBalance.setTextColor(context.getColor(R.color.color_35C1D8))
-                tvBalance.text = "+${item.value}${item.symbol}"
-            }
-            "out" -> {
-                ivIcon.setImageResource(R.drawable.icon_type_out)
-                tvTitle.text = "Send ${item.to_addr}"
-                tvBalance.text = "-${item.value}${item.symbol}"
-            }
-            "fail" -> {
+        tvTitle.text = "${item.type} ${item.to_addr}"
+        tvBalance.setTextColor(context.getColor(R.color.color_262626))
+        tvBalance.text = "-${item.value}${item.symbol}"
+        when(item.status){
+            3 -> {
                 ivIcon.setImageResource(R.drawable.icon_type_failed)
-                tvTitle.text = "Send ${item.to_addr}"
-                tvBalance.text = "-${item.value}${item.symbol}"
+                tvTitle.text = "${item.type} ${item.to_addr}"
             }
             else -> {
-                ivIcon.setImageResource(R.drawable.icon_type_failed)
-                tvTitle.text = "Send ${item.to_addr}"
-                tvBalance.text = "-${item.value}${item.symbol}"
-            }
+                when (item.type) {
+                    "Send" -> {
+                        ivIcon.setImageResource(R.drawable.icon_type_send)
+                    }
+                    "Receive" -> {
+                        tvBalance.setTextColor(context.getColor(R.color.color_35C1D8))
+                        ivIcon.setImageResource(R.drawable.icon_type_receive)
+                        tvTitle.text = "${item.type} ${item.from_addr}"
+                        tvBalance.text = "+${item.value}${item.symbol}"
+                    }
+                    "Approve" -> {
+                        ivIcon.setImageResource(R.drawable.icon_type_approve)
+                    }
+                    "Mint" -> {
+                        ivIcon.setImageResource(R.drawable.icon_type_transfer)
+                    }
+                    "Swap" -> {
+                        ivIcon.setImageResource(R.drawable.icon_type_transfer)
+                    }
+                    else -> {
+                        ivIcon.setImageResource(R.drawable.icon_type_transfer)
+                    }
+                }
+             }
         }
+
         tvTime.text = item.time
         tvValue.text = "$${item.balance_u}"
     }

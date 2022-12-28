@@ -64,6 +64,7 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
         mAdapter?.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
                 val item = mAdapter?.getItem(position) ?: return
+                if (item.contract_address.isNullOrEmpty()) return
                 showProgress()
                 if (item.isIs_selected) {
                     Go23WalletManage.getInstance().removeToken(

@@ -10,6 +10,7 @@ import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivityChargeDetailsBinding
 import com.go23wallet.mpcwalletdemo.utils.CopyUtils
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
+import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 
 class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
 
@@ -26,10 +27,11 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
     private fun initView() {
         Go23WalletManage.getInstance().requestTransactionDetail(
             hash,
+            UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
             object : BaseCallBack<TransactionDetailResponse> {
                 override fun success(data: TransactionDetailResponse?) {
                     data?.data?.let {
-                        if (it.type == 3) {
+                        if (it.transaction_class == 3) {
                             binding.nftView.visibility = View.VISIBLE
                             GlideUtils.loadImg(this@ChargeDetailsActivity, it.image, binding.ivNft)
                             binding.tvNftName.text = it.image_name
@@ -59,7 +61,7 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
                         binding.tvToAddress.text = it.to_addr
                         binding.tvTxIdAddress.text = it.hash
                         binding.tvNetworkContent.text = it.network
-                        binding.tvGasValue.text = "${it.gas_fee} ${it.symbol}"
+                        binding.tvGasValue.text = "${it.gas_fee} ${it.gas_symbol}"
                     }
                 }
 
