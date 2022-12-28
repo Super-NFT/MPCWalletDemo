@@ -98,6 +98,48 @@
         app:layout_constraintTop_toTopOf="@id/et_address" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_gas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/gas"
+        android:textColor="@color/color_262626"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_address" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_gas_num"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/shape_r8_f5_border_d9_bg"
+        android:gravity="center_vertical"
+        android:paddingStart="8dp"
+        android:paddingEnd="60dp"
+        android:textColor="@color/color_262626"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_gas" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_gas_fail_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/gas_free_fail_tip"
+        android:textColor="@color/color_D83548"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_gas_num" />
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_cancel"
         android:layout_width="141dp"
         android:layout_height="45dp"

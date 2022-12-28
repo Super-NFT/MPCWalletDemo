@@ -38,6 +38,7 @@ class TokenTransactionsAdapter :
                     }
                     "Approve" -> {
                         ivIcon.setImageResource(R.drawable.icon_type_approve)
+                        tvBalance.text = "${item.value}${item.symbol}"
                     }
                     "Mint" -> {
                         ivIcon.setImageResource(R.drawable.icon_type_transfer)

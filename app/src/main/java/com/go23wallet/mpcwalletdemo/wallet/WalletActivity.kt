@@ -136,7 +136,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                             }
 
                                             override fun reSharding() {
-
+                                                toReSharding()
                                             }
                                         })
                             } ?: kotlin.run {
@@ -242,6 +242,54 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                 })
     }
 
+    private fun toReSharding() {
+        getEmailCode("reshare") {
+            forgetPswDialog.show(supportFragmentManager, "forgetPswDialog")
+            forgetPswDialog.callback = {
+                it?.let {
+                    KeygenUtils.getInstance().requestMerchantKey(
+                        Go23WalletManage.getInstance().walletAddress,
+                        object : BaseCallBack<MerchantResponse> {
+                            override fun success(data: MerchantResponse?) {
+                                data?.data?.let { key ->
+                                    Go23WalletManage.getInstance().startReShare(
+                                        this@WalletActivity,
+                                        key.keygen,
+                                        Go23WalletManage.getInstance().walletAddress,
+                                        "111111",
+                                        object : ResharedingCallBack {
+
+                                            override fun success(key3: String?) {
+                                                //update key
+                                                KeygenUtils.getInstance().updateMerchantKey(
+                                                    Go23WalletManage.getInstance().walletAddress,
+                                                    key3
+                                                )
+                                                dismissProgress()
+                                                successDialog.show(
+                                                    supportFragmentManager,
+                                                    "successDialog"
+                                                )
+                                            }
+
+                                            override fun failed() {
+                                                dismissProgress()
+                                            }
+
+                                        })
+                                } ?: kotlin.run {
+                                    dismissProgress()
+                                }
+                            }
+
+                            override fun failed() {
+                            }
+                        })
+                }
+            }
+        }
+    }
+
     private fun getEmailCode(value: String, callback: User.() -> Unit = {}) {
         Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<UserResponse?> ->
             val `object` = JsonObject()
@@ -299,51 +347,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             settingDialog.show(supportFragmentManager, "settingDialog")
             settingDialog.callback = {
                 showProgress()
-                getEmailCode("reshare") {
-                    forgetPswDialog.show(supportFragmentManager, "forgetPswDialog")
-                    forgetPswDialog.callback = {
-                        it?.let {
-                            KeygenUtils.getInstance().requestMerchantKey(
-                                Go23WalletManage.getInstance().walletAddress,
-                                object : BaseCallBack<MerchantResponse> {
-                                    override fun success(data: MerchantResponse?) {
-                                        data?.data?.let { key ->
-                                            Go23WalletManage.getInstance().startReShare(
-                                                this@WalletActivity,
-                                                key.keygen,
-                                                Go23WalletManage.getInstance().walletAddress,
-                                                "111111",
-                                                object : ResharedingCallBack {
-
-                                                    override fun success(key3: String?) {
-                                                        //update key
-                                                        KeygenUtils.getInstance().updateMerchantKey(
-                                                            Go23WalletManage.getInstance().walletAddress,
-                                                            key3
-                                                        )
-                                                        dismissProgress()
-                                                        successDialog.show(
-                                                            supportFragmentManager,
-                                                            "successDialog"
-                                                        )
-                                                    }
-
-                                                    override fun failed() {
-                                                        dismissProgress()
-                                                    }
-
-                                                })
-                                        } ?: kotlin.run {
-                                            dismissProgress()
-                                        }
-                                    }
-
-                                    override fun failed() {
-                                    }
-                                })
-                        }
-                    }
-                }
+                toReSharding()
             }
         }
 

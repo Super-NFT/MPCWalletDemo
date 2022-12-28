@@ -42,6 +42,10 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
                             binding.nftView.visibility = View.GONE
                             binding.tvAmountValue.text = "${it.amount} ${it.symbol}"
                         }
+                        if (it.type == "Approve") {
+                            binding.tvAmountValue.visibility = View.GONE
+                            binding.tvAmount.visibility = View.GONE
+                        }
                         when (it.status) {
                             1 -> {
                                 binding.ivChargeType.setImageResource(R.drawable.icon_charge_processing)

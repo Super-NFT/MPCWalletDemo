@@ -31,12 +31,18 @@ import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 import com.google.gson.Gson
 import com.google.zxing.activity.CaptureActivity
+import java.math.BigDecimal
+import java.text.DecimalFormat
 
 
 class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
 
     private val selectTokenSendDialog: SelectTokenSendDialog by lazy {
         SelectTokenSendDialog(this)
+    }
+
+    private val format = DecimalFormat().apply {
+        isParseBigDecimal = true
     }
 
     override val layoutRes: Int = R.layout.activity_send_coin
@@ -84,7 +90,12 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                             binding.tvAvailable.text =
                                 String.format(
                                     getString(R.string.available),
-                                    "${if (it.contract_address.isEmpty()) preToken.platform_balance_sort else preToken.token_balance_sort} ${it.symbol}"
+                                    "${
+                                        if (it.contract_address.isEmpty()) format.parse(
+                                            preToken.platform_balance_sort.toString()
+                                        )
+                                        else format.parse(preToken.token_balance_sort.toString())
+                                    } ${it.symbol}"
                                 )
                             binding.tvCoinSymbol.text = it.symbol
                             binding.tvGasBalance.text =
@@ -152,11 +163,12 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                 val num = s.toString().toDouble()
 
                 val uPer = if (chainTokenInfo?.contract_address.isNullOrEmpty()) {
-                    preTokenSend?.platform_u_per
+                    preTokenSend?.platform_u_per ?: 0.0
                 } else {
-                    preTokenSend?.token_u_per
+                    preTokenSend?.token_u_per ?: 0.0
                 }
-                binding.tvInputValue.text = if (uPer == null || uPer <= 0) "" else "=$${num * uPer}"
+                binding.tvInputValue.text =
+                    if (uPer == null || uPer <= 0) "" else "=$${num * uPer}"
 
                 updateSendStatus()
             }
@@ -165,11 +177,12 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
             CopyUtils.pasteText(this, binding.etToAddress)
         }
         binding.tvAll.setOnClickListener {
-            preTokenSend?.let {
+            preTokenSend?.let { preToken ->
                 val availableNum =
-                    if (chainTokenInfo?.contract_address.isNullOrEmpty()) it.platform_balance_sort else it.token_balance_sort
-                val num = availableNum * (1 - it.fee)
-                binding.etInputNum.setText("$num")
+                    if (chainTokenInfo?.contract_address.isNullOrEmpty()) format.parse(
+                        preToken.platform_balance_sort.toString()
+                    ) else format.parse(preToken.token_balance_sort.toString())
+                binding.etInputNum.setText("${availableNum ?: ""}")
             }
         }
         binding.ivClear.setOnClickListener {
@@ -277,17 +290,20 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         if (inputStr.isNullOrEmpty()) {
             return
         }
-        val num = inputStr.toDouble()
-        var totalValue = 1.0
-        var availableNum = 0.0
+        var totalValue = format.parse(inputStr) as? BigDecimal ?: BigDecimal(0)
+        var availableNum = BigDecimal(0)
         preTokenSend?.let {
-            totalValue = num * (1 + it.fee)
             availableNum =
-                if (chainTokenInfo?.contract_address.isNullOrEmpty()) it.platform_balance_sort else it.token_balance_sort
+                if (chainTokenInfo?.contract_address.isNullOrEmpty()) format.parse(
+                    it.platform_balance_sort.toString()
+                )
+                        as? BigDecimal ?: BigDecimal(0) else format.parse(
+                    it.token_balance_sort.toString()
+                ) as? BigDecimal ?: BigDecimal(0)
         }
         binding.tvTotalValue.text = "$totalValue ${chainTokenInfo?.symbol}"
         binding.tvSend.isEnabled =
-            totalValue > 0 && totalValue <= availableNum && !TextUtils.isEmpty(binding.etToAddress.text) && isSelectGas && !TextUtils.isEmpty(
+            totalValue > BigDecimal(0) && totalValue <= availableNum && !TextUtils.isEmpty(binding.etToAddress.text) && isSelectGas && !TextUtils.isEmpty(
                 binding.tvTotalValue.text
             )
     }

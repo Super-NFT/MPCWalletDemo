@@ -65,7 +65,9 @@
     <string name="txID">TxID</string>
     <string name="network">Network</string>
     <string name="amount">Amount</string>
+    <string name="gas">Gas</string>
     <string name="gas_free">Gas Fee</string>
+    <string name="gas_free_fail_tip">Insufficient balance</string>
     <string name="total">Total</string>
     <string name="coin_mark">Standard:ERC-20</string>
 

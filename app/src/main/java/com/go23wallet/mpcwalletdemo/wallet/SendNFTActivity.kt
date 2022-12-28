@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.blankj.utilcode.constant.PermissionConstants
@@ -55,6 +56,9 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
                     dismissProgress()
                     data?.data?.let {
                         binding.tvConfirm.isEnabled = it.isIs_ok
+                        binding.tvGasNum.text = it.gas
+                        binding.tvGasFailTip.visibility =
+                            if (it.isIs_ok) View.GONE else View.VISIBLE
                     } ?: kotlin.run {
                         binding.tvConfirm.isEnabled = false
                     }
