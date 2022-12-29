@@ -28,6 +28,7 @@ import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.data.ChainTokenInfo
 import com.go23wallet.mpcwalletdemo.databinding.ActivityWalletBinding
 import com.go23wallet.mpcwalletdemo.dialog.*
+import com.go23wallet.mpcwalletdemo.ext.parseAddress
 import com.go23wallet.mpcwalletdemo.fragment.NFTFragment
 import com.go23wallet.mpcwalletdemo.fragment.TokenFragment
 import com.go23wallet.mpcwalletdemo.utils.*
@@ -86,7 +87,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         binding.tvEmail.text = Constant.emailStr
         GlideUtils.loadImg(
             this@WalletActivity,
-            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_bt%2F0%2F14297516724%2F641&refer=http%3A%2F%2Finews.gtimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1673507770&t=02715a701dcbd42df9024be0da7c4f62",
+            "https://d2vvute2v3y7pn.cloudfront.net/logo/Avalanche/0xe0bb6feD446A2dbb27F84D3C27C4ED8EA7603366.webp",
             binding.ivAvatar
         )
         showProgress()
@@ -167,7 +168,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                     dismissProgress()
                     data?.data?.get(0)?.let {
                         walletInfo = it
-                        binding.tvAddress.text = it.wallet_address
+                        binding.tvAddress.text = it.wallet_address.parseAddress()
                         UserWalletInfoManager.setWalletInfo(it)
                         loadData(it)
                         val key = SPUtils.getInstance().getString(it.wallet_address)
@@ -383,8 +384,8 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         binding.tvReceive.setOnClickListener {
             receiveDialog = ReceiveDialog(
                 this,
-                binding.tvChainAddress.text.toString(),
-                binding.tvAddress.text.toString()
+                userChain?.name ?: "",
+                walletInfo?.wallet_address ?: ""
             ).apply {
                 show(supportFragmentManager, "receiveDialog")
             }

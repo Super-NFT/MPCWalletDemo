@@ -36,26 +36,15 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:letterSpacing">0.02</item>
         <!-- Customize your theme here. -->
-    </style>
-
-    <style name="BarMediumAppearance" parent="TextAppearance.AppCompat">
-        <item name="fontFamily">@font/barlowcondensed_medium</item>
-    </style>
-
-    <style name="BarRegularAppearance" parent="TextAppearance.AppCompat">
-        <item name="fontFamily">@font/barlowcondensed_regular</item>
-    </style>
-
-    <style name="BarSemiboldAppearance" parent="TextAppearance.AppCompat">
-        <item name="fontFamily">@font/barlowcondensed_medium</item>
-
     </style>
 
     <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/barlowcondensed_medium</item>
+        <item name="android:letterSpacing">0.04</item>
     </style>
 
     <style name="CommonDialog" parent="@style/Theme.AppCompat.Light.Dialog">

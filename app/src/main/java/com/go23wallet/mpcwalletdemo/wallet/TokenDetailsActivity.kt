@@ -65,7 +65,7 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
             binding.tvCoinName.text = UserWalletInfoManager.getUserWalletInfo().userChain.name
 
             binding.tvBalance.text = it.balance
-            binding.tvValue.visibility = if (it.balance_u.toDouble() > 0) View.VISIBLE else View.GONE
+            binding.tvValue.visibility = if (it.balance_u.toDouble() > 0) View.VISIBLE else View.INVISIBLE
             binding.tvValue.text = "$${it.balance_u}"
             initView()
         }

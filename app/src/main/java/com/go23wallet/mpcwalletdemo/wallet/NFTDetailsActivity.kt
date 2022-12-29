@@ -3,7 +3,6 @@ package com.go23wallet.mpcwalletdemo.wallet
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.coins.app.BaseCallBack
@@ -49,6 +48,7 @@ class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
                         nft = it
                         GlideUtils.loadImg(this@NFTDetailsActivity, it.image, binding.ivNft)
                         binding.tvNftName.text = it.name
+                        binding.tvSeriesName.text = it.name
                         binding.tvDescriptionContent.text =
                             if (it.description.isNullOrEmpty()) "none" else it.description
                         if (it.attributes.isNullOrEmpty()) {

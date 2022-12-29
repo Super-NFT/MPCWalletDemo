@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:fontFamily="@font/barlowcondensed_medium"
+        android:letterSpacing="0.04"
         android:text="@string/import_asset"
         android:textColor="@color/color_262626"
         android:textSize="24sp"

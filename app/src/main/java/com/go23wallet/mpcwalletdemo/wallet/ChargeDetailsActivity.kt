@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.View
 import com.coins.app.BaseCallBack
 import com.coins.app.Go23WalletManage
+import com.coins.app.bean.transaction.TransactionDetail
 import com.coins.app.bean.transaction.TransactionDetailResponse
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivityChargeDetailsBinding
+import com.go23wallet.mpcwalletdemo.ext.parseAddress
 import com.go23wallet.mpcwalletdemo.utils.CopyUtils
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
@@ -17,6 +19,8 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
     override val layoutRes: Int = R.layout.activity_charge_details
 
     private var hash = ""
+
+    private var details: TransactionDetail? = null
 
     override fun initViews(savedInstanceState: Bundle?) {
         hash = intent.getStringExtra("hash") ?: ""
@@ -31,6 +35,7 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
             object : BaseCallBack<TransactionDetailResponse> {
                 override fun success(data: TransactionDetailResponse?) {
                     data?.data?.let {
+                        details = it
                         if (it.transaction_class == 3) { // nft
                             binding.nftView.visibility = View.VISIBLE
                             GlideUtils.loadImg(this@ChargeDetailsActivity, it.image, binding.ivNft)
@@ -57,9 +62,9 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
                             }
                         }
                         binding.tvTime.text = it.time
-                        binding.tvFromAddress.text = it.from_addr
-                        binding.tvToAddress.text = it.to_addr
-                        binding.tvTxIdAddress.text = it.hash
+                        binding.tvFromAddress.text = it.from_addr.parseAddress()
+                        binding.tvToAddress.text = it.to_addr.parseAddress()
+                        binding.tvTxIdAddress.text = it.hash.parseAddress()
                         binding.tvNetworkContent.text = it.network
                         binding.tvGasValue.text = "${it.gas_fee} ${it.gas_symbol}"
                     }
@@ -75,13 +80,13 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
             finish()
         }
         binding.ivFromCopy.setOnClickListener {
-            CopyUtils.copyText(this, binding.tvFromAddress.text.toString())
+            CopyUtils.copyText(this, details?.from_addr ?: "")
         }
         binding.ivToCopy.setOnClickListener {
-            CopyUtils.copyText(this, binding.tvToAddress.text.toString())
+            CopyUtils.copyText(this, details?.to_addr ?: "")
         }
         binding.ivTxIdCopy.setOnClickListener {
-            CopyUtils.copyText(this, binding.tvTxIdAddress.text.toString())
+            CopyUtils.copyText(this, details?.hash ?: "")
         }
     }
 }

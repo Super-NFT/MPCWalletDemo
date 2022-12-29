@@ -17,10 +17,11 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_back"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:layout_gravity="start"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
+            android:padding="10dp"
             android:src="@drawable/icon_back" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -28,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/barlowcondensed_medium"
+            android:letterSpacing="0.04"
             android:text="@string/send"
             android:textColor="@color/color_262626"
             android:textSize="24sp" />
@@ -73,9 +75,10 @@
                 android:layout_marginStart="12dp"
                 android:ellipsize="middle"
                 android:fontFamily="@font/barlowcondensed_medium"
+                android:letterSpacing="0.04"
                 android:lines="1"
                 android:textColor="@color/color_262626"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="@id/v_coin_type"
                 app:layout_constraintEnd_toStartOf="@id/tv_coin_mark"
                 app:layout_constraintStart_toEndOf="@id/iv_coin_icon"
@@ -136,7 +139,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_from_address"
-                android:layout_width="87dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:ellipsize="middle"
@@ -163,12 +166,14 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_to_address"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/shape_r8_f5_border_d9_bg"
+                android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 android:gravity="center_vertical"
+                android:minHeight="48dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="60dp"
                 android:textColor="@color/color_262626"
@@ -194,6 +199,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/barlowcondensed_medium"
+                android:letterSpacing="0.04"
                 android:text="@string/paste"
                 android:textColor="@color/color_35C1D8"
                 android:textSize="16sp"
@@ -248,10 +254,11 @@
                 android:gravity="center_vertical"
                 android:hint="@string/input_amount"
                 android:inputType="numberDecimal"
+                android:letterSpacing="0.04"
                 android:maxLength="18"
                 android:textColor="@color/color_262626"
-                android:textColorHint="@color/color_8C8C8C"
-                android:textSize="20sp"
+                android:textColorHint="@color/color_BFBFBF"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@id/tv_input_value"
                 app:layout_constraintEnd_toStartOf="@id/iv_clear"
                 app:layout_constraintStart_toStartOf="@id/input_view"
@@ -264,6 +271,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/barlowcondensed_medium"
                 android:inputType="number"
+                android:letterSpacing="0.04"
                 android:textColor="@color/color_BFBFBF"
                 android:textSize="12sp"
                 android:visibility="gone"
@@ -278,6 +286,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/barlowcondensed_medium"
+                android:letterSpacing="0.04"
                 android:padding="8dp"
                 android:text="@string/all"
                 android:textColor="@color/color_35C1D8"
@@ -301,6 +310,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/barlowcondensed_medium"
+                android:letterSpacing="0.04"
                 android:textColor="@color/color_BFBFBF"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_all"
@@ -333,7 +343,7 @@
             <View
                 android:id="@+id/v_gas_view"
                 android:layout_width="0dp"
-                android:layout_height="66dp"
+                android:layout_height="70dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="20dp"
@@ -353,20 +363,23 @@
                 app:layout_constraintBottom_toTopOf="@id/tv_gas_value"
                 app:layout_constraintEnd_toEndOf="@id/v_gas_view"
                 app:layout_constraintStart_toStartOf="@id/v_gas_view"
-                app:layout_constraintTop_toTopOf="@id/v_gas_view" />
+                app:layout_constraintTop_toTopOf="@id/v_gas_view"
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_gas_value"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="8dp"
                 android:textColor="@color/color_8C8C8C"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/v_gas_view"
                 app:layout_constraintEnd_toEndOf="@id/v_gas_view"
                 app:layout_constraintStart_toStartOf="@id/v_gas_view"
-                app:layout_constraintTop_toBottomOf="@id/tv_gas_balance" />
+                app:layout_constraintTop_toBottomOf="@id/tv_gas_balance"
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_gas_tips"
@@ -399,6 +412,7 @@
         android:enabled="false"
         android:fontFamily="@font/barlowcondensed_medium"
         android:gravity="center"
+        android:letterSpacing="0.04"
         android:text="@string/send"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -413,9 +427,10 @@
         android:layout_marginStart="20dp"
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/barlowcondensed_medium"
+        android:letterSpacing="0.04"
         android:text="@string/total"
         android:textColor="@color/color_262626"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@id/tv_send"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -426,8 +441,9 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/barlowcondensed_medium"
+        android:letterSpacing="0.04"
         android:textColor="@color/color_262626"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@id/tv_send"
         app:layout_constraintEnd_toEndOf="parent" />
 

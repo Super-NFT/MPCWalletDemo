@@ -6,6 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.coins.app.bean.transaction.Transaction
 import com.go23wallet.mpcwalletdemo.R
+import com.go23wallet.mpcwalletdemo.ext.parseAddress
 
 class TokenTransactionsAdapter :
     BaseQuickAdapter<Transaction, BaseViewHolder>(R.layout.layout_token_type_item) {
@@ -17,13 +18,13 @@ class TokenTransactionsAdapter :
         val tvBalance = holder.getView<AppCompatTextView>(R.id.tv_charge_balance)
         val tvValue = holder.getView<AppCompatTextView>(R.id.tv_value)
         tvBalance.setTextColor(context.getColor(R.color.color_262626))
-        tvTitle.text = "${item.type} ${item.to_addr}"
+        tvTitle.text = "${item.type} ${item.to_addr.parseAddress()}"
         tvBalance.setTextColor(context.getColor(R.color.color_262626))
         tvBalance.text = "-${item.value}${item.symbol}"
         when(item.status){
             3 -> {
                 ivIcon.setImageResource(R.drawable.icon_type_failed)
-                tvTitle.text = "${item.type} ${item.to_addr}"
+                tvTitle.text = "${item.type} ${item.to_addr.parseAddress()}"
             }
             else -> {
                 when (item.type) {
@@ -33,7 +34,7 @@ class TokenTransactionsAdapter :
                     "Receive" -> {
                         tvBalance.setTextColor(context.getColor(R.color.color_35C1D8))
                         ivIcon.setImageResource(R.drawable.icon_type_receive)
-                        tvTitle.text = "${item.type} ${item.from_addr}"
+                        tvTitle.text = "${item.type} ${item.from_addr.parseAddress()}"
                         tvBalance.text = "+${item.value}${item.symbol}"
                     }
                     "Approve" -> {

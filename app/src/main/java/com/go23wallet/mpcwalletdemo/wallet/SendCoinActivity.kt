@@ -3,9 +3,9 @@ package com.go23wallet.mpcwalletdemo.wallet
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -18,7 +18,6 @@ import com.coins.app.bean.transaction.PreTokenSend
 import com.coins.app.bean.transaction.PreTokenSendResponse
 import com.coins.app.entity.mpc.SignResponse
 import com.coins.app.manage.Go23WalletTransactionManage
-import com.coins.app.ui.gamecenter.ApproveDialog
 import com.coins.app.util.MpcUtil
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
@@ -26,10 +25,11 @@ import com.go23wallet.mpcwalletdemo.data.ChainTokenInfo
 import com.go23wallet.mpcwalletdemo.databinding.ActivitySendCoinBinding
 import com.go23wallet.mpcwalletdemo.dialog.SelectTokenSendDialog
 import com.go23wallet.mpcwalletdemo.dialog.SendCoinResultDialog
+import com.go23wallet.mpcwalletdemo.ext.parseAddress
 import com.go23wallet.mpcwalletdemo.utils.CopyUtils
+import com.go23wallet.mpcwalletdemo.utils.FloatLengthFilter
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
-import com.google.gson.Gson
 import com.google.zxing.activity.CaptureActivity
 import java.math.BigDecimal
 import java.text.DecimalFormat
@@ -67,6 +67,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
     }
 
     private fun initData() {
+        binding.etInputNum.filters = arrayOf<InputFilter>(FloatLengthFilter(8))
         chainTokenInfo?.let {
             GlideUtils.loadImg(this, it.imgUrl, binding.ivCoinIcon)
             binding.tvCoinName.text = it.name
@@ -86,7 +87,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                                 String.format(getString(R.string.gas_tips), chainTokenInfo?.symbol)
                             binding.tvGasTips.visibility =
                                 if (preToken.isIs_lending_gas) View.VISIBLE else View.GONE
-                            binding.tvFromAddress.text = it.user_wallet_address
+                            binding.tvFromAddress.text = it.user_wallet_address.parseAddress()
                             binding.tvAvailable.text =
                                 String.format(
                                     getString(R.string.available),
@@ -173,7 +174,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                 updateSendStatus()
             }
         })
-        binding.etToAddress.addTextChangedListener(object: TextWatcher {
+        binding.etToAddress.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -314,7 +315,8 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         }
         binding.tvTotalValue.text = "$totalValue ${chainTokenInfo?.symbol}"
         binding.tvSend.isEnabled =
-            totalValue > BigDecimal(0) && totalValue <= availableNum && !TextUtils.isEmpty(binding.etToAddress.text) && isSelectGas && !TextUtils.isEmpty(
+            totalValue > BigDecimal(0) && totalValue <= availableNum && (preTokenSend?.trans_type
+                ?: 0) != 0 && !TextUtils.isEmpty(binding.etToAddress.text) && isSelectGas && !TextUtils.isEmpty(
                 binding.tvTotalValue.text
             )
     }

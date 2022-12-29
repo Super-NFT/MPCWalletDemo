@@ -17,10 +17,11 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_back"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="10dp"
+            android:padding="10dp"
             android:layout_gravity="start"
-            android:layout_marginStart="20dp"
             android:src="@drawable/icon_back" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -28,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/barlowcondensed_medium"
+            android:letterSpacing="0.04"
             android:text="@string/add_a_token"
             android:textColor="@color/color_262626"
             android:textSize="24sp" />

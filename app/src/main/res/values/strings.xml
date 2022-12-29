@@ -23,7 +23,7 @@
     <string name="email">Email</string>
     <string name="pin_code">PIN code</string>
     <string name="pin_code_error">PIN code Error</string>
-    <string name="verify_count">Verify your count</string>
+    <string name="verify_count">Verify your account</string>
     <string name="verify">Verify</string>
     <string name="confirm">Confirm</string>
     <string name="ok">OK</string>
