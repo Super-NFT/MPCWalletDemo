@@ -54,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="@string/successfully"
+        android:fontFamily="@font/barlowcondensed_semibold"
         android:textColor="@color/color_262626"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"

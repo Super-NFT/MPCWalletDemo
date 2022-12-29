@@ -35,6 +35,7 @@
         android:layout_marginTop="135dp"
         android:drawableTop="@drawable/icon_success"
         android:drawablePadding="26dp"
+        android:fontFamily="@font/barlowcondensed_semibold"
         android:text="@string/successfully"
         android:textColor="@color/color_262626"
         android:textSize="24sp"

@@ -1,6 +1,7 @@
 package com.go23wallet.mpcwalletdemo.wallet
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -30,11 +31,7 @@ import com.go23wallet.mpcwalletdemo.databinding.ActivityWalletBinding
 import com.go23wallet.mpcwalletdemo.dialog.*
 import com.go23wallet.mpcwalletdemo.fragment.NFTFragment
 import com.go23wallet.mpcwalletdemo.fragment.TokenFragment
-import com.go23wallet.mpcwalletdemo.utils.Constant
-import com.go23wallet.mpcwalletdemo.utils.CopyUtils
-import com.go23wallet.mpcwalletdemo.utils.GlideUtils
-import com.go23wallet.mpcwalletdemo.utils.KeygenUtils
-import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
+import com.go23wallet.mpcwalletdemo.utils.*
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import io.reactivex.Observable

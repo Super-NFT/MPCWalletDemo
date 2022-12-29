@@ -14,6 +14,7 @@ import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.NFTAttributeAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivityNftDetailsBinding
+import com.go23wallet.mpcwalletdemo.ext.parseAddress
 import com.go23wallet.mpcwalletdemo.utils.CopyUtils
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
@@ -56,8 +57,8 @@ class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
                         } else {
                             mAdapter?.setNewInstance(it.attributes)
                         }
-                        binding.tvAddress.text = it.contract_address
-                        binding.tvTokenAddress.text = it.token_id.toString()
+                        binding.tvAddress.text = it.contract_address.parseAddress()
+                        binding.tvTokenAddress.text = it.token_id.toString().parseAddress()
                         binding.tvWebsiteAddress.text =
                             if (it.external_url.isNullOrEmpty()) "none" else it.external_url
                         binding.tvBlockchainAddress.text = it.block_chain_name.toString()
@@ -87,10 +88,10 @@ class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
             finish()
         }
         binding.tvAddress.setOnClickListener {
-            CopyUtils.copyText(this, binding.tvAddress.text.toString())
+            CopyUtils.copyText(this, nft?.contract_address ?: "")
         }
         binding.tvTokenAddress.setOnClickListener {
-            CopyUtils.copyText(this, binding.tvTokenAddress.text.toString())
+            CopyUtils.copyText(this, nft?.token_id?.toString() ?: "")
         }
         binding.tvTransfer.setOnClickListener {
             startActivity(Intent(this@NFTDetailsActivity, SendNFTActivity::class.java).apply {
