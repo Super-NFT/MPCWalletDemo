@@ -228,7 +228,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                     object : BaseCallBack<BalanceResponse> {
                                         override fun success(data: BalanceResponse?) {
                                             binding.tvTotalBalanceValue.text =
-                                                data?.data?.balance ?: "0"
+                                                "${data?.data?.balance ?: "0"} ${it.symbol}"
                                         }
 
                                         override fun failed() {
@@ -288,52 +288,13 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     }
 
     private fun toReSharding() {
+        showProgress()
         getEmailCode("reshare") {
+            dismissProgress()
             forgetPswDialog.show(supportFragmentManager, "forgetPswDialog")
             forgetPswDialog.callback = {
                 it?.let {
-                    KeygenUtils.getInstance().requestMerchantKey(
-                        Go23WalletManage.getInstance().walletAddress,
-                        object : BaseCallBack<MerchantResponse> {
-                            override fun success(data: MerchantResponse?) {
-                                data?.data?.let { key ->
-                                    Go23WalletManage.getInstance().startReShareForEmail(
-                                        this@WalletActivity,
-                                        key.keygen,
-                                        Go23WalletManage.getInstance().walletAddress,
-                                        "111111",
-                                        object : ResharedingCallBack {
-
-                                            override fun success(key3: String?) {
-                                                //update key
-                                                KeygenUtils.getInstance().updateMerchantKey(
-                                                    Go23WalletManage.getInstance().walletAddress,
-                                                    key3
-                                                )
-                                                dismissProgress()
-                                                successDialog.show(
-                                                    supportFragmentManager,
-                                                    "successDialog"
-                                                )
-                                            }
-
-                                            override fun failed() {
-                                                dismissProgress()
-                                            }
-
-                                            override fun reshareForEmail() {
-                                            }
-
-                                        })
-                                } ?: kotlin.run {
-                                    dismissProgress()
-                                }
-                            }
-
-                            override fun failed() {
-                                dismissProgress()
-                            }
-                        })
+                    toReshardingForPinCode()
                 }
             }
         }

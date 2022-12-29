@@ -56,7 +56,7 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
                     dismissProgress()
                     data?.data?.let {
                         binding.tvConfirm.isEnabled = it.isIs_ok
-                        binding.tvGasNum.text = it.gas
+                        binding.tvGasNum.text = "${it.gas} ${UserWalletInfoManager.getUserWalletInfo().userChain.symbol}"
                         binding.tvGasFailTip.visibility =
                             if (it.isIs_ok) View.GONE else View.VISIBLE
                     } ?: kotlin.run {

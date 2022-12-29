@@ -108,7 +108,7 @@
     <string name="pending_block_validation">Pending block validation. Please go to Details page to view details of this transaction.</string>
     <string name="view_details">View Details</string>
     <string name="gas_tips">%s support to lend users gas for trading</string>
-    <string name="input_amount">input amount</string>
+    <string name="input_amount">Enter Amount</string>
 
     <string name="add_success">Add Success</string>
     <string name="remove_success">Remove Success</string>
