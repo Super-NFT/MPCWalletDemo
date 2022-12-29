@@ -397,7 +397,7 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/selector_btn_enable"
         android:enabled="false"
-        android:fontFamily="@font/barlowcondensed_semibold"
+        android:fontFamily="@font/barlowcondensed_medium"
         android:gravity="center"
         android:text="@string/send"
         android:textColor="@color/white"

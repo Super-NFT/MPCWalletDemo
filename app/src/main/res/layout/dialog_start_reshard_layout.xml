@@ -4,8 +4,8 @@
     android:id="@+id/dialog_setting"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="25dp"
-    android:background="@drawable/shape_top_r12_white">
+    android:background="@drawable/shape_top_r12_white"
+    android:paddingBottom="25dp">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_back"
@@ -22,6 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/barlowcondensed_medium"
         android:text="@string/resharding"
         android:textColor="@color/color_262626"
         android:textSize="24sp"
@@ -46,11 +47,12 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="45dp"
         android:layout_marginEnd="20dp"
+        android:background="@drawable/shape_r8_35c1d8_bg"
+        android:fontFamily="@font/barlowcondensed_medium"
         android:gravity="center"
+        android:text="@string/start_reshard"
         android:textColor="@color/white"
         android:textSize="24sp"
-        android:text="@string/start_reshard"
-        android:background="@drawable/shape_r8_35c1d8_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_coin" />

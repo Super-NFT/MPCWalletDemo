@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
+        android:fontFamily="@font/barlowcondensed_medium"
         android:text="@string/send_nft"
         android:textColor="@color/color_262626"
         android:textSize="24sp"
@@ -110,8 +111,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
-        android:textColor="@color/color_8C8C8C"
         android:text="@string/token_id_content"
+        android:textColor="@color/color_8C8C8C"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_nft_avatar"
         app:layout_constraintStart_toEndOf="@id/iv_nft_avatar"
@@ -287,13 +288,14 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/shape_r8_35c1d8_bg"
+        android:fontFamily="@font/barlowcondensed_medium"
         android:gravity="center"
         android:text="@string/confirm"
         android:textColor="@color/white"
         android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_gas_value"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_gas_value" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

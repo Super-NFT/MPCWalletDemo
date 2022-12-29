@@ -14,6 +14,7 @@ import com.coins.app.Go23WalletManage
 import com.coins.app.bean.Sign
 import com.coins.app.bean.nft.Nft
 import com.coins.app.bean.token.TokenResponse
+import com.coins.app.bean.transaction.PreNFTSend
 import com.coins.app.bean.transaction.PreNFTSendResponse
 import com.coins.app.entity.mpc.SignResponse
 import com.coins.app.util.MpcUtil
@@ -32,6 +33,8 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
     override val layoutRes: Int = R.layout.activity_send_nft
 
     private var nftInfo: Nft? = null
+
+    private var preNft: PreNFTSend? = null
 
     private var sendCoinResultDialog: SendCoinResultDialog? = null
 
@@ -55,8 +58,10 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
                 override fun success(data: PreNFTSendResponse?) {
                     dismissProgress()
                     data?.data?.let {
+                        preNft = it
                         binding.tvConfirm.isEnabled = it.isIs_ok
-                        binding.tvGasNum.text = "${it.gas} ${UserWalletInfoManager.getUserWalletInfo().userChain.symbol}"
+                        binding.tvGasNum.text =
+                            "${it.gas} ${UserWalletInfoManager.getUserWalletInfo().userChain.symbol}"
                         binding.tvGasFailTip.visibility =
                             if (it.isIs_ok) View.GONE else View.VISIBLE
                     } ?: kotlin.run {
@@ -136,7 +141,7 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
                         UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
                         object : BaseCallBack<TokenResponse> {
                             override fun success(p0: TokenResponse?) {
-                                binding.tvConfirm.isEnabled = true
+                                binding.tvConfirm.isEnabled = preNft?.isIs_ok ?: false
                             }
 
                             override fun failed() {
