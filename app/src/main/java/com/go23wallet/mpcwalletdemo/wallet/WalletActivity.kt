@@ -1,7 +1,6 @@
 package com.go23wallet.mpcwalletdemo.wallet
 
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -133,7 +132,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                             }
 
                                             override fun reSharding() {
-                                                toReSharding()
+                                                toReShardingForEmail()
                                             }
                                         })
                             } ?: kotlin.run {
@@ -269,7 +268,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                 }
 
                                 override fun reshareForEmail() {
-                                    toReSharding()
+                                    toReShardingForEmail()
                                 }
 
                             })
@@ -284,14 +283,14 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             })
     }
 
-    private fun toReSharding() {
+    private fun toReShardingForEmail() {
         showProgress()
         getEmailCode("reshare") {
             dismissProgress()
             forgetPswDialog.show(supportFragmentManager, "forgetPswDialog")
             forgetPswDialog.callback = {
                 it?.let {
-                    toReshardingForPinCode()
+                    toReShardingForEmail()
                 }
             }
         }
