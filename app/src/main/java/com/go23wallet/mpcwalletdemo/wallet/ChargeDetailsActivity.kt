@@ -31,7 +31,7 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
             object : BaseCallBack<TransactionDetailResponse> {
                 override fun success(data: TransactionDetailResponse?) {
                     data?.data?.let {
-                        if (it.transaction_class == 3) {
+                        if (it.transaction_class == 3) { // nft
                             binding.nftView.visibility = View.VISIBLE
                             GlideUtils.loadImg(this@ChargeDetailsActivity, it.image, binding.ivNft)
                             binding.tvNftName.text = it.image_name
@@ -41,10 +41,6 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
                         } else {
                             binding.nftView.visibility = View.GONE
                             binding.tvAmountValue.text = "${it.amount} ${it.symbol}"
-                        }
-                        if (it.type == "Approve") {
-                            binding.tvAmountValue.visibility = View.GONE
-                            binding.tvAmount.visibility = View.GONE
                         }
                         when (it.status) {
                             1 -> {

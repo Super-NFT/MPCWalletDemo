@@ -62,7 +62,7 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
                 binding.ivCorner
             )
             binding.tvCoinNickname.text = it.symbol
-            binding.tvCoinName.text = it.name
+            binding.tvCoinName.text = UserWalletInfoManager.getUserWalletInfo().userChain.name
 
             binding.tvBalance.text = it.balance
             binding.tvValue.visibility = if (it.balance_u.toDouble() > 0) View.VISIBLE else View.GONE
@@ -138,7 +138,7 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
         }
         binding.tvReceive.setOnClickListener {
             receiveDialog =
-                ReceiveDialog(this, token?.symbol ?: "", token?.user_wallet_address ?: "").apply {
+                ReceiveDialog(this, token?.name ?: "", token?.user_wallet_address ?: "").apply {
                     show(supportFragmentManager, "receiveDialog")
                 }
         }
