@@ -305,7 +305,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             object : BaseCallBack<MerchantResponse> {
                 override fun success(data: MerchantResponse?) {
                     data?.data?.let { key ->
-                        Go23WalletManage.getInstance().startReShareForEmail(
+                        Go23WalletManage.getInstance().startReShardingForEmail(
                             this@WalletActivity,
                             key.keygen,
                             Go23WalletManage.getInstance().walletAddress,
