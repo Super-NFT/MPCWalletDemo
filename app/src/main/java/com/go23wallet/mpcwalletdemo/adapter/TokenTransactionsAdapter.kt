@@ -1,5 +1,6 @@
 package com.go23wallet.mpcwalletdemo.adapter
 
+import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -20,8 +21,13 @@ class TokenTransactionsAdapter :
         tvBalance.setTextColor(context.getColor(R.color.color_262626))
         tvTitle.text = "${item.type} ${item.to_addr.parseAddress()}"
         tvBalance.setTextColor(context.getColor(R.color.color_262626))
-        tvBalance.text = "-${item.value}${item.symbol}"
-        when(item.status){
+        val valueStr = if (item.value.length > 12) {
+            item.value.substring(0, 12) + "..."
+        } else {
+            item.value
+        }
+        tvBalance.text = "-${valueStr}${item.symbol}"
+        when (item.status) {
             3 -> {
                 ivIcon.setImageResource(R.drawable.icon_type_failed)
                 tvTitle.text = "${item.type} ${item.to_addr.parseAddress()}"
@@ -51,10 +57,12 @@ class TokenTransactionsAdapter :
                         ivIcon.setImageResource(R.drawable.icon_type_transfer)
                     }
                 }
-             }
+            }
         }
 
         tvTime.text = item.time
+        tvValue.visibility =
+            if (item.balance_u.toDouble() > 0) View.VISIBLE else View.INVISIBLE
         tvValue.text = "$${item.balance_u}"
     }
 }

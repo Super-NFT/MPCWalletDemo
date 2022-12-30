@@ -141,7 +141,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
-        android:text="@string/gas_free_fail_tip"
+        android:text="@string/gas_insufficient"
         android:textColor="@color/color_D83548"
         android:textSize="16sp"
         android:visibility="gone"

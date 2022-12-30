@@ -7,8 +7,8 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_icon"
-        android:layout_width="34dp"
-        android:layout_height="34dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="9dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -16,57 +16,59 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_title"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
-        android:layout_marginEnd="9dp"
+        android:layout_marginEnd="10dp"
         android:ellipsize="middle"
         android:fontFamily="@font/barlowcondensed_medium"
         android:letterSpacing="0.04"
         android:lines="1"
-        android:maxWidth="78dp"
         android:textColor="@color/color_262626"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@id/tv_time"
-        app:layout_constraintEnd_toStartOf="@id/tv_charge_balance"
         app:layout_constraintStart_toEndOf="@id/iv_icon"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_time"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
         android:textColor="@color/color_8C8C8C"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tv_value"
         app:layout_constraintStart_toStartOf="@id/tv_title"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_charge_balance"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="9dp"
         android:fontFamily="@font/barlowcondensed_medium"
+        android:gravity="end"
         android:letterSpacing="0.04"
         android:textColor="@color/color_262626"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_title"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_title"
         app:layout_constraintTop_toTopOf="@id/tv_title" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_value"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="9dp"
+        android:gravity="end"
         android:textColor="@color/color_8C8C8C"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_time"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_time"
         app:layout_constraintTop_toTopOf="@id/tv_time" />
 
 

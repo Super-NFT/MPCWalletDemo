@@ -1,5 +1,6 @@
 package com.go23wallet.mpcwalletdemo.adapter
 
+import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -21,6 +22,8 @@ class SelectTokenAdapter :
         GlideUtils.loadImg(context, item.chain_image_url, ivCorner)
         tvName.text = item.symbol
         tvTokenNum.text = item.balance
+        tvTokenValue.visibility =
+            if (item.balance_u.toDouble() > 0) View.VISIBLE else View.INVISIBLE
         tvTokenValue.text = "$${item.balance_u}"
     }
 

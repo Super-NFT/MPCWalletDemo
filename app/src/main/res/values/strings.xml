@@ -67,7 +67,6 @@
     <string name="amount">Amount</string>
     <string name="gas">Gas</string>
     <string name="gas_free">Gas Fee</string>
-    <string name="gas_free_fail_tip">Insufficient balance</string>
     <string name="total">Total</string>
     <string name="coin_mark">Standard:ERC-20</string>
 
@@ -108,8 +107,11 @@
     <string name="pending_block_validation">Pending block validation. Please go to Detail page to view details of this transaction.</string>
     <string name="view_details">View Details</string>
     <string name="gas_tips">%s support to lend users gas for trading</string>
+    <string name="gas_insufficient">Insufficient Gas Fee</string>
     <string name="input_amount">Enter Amount</string>
 
     <string name="add_success">Add Success</string>
     <string name="remove_success">Remove Success</string>
+
+    <string name="empty_tips">No Records</string>
 </resources>

@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.coins.app.BaseCallBack
 import com.coins.app.Go23WalletManage
 import com.coins.app.bean.Sign
@@ -120,9 +121,17 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         ) {
             val data = it.data?.getStringExtra("result") ?: ""
             val content = if (data.contains(":")) {
-                data.split(":")[1]
+                if (data.contains("@")) {
+                    data.split(":")[1].split("@")[0]
+                } else {
+                    data.split(":")[1]
+                }
             } else {
-                data
+                if (data.contains("@")) {
+                    data.split("@")[0]
+                } else {
+                    data
+                }
             }
             binding.etToAddress.setText(content)
         }
@@ -193,7 +202,14 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                     ) as BigDecimal - BigDecimal(preToken.gas)
                 } else format.parse(preToken.token_balance_sort.toString()) as? BigDecimal
                     ?: BigDecimal(0)
-                binding.etInputNum.setText("${if (availableNum < BigDecimal(0)) "0" else availableNum}")
+                binding.etInputNum.setText(
+                    "${
+                        if (availableNum < BigDecimal(0)) {
+                            ToastUtils.showShort(R.string.gas_insufficient)
+                            "0"
+                        } else availableNum
+                    }"
+                )
             }
         }
         binding.ivClear.setOnClickListener {

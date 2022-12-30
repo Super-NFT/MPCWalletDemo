@@ -110,43 +110,41 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         Go23WalletManage.getInstance().setUniqueId(Constant.emailStr).setEmail(Constant.emailStr)
             .start(this@WalletActivity, object : Go23WalletCallBack {
                 override fun recover() {
-                    getEmailCode("recover") {
-                        dismissProgress()
-                        forgetPswDialog.show(supportFragmentManager, "")
-                        forgetPswDialog.callback = {
-                            it?.let {
-                                if (it.isEmpty()) {
-                                    getEmailCode("recover")
-                                    return@let
-                                }
-                                Go23WalletManage.getInstance()
-                                    .startRecover(
-                                        this@WalletActivity,
-                                        "111111",
-                                        object : RecoverCallBack {
-                                            override fun success() {
-                                                geWalletInfo()
-                                            }
-
-                                            override fun failed() {
-                                                ToastUtils.showShort("Verify code error， please reenter")
-                                                forgetPswDialog.show(
-                                                    supportFragmentManager,
-                                                    ""
-                                                )
-                                            }
-
-                                            override fun dismiss() {
-                                                dismissProgress()
-                                            }
-
-                                            override fun reSharding() {
-                                                toReShardingForEmail()
-                                            }
-                                        })
-                            } ?: kotlin.run {
-                                dismissProgress()
+                    dismissProgress()
+                    forgetPswDialog.show(supportFragmentManager, "")
+                    forgetPswDialog.callback = {
+                        it?.let {
+                            if (it.isEmpty()) {
+                                getEmailCode("recover")
+                                return@let
                             }
+                            Go23WalletManage.getInstance()
+                                .startRecover(
+                                    this@WalletActivity,
+                                    it,
+                                    object : RecoverCallBack {
+                                        override fun success() {
+                                            geWalletInfo()
+                                        }
+
+                                        override fun failed() {
+                                            ToastUtils.showShort("Verify code error， please reenter")
+                                            forgetPswDialog.show(
+                                                supportFragmentManager,
+                                                ""
+                                            )
+                                        }
+
+                                        override fun dismiss() {
+                                            dismissProgress()
+                                        }
+
+                                        override fun reSharding() {
+                                            toReSharding()
+                                        }
+                                    })
+                        } ?: kotlin.run {
+                            dismissProgress()
                         }
                     }
                 }
@@ -252,12 +250,13 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     }
 
     private fun toReshardingForPinCode() {
+        showProgress()
         KeygenUtils.getInstance().requestMerchantKey(
             Go23WalletManage.getInstance().walletAddress,
             object : BaseCallBack<MerchantResponse> {
                 override fun success(data: MerchantResponse?) {
                     data?.data?.let { key ->
-                        Go23WalletManage.getInstance().startReshareForPinCode(
+                        Go23WalletManage.getInstance().startReshardingForPinCode(
                             this@WalletActivity,
                             key.keygen,
                             Go23WalletManage.getInstance().walletAddress,
@@ -281,7 +280,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                 }
 
                                 override fun reshareForEmail() {
-                                    toReShardingForEmail()
+                                    toReSharding()
                                 }
 
                                 override fun dismiss() {
@@ -299,18 +298,67 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             })
     }
 
-    private fun toReShardingForEmail() {
+    private fun toReshardingForEmail(code: String) {
         showProgress()
-        getEmailCode("reshare") {
-            dismissProgress()
-            forgetPswDialog.show(supportFragmentManager, "forgetPswDialog")
-            forgetPswDialog.callback = {
-                it?.let {
-                    if (it.isEmpty()) {
-                        getEmailCode("recover")
-                        return@let
+        KeygenUtils.getInstance().requestMerchantKey(
+            Go23WalletManage.getInstance().walletAddress,
+            object : BaseCallBack<MerchantResponse> {
+                override fun success(data: MerchantResponse?) {
+                    data?.data?.let { key ->
+                        Go23WalletManage.getInstance().startReShareForEmail(
+                            this@WalletActivity,
+                            key.keygen,
+                            Go23WalletManage.getInstance().walletAddress,
+                            code,
+                            object : ResharedingCallBack {
+
+                                override fun success(key3: String?) {
+                                    //update key
+                                    KeygenUtils.getInstance().updateMerchantKey(
+                                        Go23WalletManage.getInstance().walletAddress,
+                                        key3
+                                    )
+                                    dismissProgress()
+                                    successDialog.show(
+                                        supportFragmentManager,
+                                        "successDialog"
+                                    )
+                                }
+
+                                override fun failed() {
+                                    dismissProgress()
+                                }
+
+                                override fun reshareForEmail() {
+                                    toReSharding()
+                                }
+
+                                override fun dismiss() {
+                                    dismissProgress()
+                                }
+                            })
+                    } ?: kotlin.run {
+                        ToastUtils.showShort("Resharding fail, please retry")
+                        dismissProgress()
                     }
-                    toReShardingForEmail()
+                }
+
+                override fun failed() {
+                    dismissProgress()
+                }
+            })
+    }
+
+    private fun toReSharding() {
+        showProgress()
+        forgetPswDialog.show(supportFragmentManager, "forgetPswDialog")
+        forgetPswDialog.callback = {
+            it?.let {
+                if (it.isEmpty()) {
+                    getEmailCode("reshare")
+                    return@let
+                } else {
+                    toReshardingForEmail(it)
                 }
             }
         }
@@ -372,7 +420,6 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         binding.icMore.setOnClickListener {
             settingDialog.show(supportFragmentManager, "settingDialog")
             settingDialog.callback = {
-                showProgress()
                 toReshardingForPinCode()
             }
         }
@@ -403,7 +450,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         binding.tvReceive.setOnClickListener {
             receiveDialog = ReceiveDialog(
                 this,
-                userChain?.name ?: "",
+                userChain?.symbol ?: "",
                 walletInfo?.wallet_address ?: ""
             ).apply {
                 show(supportFragmentManager, "receiveDialog")

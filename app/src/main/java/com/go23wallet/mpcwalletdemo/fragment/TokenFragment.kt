@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.coins.app.BaseCallBack
 import com.coins.app.Go23WalletManage
 import com.coins.app.bean.token.TokenListResponse
+import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TokenAdapter
 import com.go23wallet.mpcwalletdemo.databinding.FragmentTabLayoutBinding
 import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
@@ -65,6 +66,7 @@ class TokenFragment : Fragment() {
             }
             adapter = mAdapter
         }
+        mAdapter?.setEmptyView(R.layout.empty_layout)
         mAdapter?.setOnItemClickListener { _, _, position ->
             val itemData = mAdapter?.data?.get(position) ?: return@setOnItemClickListener
             startActivity(Intent(context, TokenDetailsActivity::class.java).apply {

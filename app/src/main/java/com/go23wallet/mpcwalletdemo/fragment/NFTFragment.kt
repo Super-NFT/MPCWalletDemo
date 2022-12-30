@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.coins.app.BaseCallBack
 import com.coins.app.Go23WalletManage
 import com.coins.app.bean.nft.NftListResponse
+import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.NFTAdapter
 import com.go23wallet.mpcwalletdemo.databinding.FragmentTabLayoutBinding
 import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
@@ -64,6 +65,7 @@ class NFTFragment : Fragment() {
             }
             adapter = mAdapter
         }
+        mAdapter?.setEmptyView(R.layout.empty_layout)
         mAdapter?.setOnItemClickListener { _, _, position ->
             val itemData = mAdapter?.data?.get(position) ?: return@setOnItemClickListener
             startActivity(Intent(context, NFTDetailsActivity::class.java).apply {

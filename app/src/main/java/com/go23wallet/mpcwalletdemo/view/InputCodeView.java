@@ -362,6 +362,9 @@ public class InputCodeView extends AppCompatEditText implements TextWatcher {
     public void removeText() {
         if (getText().length() > 0) {
             setText(getText().toString().substring(0, getText().length() - 1));
+            if (getText().length() > 0) {
+                setSelection(getText().length());
+            }
         }
     }
 

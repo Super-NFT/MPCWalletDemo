@@ -82,9 +82,17 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
         ) {
             val data = it.data?.getStringExtra("result") ?: ""
             val content = if (data.contains(":")) {
-                data.split(":")[1]
+                if (data.contains("@")) {
+                    data.split(":")[1].split("@")[0]
+                } else {
+                    data.split(":")[1]
+                }
             } else {
-                data
+                if (data.contains("@")) {
+                    data.split("@")[0]
+                } else {
+                    data
+                }
             }
             binding.etAddress.setText(content)
         }

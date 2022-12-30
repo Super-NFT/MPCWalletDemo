@@ -55,15 +55,12 @@ class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
                     Toast.makeText(context, R.string.sending, Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
-                showProgress()
-                mHandler.postDelayed({
-                    type = TYPE_VERITY
-                    hideProgress()
-                    viewBinding.tvSendTips.visibility = View.GONE
-                    viewBinding.bottomGroup.visibility = View.VISIBLE
-                    viewBinding.llVerify.visibility = View.VISIBLE
-                    viewBinding.tvVerify.text = getString(R.string.verify)
-                }, 1000)
+                callback.invoke("")
+                type = TYPE_VERITY
+                viewBinding.tvSendTips.visibility = View.GONE
+                viewBinding.bottomGroup.visibility = View.VISIBLE
+                viewBinding.llVerify.visibility = View.VISIBLE
+                viewBinding.tvVerify.text = getString(R.string.verify)
             } else {
                 if (verifyCode.isNullOrEmpty() && (verifyCode?.length ?: 0) > 6) {
                     Toast.makeText(context, R.string.verify_error, Toast.LENGTH_SHORT).show()
