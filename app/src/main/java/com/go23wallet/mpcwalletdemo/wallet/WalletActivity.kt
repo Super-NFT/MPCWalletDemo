@@ -378,7 +378,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         }
 
         binding.tvAddress.setOnClickListener {
-            CopyUtils.copyText(this, binding.tvAddress.text.toString())
+            CopyUtils.copyText(this, walletInfo?.wallet_address ?: "")
         }
 
         binding.tvReceive.setOnClickListener {
@@ -399,7 +399,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                         "data",
                         ChainTokenInfo(
                             it.chain_id,
-                            binding.tvAddress.text.toString(),
+                            walletInfo?.wallet_address ?: "",
                             it.name,
                             it.symbol,
                             it.image_url,

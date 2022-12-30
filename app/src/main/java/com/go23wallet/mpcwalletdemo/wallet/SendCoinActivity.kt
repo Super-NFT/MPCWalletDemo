@@ -73,45 +73,44 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
             binding.tvCoinName.text = it.name
             binding.tvFromCoinNickname.text = it.symbol
             showProgress()
-            Go23WalletTransactionManage.getInstance().requestPreTokenSend(
-                UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
-                it.contract_address,
-                it.user_wallet_address,
-                object : BaseCallBack<PreTokenSendResponse> {
-                    override fun success(data: PreTokenSendResponse?) {
-                        dismissProgress()
-                        data?.data?.let { preToken ->
-                            preTokenSend = preToken
-                            binding.etToAddress.setText("")
-                            binding.tvGasTips.text =
-                                String.format(getString(R.string.gas_tips), chainTokenInfo?.symbol)
-                            binding.tvGasTips.visibility =
-                                if (preToken.isIs_lending_gas) View.VISIBLE else View.GONE
-                            binding.tvFromAddress.text = it.user_wallet_address.parseAddress()
-                            binding.tvAvailable.text =
-                                String.format(
-                                    getString(R.string.available),
-                                    "${
+            Go23WalletTransactionManage.getInstance()
+                .requestPreTokenSend(UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
+                    it.contract_address,
+                    it.user_wallet_address,
+                    object : BaseCallBack<PreTokenSendResponse> {
+                        override fun success(data: PreTokenSendResponse?) {
+                            dismissProgress()
+                            data?.data?.let { preToken ->
+                                preTokenSend = preToken
+                                binding.etToAddress.setText("")
+                                binding.tvGasTips.text = String.format(
+                                    getString(R.string.gas_tips), chainTokenInfo?.symbol
+                                )
+                                binding.tvGasTips.visibility =
+                                    if (preToken.isIs_lending_gas) View.VISIBLE else View.GONE
+                                binding.tvFromAddress.text = it.user_wallet_address.parseAddress()
+                                binding.tvAvailable.text = String.format(
+                                    getString(R.string.available), "${
                                         if (it.contract_address.isEmpty()) format.parse(
                                             preToken.platform_balance_sort.toString()
                                         )
                                         else format.parse(preToken.token_balance_sort.toString())
                                     } ${it.symbol}"
                                 )
-                            binding.tvCoinSymbol.text = it.symbol
-                            binding.tvGasBalance.text =
-                                "${preToken.gas} ${UserWalletInfoManager.getUserWalletInfo().userChain.symbol}"
-                            binding.tvGasValue.visibility =
-                                if (preToken.platform_u_per > 0) View.VISIBLE else View.GONE
-                            binding.tvGasValue.text =
-                                "=$${preToken.platform_u_per * (preToken.gas ?: "0.00").toDouble()}"
+                                binding.tvCoinSymbol.text = it.symbol
+                                binding.tvGasBalance.text =
+                                    "${preToken.gas} ${UserWalletInfoManager.getUserWalletInfo().userChain.symbol}"
+                                binding.tvGasValue.visibility =
+                                    if (preToken.platform_u_per > 0) View.VISIBLE else View.GONE
+                                binding.tvGasValue.text =
+                                    "=$${preToken.platform_u_per * (preToken.gas ?: "0.00").toDouble()}"
+                            }
                         }
-                    }
 
-                    override fun failed() {
-                        dismissProgress()
-                    }
-                })
+                        override fun failed() {
+                            dismissProgress()
+                        }
+                    })
         }
     }
 
@@ -132,15 +131,14 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         }
         selectTokenSendDialog.callback = {
 //            tokenId = it.token_id
-            chainTokenInfo =
-                ChainTokenInfo(
-                    it.chain_id,
-                    it.user_wallet_address,
-                    it.name,
-                    it.symbol,
-                    it.image_url,
-                    it.contract_address,
-                )
+            chainTokenInfo = ChainTokenInfo(
+                it.chain_id,
+                it.user_wallet_address,
+                it.name,
+                it.symbol,
+                it.image_url,
+                it.contract_address,
+            )
             initData()
         }
 
@@ -168,8 +166,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                 } else {
                     preTokenSend?.token_u_per ?: 0.0
                 }
-                binding.tvInputValue.text =
-                    if (uPer == null || uPer <= 0) "" else "=$${num * uPer}"
+                binding.tvInputValue.text = if (uPer == null || uPer <= 0) "" else "=$${num * uPer}"
 
                 updateSendStatus()
             }
@@ -190,10 +187,12 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         }
         binding.tvAll.setOnClickListener {
             preTokenSend?.let { preToken ->
-                val availableNum =
-                    if (chainTokenInfo?.contract_address.isNullOrEmpty()) format.parse(
+                val availableNum = if (chainTokenInfo?.contract_address.isNullOrEmpty()) {
+                    format.parse(
                         preToken.platform_balance_sort.toString()
-                    ) else format.parse(preToken.token_balance_sort.toString())
+                    ) as BigDecimal - BigDecimal(preToken.gas)
+                } else format.parse(preToken.token_balance_sort.toString()) as? BigDecimal
+                    ?: BigDecimal(0)
                 binding.etInputNum.setText("${availableNum ?: ""}")
             }
         }
@@ -207,8 +206,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                         try {
                             registerResult.launch(
                                 Intent(
-                                    this@SendCoinActivity,
-                                    CaptureActivity::class.java
+                                    this@SendCoinActivity, CaptureActivity::class.java
                                 )
                             )
                         } catch (ignored: Exception) {
@@ -233,10 +231,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         binding.tvGasTips.setOnClickListener {
             isSelectGas = !isSelectGas
             binding.tvGasTips.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                if (isSelectGas) R.drawable.icon_checked else R.drawable.icon_uncheck,
-                0,
-                0,
-                0
+                if (isSelectGas) R.drawable.icon_checked else R.drawable.icon_uncheck, 0, 0, 0
             )
             updateSendStatus()
         }
@@ -264,27 +259,21 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         sign.value = binding.etInputNum.text.toString()
         sign.middleContractAddress =
             UserWalletInfoManager.getUserWalletInfo().userChain.middle_contract_address
-        Go23WalletManage.getInstance().sign(
-            this, supportFragmentManager, key1, sign, object : MpcUtil.SignCallBack {
+        Go23WalletManage.getInstance()
+            .sign(this, supportFragmentManager, key1, sign, object : MpcUtil.SignCallBack {
                 override fun success(response: SignResponse?) {
                     dismissProgress()
                     if (response?.code.toString() == "0") {
                         dismissProgress()
-                        sendCoinResultDialog =
-                            SendCoinResultDialog(
-                                this@SendCoinActivity,
-                                true,
-                                response?.data ?: ""
-                            )
+                        sendCoinResultDialog = SendCoinResultDialog(
+                            this@SendCoinActivity, true, response?.data ?: ""
+                        )
                         sendCoinResultDialog?.show(
-                            supportFragmentManager,
-                            "sendCoinResultDialog"
+                            supportFragmentManager, "sendCoinResultDialog"
                         )
                     } else {
                         Toast.makeText(
-                            baseContext,
-                            response?.msg ?: "Transaction failed",
-                            Toast.LENGTH_SHORT
+                            baseContext, response?.msg ?: "Transaction failed", Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
@@ -293,8 +282,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                     dismissProgress()
                     Toast.makeText(baseContext, "Transaction failed", Toast.LENGTH_SHORT).show()
                 }
-            }
-        )
+            })
     }
 
     private fun updateSendStatus() {
@@ -305,17 +293,19 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         var totalValue = format.parse(inputStr) as? BigDecimal ?: BigDecimal(0)
         var availableNum = BigDecimal(0)
         preTokenSend?.let {
-            availableNum =
-                if (chainTokenInfo?.contract_address.isNullOrEmpty()) format.parse(
-                    it.platform_balance_sort.toString()
-                )
-                        as? BigDecimal ?: BigDecimal(0) else format.parse(
-                    it.token_balance_sort.toString()
-                ) as? BigDecimal ?: BigDecimal(0)
+            availableNum = if (chainTokenInfo?.contract_address.isNullOrEmpty()) format.parse(
+                it.platform_balance_sort.toString()
+            ) as? BigDecimal ?: BigDecimal(0) else format.parse(
+                it.token_balance_sort.toString()
+            ) as? BigDecimal ?: BigDecimal(0)
         }
         binding.tvTotalValue.text = "$totalValue ${chainTokenInfo?.symbol}"
         binding.tvSend.isEnabled =
-            totalValue > BigDecimal(0) && totalValue <= availableNum && (preTokenSend?.trans_type
+            totalValue > BigDecimal(0) && if (chainTokenInfo?.contract_address.isNullOrEmpty()) {
+                totalValue <= (availableNum - BigDecimal(preTokenSend?.gas ?: "0"))
+            } else {
+                totalValue <= availableNum
+            } && (preTokenSend?.trans_type
                 ?: 0) != 0 && !TextUtils.isEmpty(binding.etToAddress.text) && isSelectGas && !TextUtils.isEmpty(
                 binding.tvTotalValue.text
             )
