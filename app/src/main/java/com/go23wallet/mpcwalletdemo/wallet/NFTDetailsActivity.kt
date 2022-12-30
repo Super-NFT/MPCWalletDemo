@@ -48,7 +48,7 @@ class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
                         nft = it
                         GlideUtils.loadImg(this@NFTDetailsActivity, it.image, binding.ivNft)
                         binding.tvNftName.text = it.name
-                        binding.tvSeriesName.text = it.name
+                        binding.tvSeriesName.text = it.series
                         binding.tvDescriptionContent.text =
                             if (it.description.isNullOrEmpty()) "none" else it.description
                         if (it.attributes.isNullOrEmpty()) {

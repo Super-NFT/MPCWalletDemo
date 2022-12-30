@@ -22,6 +22,6 @@ class TokenAdapter(private val mContext: Context) :
         GlideUtils.loadImg(mContext, item.chain_image_url, ivCorner)
         tvTitle.text = "${item.balance} ${item.symbol}"
         tvContent.text = "$${item.balance_u}"
-        tvContent.visibility = if (item.balance_u.toDouble() > 0) View.VISIBLE else View.INVISIBLE
+        tvContent.visibility = if (item.balance_u.toDouble() > 0) View.VISIBLE else View.GONE
     }
 }

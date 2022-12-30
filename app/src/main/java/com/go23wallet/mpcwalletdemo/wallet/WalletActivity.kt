@@ -136,6 +136,10 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                                 )
                                             }
 
+                                            override fun dismiss() {
+                                                dismissProgress()
+                                            }
+
                                             override fun reSharding() {
                                                 toReShardingForEmail()
                                             }
@@ -149,6 +153,10 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
                 override fun success() {
                     geWalletInfo()
+                }
+
+                override fun dismiss() {
+                    dismissProgress()
                 }
 
                 override fun failed() {
@@ -276,6 +284,9 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                     toReShardingForEmail()
                                 }
 
+                                override fun dismiss() {
+                                    dismissProgress()
+                                }
                             })
                     } ?: kotlin.run {
                         dismissProgress()
