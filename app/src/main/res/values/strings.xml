@@ -30,12 +30,12 @@
     <string name="cancel">Cancel</string>
     <string name="forget_psw">Forget password</string>
     <string name="send_code">Send a code to your email to verify</string>
-    <string name="has_send_tips">An email with code has been send to your e-mail</string>
+    <string name="has_send_tips">An email with code has been sent to your email.</string>
     <string name="sending">Sending， please wait</string>
     <string name="verifying">Verifying， please wait</string>
     <string name="verify_error">Verify code is error, please check it</string>
     <string name="confirm_error">The two pincode are different, please check it</string>
-    <string name="dont_receive">Didn`t receive?</string>
+    <string name="dont_receive">Didn\'t receive it?</string>
     <string name="resend">Please click resend</string>
     <string name="set_pin_code">Set Pincode</string>
     <string name="confirm_pin_code">Confirm Pincode</string>
@@ -105,7 +105,7 @@
     <string name="select_token_send">Select token to send</string>
     <string name="confirm_transfer">Confirm Transfer</string>
     <string name="request_sent">The request is sent</string>
-    <string name="pending_block_validation">Pending block validation. Please go to Details page to view details of this transaction.</string>
+    <string name="pending_block_validation">Pending block validation. Please go to Detail page to view details of this transaction.</string>
     <string name="view_details">View Details</string>
     <string name="gas_tips">%s support to lend users gas for trading</string>
     <string name="input_amount">Enter Amount</string>

@@ -19,9 +19,9 @@
             android:id="@+id/iv_back"
             android:layout_width="44dp"
             android:layout_height="44dp"
+            android:layout_gravity="start"
             android:layout_marginStart="10dp"
             android:padding="10dp"
-            android:layout_gravity="start"
             android:src="@drawable/icon_back" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -78,6 +78,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/shape_r8_f5_border_d9_bg"
+        android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:hint="@string/receiving_address"
         android:minHeight="48dp"
         android:paddingStart="8dp"

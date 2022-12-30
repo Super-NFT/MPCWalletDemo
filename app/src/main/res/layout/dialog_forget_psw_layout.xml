@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shape_r12_white"
+    android:background="@drawable/shape_top_r12_white"
     android:paddingBottom="10dp">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -83,14 +83,14 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_email"
         app:tvBgColor="@color/color_D9D9D9"
         app:tvBorderColor="@color/color_D9D9D9"
-        app:tvFocusBorderColor="#FFC107"
+        app:tvFocusBorderColor="@color/color_35C1D8"
         app:tvIsCursor="true"
         app:tvIsPwd="false"
         app:tvLen="6"
         app:tvMargin="8dp"
         app:tvRadius="2dp"
         app:tvStyle="defaultStyle"
-        app:tvTextColor="@color/white"
+        app:tvTextColor="@color/color_262626"
         app:tvTextSize="16sp"
         app:tvWidth="33dp" />
 

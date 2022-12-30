@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.*
 import android.widget.Toast
+import com.blankj.utilcode.util.ScreenUtils
 import com.coins.app.bean.token.Token
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
@@ -31,7 +32,7 @@ class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        setGravity(Gravity.CENTER)
+        setHeight((ScreenUtils.getScreenHeight() * 0.8).toInt())
     }
 
     override fun initViews(v: View?) {
@@ -64,7 +65,7 @@ class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
                     viewBinding.tvVerify.text = getString(R.string.verify)
                 }, 1000)
             } else {
-                if (verifyCode.isNullOrEmpty()) {
+                if (verifyCode.isNullOrEmpty() && (verifyCode?.length ?: 0) > 6) {
                     Toast.makeText(context, R.string.verify_error, Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 } else {
@@ -87,6 +88,7 @@ class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
 
         viewBinding.tvResend.setOnClickListener {
             viewBinding.llVerify.setText("")
+            callback.invoke("")
         }
     }
 

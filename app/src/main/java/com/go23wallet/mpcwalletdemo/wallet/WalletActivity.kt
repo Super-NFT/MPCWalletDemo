@@ -115,6 +115,10 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                         forgetPswDialog.show(supportFragmentManager, "")
                         forgetPswDialog.callback = {
                             it?.let {
+                                if (it.isEmpty()) {
+                                    getEmailCode("recover")
+                                    return@let
+                                }
                                 Go23WalletManage.getInstance()
                                     .startRecover(
                                         this@WalletActivity,
@@ -291,6 +295,10 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             forgetPswDialog.show(supportFragmentManager, "forgetPswDialog")
             forgetPswDialog.callback = {
                 it?.let {
+                    if (it.isEmpty()) {
+                        getEmailCode("recover")
+                        return@let
+                    }
                     toReShardingForEmail()
                 }
             }

@@ -193,7 +193,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                     ) as BigDecimal - BigDecimal(preToken.gas)
                 } else format.parse(preToken.token_balance_sort.toString()) as? BigDecimal
                     ?: BigDecimal(0)
-                binding.etInputNum.setText("${availableNum ?: ""}")
+                binding.etInputNum.setText("${if (availableNum < BigDecimal(0)) "0" else availableNum}")
             }
         }
         binding.ivClear.setOnClickListener {
