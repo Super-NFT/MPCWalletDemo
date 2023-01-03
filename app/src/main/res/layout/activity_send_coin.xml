@@ -104,8 +104,8 @@
                 android:id="@+id/iv_next"
                 android:layout_width="12dp"
                 android:layout_height="12dp"
-                android:layout_marginEnd="20dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
                 android:src="@drawable/icon_next_color"
                 app:layout_constraintBottom_toBottomOf="@id/v_coin_type"
                 app:layout_constraintEnd_toEndOf="@id/v_coin_type"
@@ -189,9 +189,10 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_scan_code"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="15dp"
+                android:padding="5dp"
                 android:src="@drawable/icon_scan_qrcode"
                 app:layout_constraintBottom_toBottomOf="@id/tv_to"
                 app:layout_constraintEnd_toEndOf="parent"

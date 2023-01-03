@@ -16,6 +16,7 @@ import com.go23wallet.mpcwalletdemo.databinding.ActivityNftDetailsBinding
 import com.go23wallet.mpcwalletdemo.ext.parseAddress
 import com.go23wallet.mpcwalletdemo.utils.CopyUtils
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
+import com.go23wallet.mpcwalletdemo.utils.TextEllipsizeSpanUtil
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 
 class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
@@ -58,7 +59,7 @@ class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
                             mAdapter?.setNewInstance(it.attributes)
                         }
                         binding.tvAddress.text = it.contract_address.parseAddress()
-                        binding.tvTokenAddress.text = it.token_id.toString().parseAddress()
+                        binding.tvTokenAddress.text = it.token_id
                         binding.tvWebsiteAddress.text =
                             if (it.external_url.isNullOrEmpty()) "none" else it.external_url
                         binding.tvBlockchainAddress.text = it.block_chain_name.toString()

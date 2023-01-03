@@ -92,6 +92,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         )
         showProgress()
         initData()
+        setListener()
         binding.refreshView.setOnRefreshListener {
             walletInfo?.let {
                 loadData(it)
@@ -124,7 +125,10 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                     it,
                                     object : RecoverCallBack {
                                         override fun success() {
-                                            geWalletInfo()
+                                            successDialog.show(
+                                                supportFragmentManager,
+                                                "successDialog"
+                                            )
                                         }
 
                                         override fun failed() {
@@ -188,7 +192,6 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                             }
                         }
                     }
-                    setListener()
                 }
 
                 override fun failed() {}
@@ -277,6 +280,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
                                 override fun failed() {
                                     dismissProgress()
+                                    ToastUtils.showShort(R.string.resharding_fail)
                                 }
 
                                 override fun reshareForEmail() {
@@ -338,7 +342,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                 }
                             })
                     } ?: kotlin.run {
-                        ToastUtils.showShort("Resharding fail, please retry")
+                        ToastUtils.showShort(R.string.resharding_fail)
                         dismissProgress()
                     }
                 }
@@ -403,8 +407,11 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                     dismissProgress()
                 }
 
-                override fun onComplete() {}
+                override fun onComplete() {
+                }
+
                 override fun onNext(t: UserResponse) {
+                    ToastUtils.showShort(R.string.verify_code_sent)
                     callback.invoke(t.data)
                 }
             })

@@ -168,6 +168,11 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                     binding.tvSend.isEnabled = false
                     return
                 }
+                if (s.toString() == ".") {
+                    binding.etInputNum.setText("0.")
+                    binding.etInputNum.setSelection(2)
+                    return
+                }
                 val num = s.toString().toDouble()
 
                 val uPer = if (chainTokenInfo?.contract_address.isNullOrEmpty()) {

@@ -3,6 +3,9 @@ package com.google.zxing.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,10 +17,13 @@ import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.SurfaceHolder;
@@ -210,16 +216,17 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
             switch (requestCode) {
                 case REQUEST_CODE_SCAN_GALLERY:
                     //获取选中图片的路径
-                    Cursor cursor = getContentResolver().query(data.getData(), null, null, null, null);
-                    if (cursor.moveToFirst()) {
-                        photo_path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-                    }
-                    cursor.close();
+//                    Cursor cursor = getContentResolver().query(Uri.parse(url), new String[]{MediaStore.Images.Media.DATA}, null, null, null);
+//                    if (cursor.moveToFirst()) {
+//                        photo_path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+//                    }
+//                    cursor.close();
+                    photo_path = getFilePathByUri(data.getData());
                     //扫描结果
                     Result result = scanningImage(photo_path);
                     //对话框
                     Intent intent = getIntent();
-                    intent.putExtra("result", result.getText().toString());
+                    intent.putExtra("result", result != null ? result.getText() : "");
                     setResult(Activity.RESULT_OK, intent);
                     finish();
 //                    AlertDialog dialog = new AlertDialog.Builder(this)
@@ -248,6 +255,90 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @SuppressLint("NewApi")
+    public String getFilePathByUri(Uri uri) {
+        if (DocumentsContract.isDocumentUri(this, uri)) {
+            if (isExternalStorageDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+                if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
+            } else if (isDownloadsDocument(uri)) {
+                final String id = DocumentsContract.getDocumentId(uri);
+                final String[] split = id.split(":");
+                final String type = split[0];
+                if ("raw".equalsIgnoreCase(type)) {
+                    return split[1];
+                }
+                String[] contentUriPrefixesToTry = new String[]{
+                        "content://downloads/public_downloads",
+                        "content://downloads/my_downloads",
+                        "content://downloads/all_downloads"
+                };
+                for (String contentUriPrefix : contentUriPrefixesToTry) {
+                    Uri contentUri = ContentUris.withAppendedId(Uri.parse(contentUriPrefix), Long.valueOf(id));
+                    try {
+                        String path = getDataColumn(this, contentUri, null, null);
+                        if (path != null) {
+                            return path;
+                        }
+                    } catch (Exception e) {
+                    }
+                }
+            } else if (isMediaDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+                Uri contentUri = null;
+                if ("image".equals(type)) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+                final String selection = "_id=?";
+                final String[] selectionArgs = new String[]{split[1]};
+                return getDataColumn(this, contentUri, selection, selectionArgs);
+            }
+        } else if (ContentResolver.SCHEME_FILE.equals(uri.getScheme())) {
+            return uri.getPath();
+        } else if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme())) {
+            return getDataColumn(this, uri, null, null);
+        }
+        return null;
+    }
+
+    private String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
+        Cursor cursor = null;
+        final String column = MediaStore.Images.Media.DATA;
+        final String[] projection = {column};
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int column_index = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(column_index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
+    }
+
+    private boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    private boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    private boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
 
     /**
      * 扫描二维码图片的方法

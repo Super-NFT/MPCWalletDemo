@@ -18,13 +18,7 @@ class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
 
     override val layoutId: Int = R.layout.dialog_forget_psw_layout
 
-    private val mHandler: Handler = Handler(Looper.getMainLooper())
-
     var callback: (code: String?) -> Unit = {}
-
-    private val setPinCodeDialog: SetPinCodeDialog by lazy {
-        SetPinCodeDialog(mContext)
-    }
 
     private var type = TYPE_SEND
 
@@ -57,7 +51,7 @@ class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
                 }
                 callback.invoke("")
                 type = TYPE_VERITY
-                viewBinding.tvSendTips.visibility = View.GONE
+                viewBinding.tvSendTips.visibility = View.INVISIBLE
                 viewBinding.bottomGroup.visibility = View.VISIBLE
                 viewBinding.llVerify.visibility = View.VISIBLE
                 viewBinding.tvVerify.text = getString(R.string.verify)
@@ -84,8 +78,10 @@ class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
         }
 
         viewBinding.tvResend.setOnClickListener {
-            viewBinding.llVerify.setText("")
-            callback.invoke("")
+            if (viewBinding.tvResend.visibility == View.VISIBLE) {
+                viewBinding.llVerify.setText("")
+                callback.invoke("")
+            }
         }
     }
 

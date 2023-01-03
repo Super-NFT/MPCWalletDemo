@@ -1,6 +1,8 @@
 package com.go23wallet.mpcwalletdemo.wallet
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import com.coins.app.BaseCallBack
 import com.coins.app.Go23WalletManage
@@ -12,6 +14,7 @@ import com.go23wallet.mpcwalletdemo.databinding.ActivityChargeDetailsBinding
 import com.go23wallet.mpcwalletdemo.ext.parseAddress
 import com.go23wallet.mpcwalletdemo.utils.CopyUtils
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
+import com.go23wallet.mpcwalletdemo.utils.TextEllipsizeSpanUtil
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 
 class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
@@ -22,52 +25,22 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
 
     private var details: TransactionDetail? = null
 
+    private val mHandler = Handler(Looper.getMainLooper())
+
     override fun initViews(savedInstanceState: Bundle?) {
         hash = intent.getStringExtra("hash") ?: ""
-        initView()
+        initData()
         setListener()
     }
 
-    private fun initView() {
+    private fun initData() {
         Go23WalletManage.getInstance().requestTransactionDetail(
             hash,
             UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
             object : BaseCallBack<TransactionDetailResponse> {
                 override fun success(data: TransactionDetailResponse?) {
-                    data?.data?.let {
-                        details = it
-                        if (it.transaction_class == 3) { // nft
-                            binding.nftView.visibility = View.VISIBLE
-                            GlideUtils.loadImg(this@ChargeDetailsActivity, it.image, binding.ivNft)
-                            binding.tvNftName.text = it.image_name
-                            binding.tvTokenId.text = it.token
-                            binding.tvAmountValue.visibility = View.GONE
-                            binding.tvAmount.visibility = View.GONE
-                        } else {
-                            binding.nftView.visibility = View.GONE
-                            binding.tvAmountValue.text = "${it.amount} ${it.symbol}"
-                        }
-                        when (it.status) {
-                            1 -> {
-                                binding.ivChargeType.setImageResource(R.drawable.icon_charge_processing)
-                                binding.tvType.text = getString(R.string.processing)
-                            }
-                            2 -> {
-                                binding.ivChargeType.setImageResource(R.drawable.icon_charge_success)
-                                binding.tvType.text = getString(R.string.successfully)
-                            }
-                            else -> {
-                                binding.ivChargeType.setImageResource(R.drawable.icon_charge_failed)
-                                binding.tvType.text = getString(R.string.failed)
-                            }
-                        }
-                        binding.tvTime.text = it.time
-                        binding.tvFromAddress.text = it.from_addr.parseAddress()
-                        binding.tvToAddress.text = it.to_addr.parseAddress()
-                        binding.tvTxIdAddress.text = it.hash.parseAddress()
-                        binding.tvNetworkContent.text = it.network
-                        binding.tvGasValue.text = "${it.gas_fee} ${it.gas_symbol}"
-                    }
+                    details = data?.data
+                    initView()
                 }
 
                 override fun failed() {
@@ -75,18 +48,87 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
             })
     }
 
+    private fun initView() {
+        details?.let {
+            if (it.transaction_class == 3) { // nft
+                binding.nftView.visibility = View.VISIBLE
+                GlideUtils.loadImg(this@ChargeDetailsActivity, it.image, binding.ivNft)
+                binding.tvNftName.text = it.image_name
+                TextEllipsizeSpanUtil.setTextEndImg(
+                    this@ChargeDetailsActivity,
+                    binding.tvTokenId,
+                    it.token,
+                    R.drawable.icon_copy
+                )
+                binding.tvAmountValue.visibility = View.GONE
+                binding.tvAmount.visibility = View.GONE
+            } else {
+                binding.nftView.visibility = View.GONE
+                binding.tvAmountValue.text = "${it.amount} ${it.symbol}"
+            }
+            when (it.status) {
+                1 -> {
+                    binding.ivChargeType.setImageResource(R.drawable.icon_charge_processing)
+                    binding.tvType.text = getString(R.string.processing)
+                    mHandler.postDelayed(runnable, 3 * 1000)
+                }
+                2 -> {
+                    binding.ivChargeType.setImageResource(R.drawable.icon_charge_success)
+                    binding.tvType.text = getString(R.string.successfully)
+                }
+                else -> {
+                    binding.ivChargeType.setImageResource(R.drawable.icon_charge_failed)
+                    binding.tvType.text = getString(R.string.failed)
+                }
+            }
+            binding.tvTime.text = it.time
+            TextEllipsizeSpanUtil.setTextEndImg(
+                this,
+                binding.tvFromAddress,
+                it.from_addr.parseAddress(),
+                R.drawable.icon_copy
+            )
+            TextEllipsizeSpanUtil.setTextEndImg(
+                this,
+                binding.tvToAddress,
+                it.to_addr.parseAddress(),
+                R.drawable.icon_copy
+            )
+            TextEllipsizeSpanUtil.setTextEndImg(
+                this,
+                binding.tvTxIdAddress,
+                it.hash.parseAddress(),
+                R.drawable.icon_copy
+            )
+            binding.tvNetworkContent.text = it.network
+            binding.tvGasValue.text = "${it.gas_fee} ${it.gas_symbol}"
+        }
+    }
+
+    private val runnable = Runnable {
+        initData()
+    }
+
     private fun setListener() {
         binding.ivBack.setOnClickListener {
             finish()
         }
-        binding.ivFromCopy.setOnClickListener {
+        binding.tvTokenId.setOnClickListener {
+            CopyUtils.copyText(this, details?.token ?: "")
+        }
+        binding.tvFromAddress.setOnClickListener {
             CopyUtils.copyText(this, details?.from_addr ?: "")
         }
-        binding.ivToCopy.setOnClickListener {
+        binding.tvToAddress.setOnClickListener {
             CopyUtils.copyText(this, details?.to_addr ?: "")
         }
-        binding.ivTxIdCopy.setOnClickListener {
+        binding.tvTxIdAddress.setOnClickListener {
             CopyUtils.copyText(this, details?.hash ?: "")
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mHandler.removeCallbacks(runnable)
     }
 }

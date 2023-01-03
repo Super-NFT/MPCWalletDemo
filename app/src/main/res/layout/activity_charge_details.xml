@@ -156,28 +156,17 @@
         app:layout_constraintTop_toTopOf="@id/v_from"
         app:layout_constraintVertical_chainStyle="packed" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_from_copy"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:layout_marginEnd="18dp"
-        android:src="@drawable/icon_copy"
-        app:layout_constraintBottom_toBottomOf="@id/tv_from"
-        app:layout_constraintEnd_toEndOf="@id/v_from"
-        app:layout_constraintTop_toTopOf="@id/tv_from"
-        app:layout_constraintVertical_chainStyle="packed" />
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_from_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="20dp"
         android:ellipsize="middle"
         android:lines="1"
         android:textColor="@color/color_8C8C8C"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_from"
-        app:layout_constraintEnd_toStartOf="@id/iv_from_copy"
+        app:layout_constraintEnd_toEndOf="@id/v_from"
         app:layout_constraintTop_toTopOf="@id/tv_from"
         tools:text="qwerttyrtwrearasdadsadaqreq" />
 
@@ -206,27 +195,17 @@
         app:layout_constraintTop_toTopOf="@id/v_to"
         app:layout_constraintVertical_chainStyle="packed" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_to_copy"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:layout_marginEnd="20dp"
-        android:src="@drawable/icon_copy"
-        app:layout_constraintBottom_toBottomOf="@id/v_to"
-        app:layout_constraintEnd_toEndOf="@id/v_to"
-        app:layout_constraintTop_toTopOf="@id/v_to" />
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_to_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="20dp"
         android:ellipsize="middle"
         android:lines="1"
         android:textColor="@color/color_8C8C8C"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_to"
-        app:layout_constraintEnd_toStartOf="@id/iv_to_copy"
+        app:layout_constraintEnd_toEndOf="@id/v_to"
         app:layout_constraintTop_toTopOf="@id/tv_to"
         tools:text="qwerttyrtwrearasdadsadaqreq" />
 
@@ -254,27 +233,17 @@
         app:layout_constraintStart_toStartOf="@id/v_txId"
         app:layout_constraintTop_toTopOf="@id/v_txId" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_txId_copy"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:layout_marginEnd="18dp"
-        android:src="@drawable/icon_copy"
-        app:layout_constraintBottom_toBottomOf="@id/v_txId"
-        app:layout_constraintEnd_toEndOf="@id/v_txId"
-        app:layout_constraintTop_toTopOf="@id/v_txId" />
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_txId_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="20dp"
         android:ellipsize="middle"
         android:lines="1"
         android:textColor="@color/color_8C8C8C"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/v_txId"
-        app:layout_constraintEnd_toStartOf="@id/iv_txId_copy"
+        app:layout_constraintEnd_toEndOf="@id/v_txId"
         app:layout_constraintTop_toTopOf="@id/v_txId"
         tools:text="qwerttyrtwrearasdadsadaqreq" />
 
@@ -346,7 +315,7 @@
             android:layout_marginStart="18dp"
             android:text="@string/gas_free"
             android:textColor="@color/color_8C8C8C"
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_amount" />
 
@@ -368,7 +337,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="18dp"
             android:textColor="@color/color_8C8C8C"
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_gas_free"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_gas_free"
