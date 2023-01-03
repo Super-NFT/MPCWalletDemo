@@ -12,6 +12,7 @@ import com.coins.app.bean.transaction.TransactionDetailResponse
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogSendCoinResultLayoutBinding
+import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 import com.go23wallet.mpcwalletdemo.wallet.ChargeDetailsActivity
 
@@ -51,6 +52,7 @@ class SendCoinResultDialog(
         viewBinding.tvConfirm.setOnClickListener {
             dismissAllowingStateLoss()
             mContext.finish()
+            UpdateDataLiveData.setUpdateType(2)
         }
         viewBinding.tvOk.setOnClickListener {
             dismissAllowingStateLoss()

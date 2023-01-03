@@ -27,6 +27,7 @@ import com.go23wallet.mpcwalletdemo.databinding.ActivitySendCoinBinding
 import com.go23wallet.mpcwalletdemo.dialog.SelectTokenSendDialog
 import com.go23wallet.mpcwalletdemo.dialog.SendCoinResultDialog
 import com.go23wallet.mpcwalletdemo.ext.parseAddress
+import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
 import com.go23wallet.mpcwalletdemo.utils.CopyUtils
 import com.go23wallet.mpcwalletdemo.utils.FloatLengthFilter
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
@@ -116,6 +117,11 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
     }
 
     private fun setListener() {
+        UpdateDataLiveData.liveData.observe(this) {
+            if (it == 2) {
+                finish()
+            }
+        }
         val registerResult = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) {

@@ -31,6 +31,7 @@ import com.go23wallet.mpcwalletdemo.dialog.*
 import com.go23wallet.mpcwalletdemo.ext.parseAddress
 import com.go23wallet.mpcwalletdemo.fragment.NFTFragment
 import com.go23wallet.mpcwalletdemo.fragment.TokenFragment
+import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
 import com.go23wallet.mpcwalletdemo.utils.*
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -111,7 +112,6 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         Go23WalletManage.getInstance().setUniqueId(Constant.emailStr).setEmail(Constant.emailStr)
             .start(this@WalletActivity, object : Go23WalletCallBack {
                 override fun recover() {
-                    dismissProgress()
                     forgetPswDialog.show(supportFragmentManager, "")
                     forgetPswDialog.callback = {
                         it?.let {
@@ -167,7 +167,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
                 override fun createKeySuccess(address: String?, key: String?) {
                     address?.let {
-                        SPUtils.getInstance().put(address, key, true)
+                        SPUtils.getInstance().put(address, key)
                         KeygenUtils.getInstance().uploadMerchantKey(address, key ?: "")
                         geWalletInfo()
                     }
@@ -237,8 +237,10 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                     info.wallet_address,
                                     object : BaseCallBack<BalanceResponse> {
                                         override fun success(data: BalanceResponse?) {
-                                            binding.tvTotalBalanceValue.text =
+                                            binding.tvTotalBalance.text =
                                                 "${data?.data?.balance ?: "0"} ${it.symbol}"
+                                            binding.tvTotalBalanceValue.text =
+                                                "$${data?.data?.balance_u}"
                                         }
 
                                         override fun failed() {
@@ -418,6 +420,12 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     }
 
     private fun setListener() {
+        UpdateDataLiveData.liveData.observe(this) {
+            if (it == 2) {
+                UpdateDataLiveData.clearType()
+                binding.viewPager.currentItem = 1
+            }
+        }
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }

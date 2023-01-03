@@ -23,6 +23,7 @@ abstract class BaseDialogFragment<T : ViewBinding> : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        dialog?.window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
         val mView = inflater.inflate(layoutId, container, false)
         val type = javaClass.genericSuperclass as ParameterizedType
         val cls = type.actualTypeArguments[0] as Class<*>
