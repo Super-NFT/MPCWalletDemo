@@ -69,6 +69,7 @@
     <string name="amount">Amount</string>
     <string name="gas">Gas</string>
     <string name="gas_free">Gas Fee</string>
+    <string name="lending_gas_free">lending gas fee</string>
     <string name="total">Total</string>
     <string name="coin_mark">Standard:ERC-20</string>
 

@@ -81,6 +81,16 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
                     binding.tvType.text = getString(R.string.failed)
                 }
             }
+            if (it.lending_gas_fee.isNullOrEmpty() || it.lending_gas_fee == "0") {
+                binding.vLending.visibility = View.GONE
+                binding.tvLending.visibility = View.GONE
+                binding.tvLendingContent.visibility = View.GONE
+            } else {
+                binding.vLending.visibility = View.VISIBLE
+                binding.tvLending.visibility = View.VISIBLE
+                binding.tvLendingContent.visibility = View.VISIBLE
+                binding.tvLendingContent.text = it.lending_gas_fee
+            }
             binding.tvTime.text = it.time
             TextEllipsizeSpanUtil.setTextEndImg(
                 this,
