@@ -1,19 +1,16 @@
 package com.go23wallet.mpcwalletdemo.dialog
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.view.*
 import android.widget.Toast
 import com.blankj.utilcode.util.ScreenUtils
-import com.coins.app.bean.token.Token
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogForgetPswLayoutBinding
 import com.go23wallet.mpcwalletdemo.utils.Constant
 import com.go23wallet.mpcwalletdemo.view.InputCodeView.OnCodeCompleteListener
 
-class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
+class EmailVerifyDialog(private val mContext: Context, val dialogType: Int = 0) :
     BaseDialogFragment<DialogForgetPswLayoutBinding>() {
 
     override val layoutId: Int = R.layout.dialog_forget_psw_layout
@@ -72,7 +69,6 @@ class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
                         // resharding  two set pin code
                         callback.invoke(verifyCode)
                     }
-                    dismissAllowingStateLoss()
                 }
             }
         }
@@ -83,6 +79,10 @@ class ForgetPswDialog(private val mContext: Context, val dialogType: Int = 0) :
                 callback.invoke("")
             }
         }
+    }
+
+    public fun clearText() {
+        viewBinding.llVerify.setText("")
     }
 
     private fun showProgress() {

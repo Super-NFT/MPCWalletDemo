@@ -7,22 +7,18 @@ import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.coins.app.BaseCallBack
-import com.coins.app.C
 import com.coins.app.Go23WalletCallBack
 import com.coins.app.Go23WalletManage
 import com.coins.app.bean.chain.UserChain
 import com.coins.app.bean.chain.UserChainResponse
 import com.coins.app.bean.user.BalanceResponse
 import com.coins.app.bean.user.MerchantResponse
-import com.coins.app.bean.user.User
-import com.coins.app.bean.user.UserResponse
 import com.coins.app.bean.walletinfo.WalletInfo
 import com.coins.app.bean.walletinfo.WalletInfoResponse
 import com.coins.app.callback.EmailCallBack
 import com.coins.app.callback.ReShareCallBack
 import com.coins.app.callback.RestoreCallBack
 import com.coins.app.manage.Go23WalletChainManage
-import com.coins.app.util.OkhttpUtil
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
@@ -34,21 +30,8 @@ import com.go23wallet.mpcwalletdemo.fragment.NFTFragment
 import com.go23wallet.mpcwalletdemo.fragment.TokenFragment
 import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
 import com.go23wallet.mpcwalletdemo.utils.*
-import com.google.gson.Gson
-import com.google.gson.JsonObject
-import io.reactivex.Observable
-import io.reactivex.ObservableEmitter
-import io.reactivex.ObservableOnSubscribe
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.Request
-import okhttp3.RequestBody
-
 
 class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
@@ -65,8 +48,8 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         ChooseMainnetDialog(this)
     }
 
-    private val forgetPswDialog: ForgetPswDialog by lazy {
-        ForgetPswDialog(this)
+    private val emailVerifyDialog: EmailVerifyDialog by lazy {
+        EmailVerifyDialog(this)
     }
 
     private val settingDialog by lazy {
@@ -113,19 +96,19 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         Go23WalletManage.getInstance().setUniqueId(Constant.emailStr).setEmail(Constant.emailStr)
             .start(this@WalletActivity, object : Go23WalletCallBack {
                 override fun reStore(p0: MutableList<WalletInfo>?) {
-                    forgetPswDialog.show(supportFragmentManager, "")
-                    forgetPswDialog.callback = {
+                    emailVerifyDialog.show(supportFragmentManager, "")
+                    emailVerifyDialog.callback = {
                         it?.let {
                             if (it.isEmpty()) {
                                 Go23WalletManage.getInstance().verifyEmailCode(1,object :EmailCallBack{
                                     override fun success() {
+                                        ToastUtils.showShort(R.string.verify_code_sent)
                                     }
 
                                     override fun failed() {
                                     }
 
                                 })
-//                                getEmailCode("recover")
                                 return@let
                             }
                             dismissProgress()
@@ -142,8 +125,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                         }
 
                                         override fun failed() {
-                                            ToastUtils.showShort("Verify code error， please reenter")
-                                            forgetPswDialog.show(
+                                            emailVerifyDialog.show(
                                                 supportFragmentManager,
                                                 ""
                                             )
@@ -158,11 +140,12 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                         }
 
                                         override fun emailVerifyFailed() {
-                                            TODO("Not yet implemented")
+                                            ToastUtils.showShort(R.string.verify_code_fail)
+                                            emailVerifyDialog.clearText()
                                         }
 
                                         override fun emailVerifySuccess() {
-                                            TODO("Not yet implemented")
+                                            emailVerifyDialog.dismissAllowingStateLoss()
                                         }
                                     })
                         } ?: kotlin.run {
@@ -308,11 +291,12 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                 }
 
                                 override fun emailVerifyFailed() {
-                                    TODO("Not yet implemented")
+                                    ToastUtils.showShort(R.string.verify_code_fail)
+                                    emailVerifyDialog.clearText()
                                 }
 
                                 override fun emailVerifySuccess() {
-                                    TODO("Not yet implemented")
+                                    emailVerifyDialog.dismissAllowingStateLoss()
                                 }
 
                                 override fun dismiss() {
@@ -345,6 +329,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                             object : ReShareCallBack {
 
                                 override fun success(key3: String?) {
+                                    emailVerifyDialog.dismissAllowingStateLoss()
                                     //update key
                                     KeygenUtils.getInstance().updateMerchantKey(
                                         Go23WalletManage.getInstance().walletAddress,
@@ -359,6 +344,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
                                 override fun failed() {
                                     dismissProgress()
+                                    ToastUtils.showShort(R.string.resharding_fail)
                                 }
 
                                 override fun reShareForEmail() {
@@ -366,11 +352,12 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                 }
 
                                 override fun emailVerifyFailed() {
-                                    TODO("Not yet implemented")
+                                    ToastUtils.showShort(R.string.verify_code_fail)
+                                    emailVerifyDialog.clearText()
                                 }
 
                                 override fun emailVerifySuccess() {
-                                    TODO("Not yet implemented")
+                                    emailVerifyDialog.dismissAllowingStateLoss()
                                 }
 
                                 override fun dismiss() {
@@ -391,19 +378,19 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
     private fun toReSharding() {
         showProgress()
-        forgetPswDialog.show(supportFragmentManager, "forgetPswDialog")
-        forgetPswDialog.callback = {
+        emailVerifyDialog.show(supportFragmentManager, "emailVerifyDialog")
+        emailVerifyDialog.callback = {
             it?.let {
                 if (it.isEmpty()) {
                     Go23WalletManage.getInstance().verifyEmailCode(0,object :EmailCallBack{
                         override fun success() {
+                            ToastUtils.showShort(R.string.verify_code_sent)
                         }
 
                         override fun failed() {
                         }
 
                     })
-//                    getEmailCode("reshare")
                     return@let
                 } else {
                     toReshardingForEmail(it)
@@ -412,60 +399,13 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         }
     }
 
-    private fun getEmailCode(value: String, callback: User.() -> Unit = {}) {
-        Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<UserResponse?> ->
-            val `object` = JsonObject()
-            `object`.addProperty("type", value)
-            val body = RequestBody.create(
-                "application/json".toMediaTypeOrNull(), `object`.toString()
-            )
-            val request: Request = Request.Builder()
-                .url(C.GAME_CENTER_URL + "/v1/common/email_code")
-                .addHeader(
-                    "Authorization",
-                    "Bearer " + Go23WalletManage.getInstance().gameCenterToken
-                        .access_token
-                )
-                .addHeader("Uuid", Go23WalletManage.getInstance().user.uuid)
-                .post(body)
-                .build()
-            try {
-                val response =
-                    OkhttpUtil.getInstance().okHttpClient.newCall(request)
-                        .execute()
-                val result =
-                    if (response.body != null) response.body!!.string() else ""
-                val userResponse =
-                    Gson().fromJson(result, UserResponse::class.java)
-                emitter.onNext(userResponse)
-            } catch (e: Exception) {
-                emitter.onError(e)
-            } finally {
-                emitter.onComplete()
-            }
-        }).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<UserResponse?> {
-                override fun onSubscribe(d: Disposable) {}
-                override fun onError(e: Throwable) {
-                    dismissProgress()
-                }
-
-                override fun onComplete() {
-                }
-
-                override fun onNext(t: UserResponse) {
-                    ToastUtils.showShort(R.string.verify_code_sent)
-                    callback.invoke(t.data)
-                }
-            })
-    }
-
     private fun setListener() {
         UpdateDataLiveData.liveData.observe(this) {
             if (it == 2) {
-                UpdateDataLiveData.clearType()
                 binding.viewPager.currentItem = 1
+                UpdateDataLiveData.clearType()
+            } else if (it == 3) {
+                UpdateDataLiveData.clearType()
             }
         }
         binding.toolbar.setNavigationOnClickListener {

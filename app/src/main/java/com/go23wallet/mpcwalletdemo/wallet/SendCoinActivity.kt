@@ -18,7 +18,6 @@ import com.coins.app.bean.Sign
 import com.coins.app.bean.transaction.PreTokenSend
 import com.coins.app.bean.transaction.PreTokenSendResponse
 import com.coins.app.entity.mpc.SignResponse
-import com.coins.app.manage.Go23WalletTransactionManage
 import com.coins.app.util.MpcUtil
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
@@ -75,37 +74,44 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
             binding.tvCoinName.text = it.name
             binding.tvFromCoinNickname.text = it.symbol
             showProgress()
-            Go23WalletTransactionManage.getInstance()
+            Go23WalletManage.getInstance()
                 .requestPreTokenSend(UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
                     it.contract_address,
                     it.user_wallet_address,
                     object : BaseCallBack<PreTokenSendResponse> {
                         override fun success(data: PreTokenSendResponse?) {
                             dismissProgress()
-                            data?.data?.let { preToken ->
-                                preTokenSend = preToken
-                                binding.etToAddress.setText("")
-                                binding.tvGasTips.text = String.format(
-                                    getString(R.string.gas_tips), chainTokenInfo?.symbol
-                                )
-                                binding.tvGasTips.visibility =
-                                    if (preToken.isIs_lending_gas) View.VISIBLE else View.GONE
-                                binding.tvFromAddress.text = it.user_wallet_address.parseAddress()
-                                binding.tvAvailable.text = String.format(
-                                    getString(R.string.available), "${
-                                        if (it.contract_address.isEmpty()) format.parse(
-                                            preToken.platform_balance_sort.toString()
-                                        )
-                                        else format.parse(preToken.token_balance_sort.toString())
-                                    } ${it.symbol}"
-                                )
-                                binding.tvCoinSymbol.text = it.symbol
-                                binding.tvGasBalance.text =
-                                    "${preToken.gas} ${UserWalletInfoManager.getUserWalletInfo().userChain.symbol}"
-                                binding.tvGasValue.visibility =
-                                    if (preToken.platform_u_per > 0) View.VISIBLE else View.GONE
-                                binding.tvGasValue.text =
-                                    "=$${preToken.platform_u_per * (preToken.gas ?: "0.00").toDouble()}"
+                            data?.let { msg ->
+                                if (msg.code != 0) {
+                                    ToastUtils.showShort("Send error, please retry")
+                                    return@let
+                                }
+                                msg.data?.let { preToken ->
+                                    preTokenSend = preToken
+                                    binding.etToAddress.setText("")
+                                    binding.tvGasTips.text = String.format(
+                                        getString(R.string.gas_tips), chainTokenInfo?.symbol
+                                    )
+                                    binding.tvGasTips.visibility =
+                                        if (preToken.isIs_lending_gas) View.VISIBLE else View.GONE
+                                    binding.tvFromAddress.text =
+                                        it.user_wallet_address.parseAddress()
+                                    binding.tvAvailable.text = String.format(
+                                        getString(R.string.available), "${
+                                            if (it.contract_address.isEmpty()) format.parse(
+                                                preToken.platform_balance_sort.toString()
+                                            )
+                                            else format.parse(preToken.token_balance_sort.toString())
+                                        } ${it.symbol}"
+                                    )
+                                    binding.tvCoinSymbol.text = it.symbol
+                                    binding.tvGasBalance.text =
+                                        "${preToken.gas} ${UserWalletInfoManager.getUserWalletInfo().userChain.symbol}"
+                                    binding.tvGasValue.visibility =
+                                        if (preToken.platform_u_per.toDouble() > 0) View.VISIBLE else View.GONE
+                                    binding.tvGasValue.text =
+                                        "=$${preToken.platform_u_per.toDouble() * (preToken.gas ?: "0.00").toDouble()}"
+                                }
                             }
                         }
 
@@ -115,6 +121,8 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                     })
         }
     }
+
+    private var isClickAll = false
 
     private fun setListener() {
         UpdateDataLiveData.liveData.observe(this) {
@@ -165,6 +173,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                isClickAll = !binding.etInputNum.hasFocus()
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -182,15 +191,16 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                 val num = s.toString().toDouble()
 
                 val uPer = if (chainTokenInfo?.contract_address.isNullOrEmpty()) {
-                    preTokenSend?.platform_u_per ?: 0.0
+                    preTokenSend?.platform_u_per?.toDouble() ?: 0.0
                 } else {
-                    preTokenSend?.token_u_per ?: 0.0
+                    preTokenSend?.token_u_per?.toDouble() ?: 0.0
                 }
                 binding.tvInputValue.text = if (uPer == null || uPer <= 0) "" else "=$${num * uPer}"
 
-                updateSendStatus()
+                updateSendStatus(isClickAll)
             }
         })
+
         binding.etToAddress.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -199,7 +209,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                updateSendStatus()
+                updateSendStatus(isClickAll)
             }
         })
         binding.tvPaste.setOnClickListener {
@@ -213,6 +223,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                     ) as BigDecimal - BigDecimal(preToken.gas)
                 } else format.parse(preToken.token_balance_sort.toString()) as? BigDecimal
                     ?: BigDecimal(0)
+                binding.etInputNum.clearFocus()
                 binding.etInputNum.setText(
                     "${
                         if (availableNum < BigDecimal(0)) {
@@ -260,7 +271,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
             binding.tvGasTips.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 if (isSelectGas) R.drawable.icon_checked else R.drawable.icon_uncheck, 0, 0, 0
             )
-            updateSendStatus()
+            updateSendStatus(isClickAll)
         }
         binding.tvSend.setOnClickListener {
             preTokenSend?.let {
@@ -312,7 +323,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
             })
     }
 
-    private fun updateSendStatus() {
+    private fun updateSendStatus(isAll: Boolean) {
         val inputStr = binding.etInputNum.text.toString()
         if (inputStr.isNullOrEmpty()) {
             return
@@ -326,7 +337,8 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                 it.token_balance_sort.toString()
             ) as? BigDecimal ?: BigDecimal(0)
         }
-        binding.tvTotalValue.text = "$totalValue ${chainTokenInfo?.symbol}"
+        binding.tvTotalValue.text =
+            "${if (isAll) availableNum else inputStr} ${chainTokenInfo?.symbol}"
         binding.tvSend.isEnabled =
             totalValue > BigDecimal(0) && if (chainTokenInfo?.contract_address.isNullOrEmpty()) {
                 totalValue <= (availableNum - BigDecimal(preTokenSend?.gas ?: "0"))

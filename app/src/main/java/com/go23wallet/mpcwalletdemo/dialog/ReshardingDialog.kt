@@ -6,7 +6,6 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
-import androidx.core.widget.addTextChangedListener
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogReshardingLayoutBinding
@@ -17,8 +16,8 @@ class ReshardingDialog(mContext: Context) : BaseDialogFragment<DialogReshardingL
 
     private val mHandler: Handler = Handler(Looper.getMainLooper())
 
-    private val forgetPswDialog: ForgetPswDialog by lazy {
-        ForgetPswDialog(mContext, 1)
+    private val emailVerifyDialog: EmailVerifyDialog by lazy {
+        EmailVerifyDialog(mContext, 1)
     }
 
     private val startReshardDialog: StartReshardDialog by lazy {
@@ -35,7 +34,7 @@ class ReshardingDialog(mContext: Context) : BaseDialogFragment<DialogReshardingL
             dismissAllowingStateLoss()
         }
         viewBinding.tvForget.setOnClickListener {
-            forgetPswDialog.show(parentFragmentManager, "forgetPswDialog")
+            emailVerifyDialog.show(parentFragmentManager, "emailVerifyDialog")
             dismissAllowingStateLoss()
         }
         viewBinding.tvVerify.setOnClickListener {

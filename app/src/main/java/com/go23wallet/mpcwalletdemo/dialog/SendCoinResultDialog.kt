@@ -19,7 +19,8 @@ import com.go23wallet.mpcwalletdemo.wallet.ChargeDetailsActivity
 class SendCoinResultDialog(
     private val mContext: Activity,
     private val isSuccess: Boolean,
-    private val hash: String
+    private val hash: String,
+    private val isNft: Boolean = false
 ) :
     BaseDialogFragment<DialogSendCoinResultLayoutBinding>() {
 
@@ -52,7 +53,11 @@ class SendCoinResultDialog(
         viewBinding.tvConfirm.setOnClickListener {
             dismissAllowingStateLoss()
             mContext.finish()
-            UpdateDataLiveData.setUpdateType(2)
+            if (isNft) {
+                UpdateDataLiveData.setUpdateType(2)
+            } else {
+                UpdateDataLiveData.setUpdateType(3)
+            }
         }
         viewBinding.tvOk.setOnClickListener {
             dismissAllowingStateLoss()

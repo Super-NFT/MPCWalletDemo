@@ -91,6 +91,7 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
                 binding.tvLendingContent.visibility = View.VISIBLE
                 binding.tvLendingContent.text = it.lending_gas_fee
             }
+            binding.tvTime.visibility = if (it.status == 1) View.INVISIBLE else View.VISIBLE
             binding.tvTime.text = it.time
             TextEllipsizeSpanUtil.setTextEndImg(
                 this,

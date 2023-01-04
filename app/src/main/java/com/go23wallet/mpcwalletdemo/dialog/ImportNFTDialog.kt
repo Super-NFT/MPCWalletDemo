@@ -3,6 +3,8 @@ package com.go23wallet.mpcwalletdemo.dialog
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.updateLayoutParams
 import com.blankj.utilcode.util.ToastUtils
 import com.coins.app.BaseCallBack
 import com.coins.app.Go23WalletManage
@@ -11,6 +13,7 @@ import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogImportNftLayoutBinding
 import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
+import com.go23wallet.mpcwalletdemo.utils.KeyboardStatusWatcher
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 
 class ImportNFTDialog :
@@ -19,7 +22,14 @@ class ImportNFTDialog :
     override val layoutId: Int = R.layout.dialog_import_nft_layout
 
     override fun initViews(v: View?) {
-
+        dialog?.window?.let {
+            KeyboardStatusWatcher.setKeyBoardListener(it) {
+                viewBinding.tvImport.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    bottomMargin = this@setKeyBoardListener
+                }
+            }
+        }
+        viewBinding.etNtfAddress.requestFocus()
         viewBinding.etNtfAddress.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }

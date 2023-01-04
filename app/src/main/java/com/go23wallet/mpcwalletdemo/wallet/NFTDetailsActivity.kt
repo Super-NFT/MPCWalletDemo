@@ -14,6 +14,7 @@ import com.go23wallet.mpcwalletdemo.adapter.NFTAttributeAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivityNftDetailsBinding
 import com.go23wallet.mpcwalletdemo.ext.parseAddress
+import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
 import com.go23wallet.mpcwalletdemo.utils.CopyUtils
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 import com.go23wallet.mpcwalletdemo.utils.TextEllipsizeSpanUtil
@@ -87,6 +88,11 @@ class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
     private fun setListener() {
         binding.ivBack.setOnClickListener {
             finish()
+        }
+        UpdateDataLiveData.liveData.observe(this) {
+            if (it == 2 || it == 3) {
+                finish()
+            }
         }
         binding.tvAddress.setOnClickListener {
             CopyUtils.copyText(this, nft?.contract_address ?: "")

@@ -190,7 +190,7 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
                     dismissProgress()
                     if (response?.code.toString() == "0") {
                         sendCoinResultDialog =
-                            SendCoinResultDialog(this@SendNFTActivity, true, response?.data ?: "")
+                            SendCoinResultDialog(this@SendNFTActivity, true, response?.data ?: "", true)
                         sendCoinResultDialog?.show(supportFragmentManager, "sendCoinResultDialog")
                     } else {
                         Toast.makeText(baseContext, "Transaction failed", Toast.LENGTH_SHORT).show()
