@@ -18,8 +18,11 @@ import com.coins.app.bean.user.User
 import com.coins.app.bean.user.UserResponse
 import com.coins.app.bean.walletinfo.WalletInfo
 import com.coins.app.bean.walletinfo.WalletInfoResponse
+import com.coins.app.callback.EmailCallBack
+import com.coins.app.callback.ReShareCallBack
 import com.coins.app.callback.RecoverCallBack
 import com.coins.app.callback.ResharedingCallBack
+import com.coins.app.callback.RestoreCallBack
 import com.coins.app.manage.Go23WalletChainManage
 import com.coins.app.util.OkhttpUtil
 import com.go23wallet.mpcwalletdemo.R
@@ -111,19 +114,27 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     private fun initData() {
         Go23WalletManage.getInstance().setUniqueId(Constant.emailStr).setEmail(Constant.emailStr)
             .start(this@WalletActivity, object : Go23WalletCallBack {
-                override fun recover() {
+                override fun reStore(p0: MutableList<WalletInfo>?) {
                     forgetPswDialog.show(supportFragmentManager, "")
                     forgetPswDialog.callback = {
                         it?.let {
                             if (it.isEmpty()) {
-                                getEmailCode("recover")
+                                Go23WalletManage.getInstance().verifyEmailCode(0,object :EmailCallBack{
+                                    override fun success() {
+                                    }
+
+                                    override fun failed() {
+                                    }
+
+                                })
+//                                getEmailCode("recover")
                                 return@let
                             }
                             Go23WalletManage.getInstance()
-                                .startRecover(
+                                .startReStore(
                                     this@WalletActivity,
                                     it,
-                                    object : RecoverCallBack {
+                                    object : RestoreCallBack {
                                         override fun success() {
                                             successDialog.show(
                                                 supportFragmentManager,
@@ -143,7 +154,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                             dismissProgress()
                                         }
 
-                                        override fun reSharding() {
+                                        override fun reShare() {
                                             toReSharding()
                                         }
                                     })
@@ -261,11 +272,11 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             object : BaseCallBack<MerchantResponse> {
                 override fun success(data: MerchantResponse?) {
                     data?.data?.let { key ->
-                        Go23WalletManage.getInstance().startReshardingForPinCode(
+                        Go23WalletManage.getInstance().startReShareForPinCode(
                             this@WalletActivity,
                             key.keygen,
                             Go23WalletManage.getInstance().walletAddress,
-                            object : ResharedingCallBack {
+                            object : ReShareCallBack {
 
                                 override fun success(key3: String?) {
                                     //update key
@@ -285,7 +296,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                     ToastUtils.showShort(R.string.resharding_fail)
                                 }
 
-                                override fun reshareForEmail() {
+                                override fun reShareForEmail() {
                                     toReSharding()
                                 }
 
@@ -311,12 +322,12 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             object : BaseCallBack<MerchantResponse> {
                 override fun success(data: MerchantResponse?) {
                     data?.data?.let { key ->
-                        Go23WalletManage.getInstance().startReShardingForEmail(
+                        Go23WalletManage.getInstance().startReShareForEmail(
                             this@WalletActivity,
                             key.keygen,
                             Go23WalletManage.getInstance().walletAddress,
                             code,
-                            object : ResharedingCallBack {
+                            object : ReShareCallBack {
 
                                 override fun success(key3: String?) {
                                     //update key
@@ -335,7 +346,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                     dismissProgress()
                                 }
 
-                                override fun reshareForEmail() {
+                                override fun reShareForEmail() {
                                     toReSharding()
                                 }
 
