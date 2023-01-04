@@ -20,8 +20,6 @@ import com.coins.app.bean.walletinfo.WalletInfo
 import com.coins.app.bean.walletinfo.WalletInfoResponse
 import com.coins.app.callback.EmailCallBack
 import com.coins.app.callback.ReShareCallBack
-import com.coins.app.callback.RecoverCallBack
-import com.coins.app.callback.ResharedingCallBack
 import com.coins.app.callback.RestoreCallBack
 import com.coins.app.manage.Go23WalletChainManage
 import com.coins.app.util.OkhttpUtil
@@ -157,6 +155,14 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
                                         override fun reShare() {
                                             toReSharding()
+                                        }
+
+                                        override fun emailVerifyFailed() {
+                                            TODO("Not yet implemented")
+                                        }
+
+                                        override fun emailVerifySuccess() {
+                                            TODO("Not yet implemented")
                                         }
                                     })
                         } ?: kotlin.run {
@@ -301,6 +307,14 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                     toReSharding()
                                 }
 
+                                override fun emailVerifyFailed() {
+                                    TODO("Not yet implemented")
+                                }
+
+                                override fun emailVerifySuccess() {
+                                    TODO("Not yet implemented")
+                                }
+
                                 override fun dismiss() {
                                     dismissProgress()
                                 }
@@ -349,6 +363,14 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
                                 override fun reShareForEmail() {
                                     toReSharding()
+                                }
+
+                                override fun emailVerifyFailed() {
+                                    TODO("Not yet implemented")
+                                }
+
+                                override fun emailVerifySuccess() {
+                                    TODO("Not yet implemented")
                                 }
 
                                 override fun dismiss() {
