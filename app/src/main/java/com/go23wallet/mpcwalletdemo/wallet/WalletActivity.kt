@@ -119,7 +119,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                     forgetPswDialog.callback = {
                         it?.let {
                             if (it.isEmpty()) {
-                                Go23WalletManage.getInstance().verifyEmailCode(0,object :EmailCallBack{
+                                Go23WalletManage.getInstance().verifyEmailCode(1,object :EmailCallBack{
                                     override fun success() {
                                     }
 
@@ -130,6 +130,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 //                                getEmailCode("recover")
                                 return@let
                             }
+                            dismissProgress()
                             Go23WalletManage.getInstance()
                                 .startReStore(
                                     this@WalletActivity,
@@ -372,7 +373,15 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         forgetPswDialog.callback = {
             it?.let {
                 if (it.isEmpty()) {
-                    getEmailCode("reshare")
+                    Go23WalletManage.getInstance().verifyEmailCode(0,object :EmailCallBack{
+                        override fun success() {
+                        }
+
+                        override fun failed() {
+                        }
+
+                    })
+//                    getEmailCode("reshare")
                     return@let
                 } else {
                     toReshardingForEmail(it)
