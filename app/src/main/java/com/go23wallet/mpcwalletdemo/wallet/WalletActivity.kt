@@ -44,6 +44,12 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
     private var walletInfo: WalletInfo? = null
 
+    private var emailStr = ""
+
+    private val setUserDialog: SetUserDialog by lazy {
+        SetUserDialog(this)
+    }
+
     private val chooseMainnetDialog: ChooseMainnetDialog by lazy {
         ChooseMainnetDialog(this)
     }
@@ -69,15 +75,25 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     override val layoutRes: Int = R.layout.activity_wallet
 
     override fun initViews(savedInstanceState: Bundle?) {
-        binding.tvEmail.text = Constant.emailStr
+        emailStr = SPUtils.getInstance().getString("email")
+        showProgress()
+        setListener()
+        if (emailStr.isNullOrEmpty()) {
+            setUserDialog.show(supportFragmentManager, "setUserDialog")
+        } else {
+            initUserInfo()
+        }
+    }
+
+    private fun initUserInfo() {
+        binding.tvEmail.text = emailStr
+
         GlideUtils.loadImg(
             this@WalletActivity,
             "https://d2vvute2v3y7pn.cloudfront.net/logo/Avalanche/0xe0bb6feD446A2dbb27F84D3C27C4ED8EA7603366.webp",
             binding.ivAvatar
         )
-        showProgress()
         initData()
-        setListener()
         binding.refreshView.setOnRefreshListener {
             walletInfo?.let {
                 loadData(it)
@@ -93,7 +109,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     }
 
     private fun initData() {
-        Go23WalletManage.getInstance().setUniqueId(Constant.emailStr).setEmail(Constant.emailStr)
+        Go23WalletManage.getInstance().setUniqueId(emailStr).setEmail(emailStr)
             .start(this@WalletActivity, object : Go23WalletCallBack {
                 override fun reStore(p0: MutableList<WalletInfo>?) {
                     emailVerifyDialog.show(supportFragmentManager, "")
@@ -410,6 +426,11 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         }
         binding.toolbar.setNavigationOnClickListener {
             finish()
+        }
+        setUserDialog.callback = {
+            emailStr = this
+            SPUtils.getInstance().put("email", this)
+            initUserInfo()
         }
         successDialog.callback = {
             geWalletInfo()
