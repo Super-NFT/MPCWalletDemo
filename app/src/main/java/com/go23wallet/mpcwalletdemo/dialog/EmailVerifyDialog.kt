@@ -3,11 +3,11 @@ package com.go23wallet.mpcwalletdemo.dialog
 import android.content.Context
 import android.view.*
 import android.widget.Toast
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogForgetPswLayoutBinding
-import com.go23wallet.mpcwalletdemo.utils.Constant
 import com.go23wallet.mpcwalletdemo.view.InputCodeView.OnCodeCompleteListener
 
 class EmailVerifyDialog(private val mContext: Context, val dialogType: Int = 0) :
@@ -27,7 +27,8 @@ class EmailVerifyDialog(private val mContext: Context, val dialogType: Int = 0) 
     }
 
     override fun initViews(v: View?) {
-        viewBinding.tvEmail.text = Constant.emailStr
+        val emailStr = SPUtils.getInstance().getString("email")
+        viewBinding.tvEmail.text = emailStr
         viewBinding.ivBack.setOnClickListener {
             callback.invoke(null)
             dismissAllowingStateLoss()

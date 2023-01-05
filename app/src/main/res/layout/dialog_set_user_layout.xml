@@ -44,7 +44,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <com.go23wallet.mpcwalletdemo.view.InputEditText
         android:id="@+id/et_set_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -59,6 +59,21 @@
         app:layout_constraintTop_toBottomOf="@id/tv_set_tip" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_error_tips"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/email_input_error"
+        android:textColor="@color/color_D83548"
+        android:textSize="14sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_set_email" />
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_confirm_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,9 +83,9 @@
         android:textColor="@color/color_262626"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_set_email" />
+        app:layout_constraintTop_toBottomOf="@id/tv_error_tips" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <com.go23wallet.mpcwalletdemo.view.InputEditText
         android:id="@+id/et_verify_code"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -78,11 +93,25 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/shape_r8_f5_bg"
+        android:maxLength="6"
         android:minHeight="46dp"
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_confirm_tip" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/send"
+        android:textColor="@color/color_35C1D8"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/et_verify_code"
+        app:layout_constraintEnd_toEndOf="@id/et_verify_code"
+        app:layout_constraintTop_toTopOf="@id/et_verify_code" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_confirm"
@@ -91,7 +120,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/shape_r8_35c1d8_bg"
+        android:background="@drawable/selector_btn_enable"
         android:fontFamily="@font/barlowcondensed_medium"
         android:gravity="center"
         android:letterSpacing="0.04"

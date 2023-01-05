@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.coins.app.BaseCallBack
 import com.coins.app.Go23WalletManage
 import com.coins.app.bean.nft.NftResponse
+import com.coins.app.util.KeyboardUtils
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogImportNftLayoutBinding
@@ -71,5 +72,10 @@ class ImportNFTDialog :
                     }
                 })
         }
+
+        viewBinding.root.setOnClickListener {
+            KeyboardUtils.hideKeyboard(viewBinding.root)
+        }
+
     }
 }

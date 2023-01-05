@@ -46,6 +46,7 @@
     <string name="resharding_loading">Resharding, please wait</string>
     <string name="resharding_fail">Resharding fail, please retry</string>
     <string name="verify_code">Verification code</string>
+    <string name="email_input_error">Email input error</string>
     <string name="verify_code_sent">Verification code has been sent</string>
     <string name="verify_code_fail">Verification code error, please reenter</string>
 

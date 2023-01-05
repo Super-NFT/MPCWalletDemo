@@ -70,7 +70,7 @@ class NFTFragment : Fragment() {
             val itemData = mAdapter?.data?.get(position) ?: return@setOnItemClickListener
             startActivity(Intent(context, NFTDetailsActivity::class.java).apply {
                 putExtra("contract_address", itemData.contract_address)
-//                putExtra("token_id", itemData.token_id)
+                putExtra("token_id", itemData.token_id)
             })
         }
     }

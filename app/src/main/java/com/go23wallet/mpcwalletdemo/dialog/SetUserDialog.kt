@@ -2,16 +2,17 @@ package com.go23wallet.mpcwalletdemo.dialog
 
 import android.app.Activity
 import android.content.Context
+import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.*
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.updateLayoutParams
+import android.view.View
 import com.blankj.utilcode.util.ScreenUtils
+import com.coins.app.util.KeyboardUtils
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogSetUserLayoutBinding
-import com.go23wallet.mpcwalletdemo.utils.KeyboardStatusWatcher
+import com.go23wallet.mpcwalletdemo.utils.Validator
+
 
 class SetUserDialog(val activity: Activity) : BaseDialogFragment<DialogSetUserLayoutBinding>() {
 
@@ -22,10 +23,13 @@ class SetUserDialog(val activity: Activity) : BaseDialogFragment<DialogSetUserLa
     private var setEmail = ""
     private var verifyCode = ""
 
+    private var mCountDownTimer: CountDownTimer? = null
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         setHeight((ScreenUtils.getScreenHeight() * 0.8).toInt())
     }
+
     override fun initViews(v: View?) {
         viewBinding.ivClose.setOnClickListener {
             activity.finish()
@@ -39,6 +43,10 @@ class SetUserDialog(val activity: Activity) : BaseDialogFragment<DialogSetUserLa
 
             override fun afterTextChanged(s: Editable?) {
                 setEmail = s.toString()
+                if (setEmail.isNullOrEmpty()) return
+                val isEnable = Validator.isEmail(setEmail)
+                viewBinding.tvErrorTips.visibility = if (isEnable) View.INVISIBLE else View.VISIBLE
+                viewBinding.tvConfirm.isEnabled = isEnable
             }
 
         })
@@ -55,9 +63,37 @@ class SetUserDialog(val activity: Activity) : BaseDialogFragment<DialogSetUserLa
 
         })
 
+        viewBinding.root.setOnClickListener {
+            KeyboardUtils.hideKeyboard(viewBinding.root)
+        }
+
         viewBinding.tvConfirm.setOnClickListener {
             dismissAllowingStateLoss()
             callback.invoke(setEmail)
+        }
+
+        viewBinding.tvSend.setOnClickListener {
+            countDown()
+        }
+    }
+
+    private fun countDown() {
+        if (mCountDownTimer != null) {
+            return
+        } else {
+            mCountDownTimer = object : CountDownTimer(60 * 1000, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    viewBinding.tvSend.isEnabled = false
+                    viewBinding.tvSend.text = "${millisUntilFinished / 1000}s"
+                }
+
+                override fun onFinish() {
+                    viewBinding.tvSend.isEnabled = true
+                    viewBinding.tvSend.text = getString(R.string.send)
+                }
+
+            }
+            mCountDownTimer?.start()
         }
     }
 }
