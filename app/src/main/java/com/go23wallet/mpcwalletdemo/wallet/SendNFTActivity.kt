@@ -171,8 +171,6 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
     private fun toSign(nft: Nft) {
         showProgress()
         val sign = Sign()
-        val key1 = Go23WalletManage.getInstance()
-            .getLocalMpcKey(Go23WalletManage.getInstance().walletAddress)
         sign.type = 1
         sign.chainId = UserWalletInfoManager.getUserWalletInfo().userChain.chain_id
         sign.rpc = UserWalletInfoManager.getUserWalletInfo().userChain.rpc
@@ -185,12 +183,17 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
         sign.nft_name = nft.name
         sign.middleContractAddress = ""
         Go23WalletManage.getInstance().sign(
-            this, supportFragmentManager, key1, sign, object : MpcUtil.SignCallBack {
+            this, supportFragmentManager, sign, object : MpcUtil.SignCallBack {
                 override fun success(response: SignResponse?) {
                     dismissProgress()
                     if (response?.code.toString() == "0") {
                         sendCoinResultDialog =
-                            SendCoinResultDialog(this@SendNFTActivity, true, response?.data ?: "", true)
+                            SendCoinResultDialog(
+                                this@SendNFTActivity,
+                                true,
+                                response?.data ?: "",
+                                true
+                            )
                         sendCoinResultDialog?.show(supportFragmentManager, "sendCoinResultDialog")
                     } else {
                         Toast.makeText(baseContext, "Transaction failed", Toast.LENGTH_SHORT).show()

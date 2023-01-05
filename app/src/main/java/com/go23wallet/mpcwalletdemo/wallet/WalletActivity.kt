@@ -182,6 +182,10 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                     dismissProgress()
                 }
 
+                override fun preShowCreateKeyPincodeDialog() {
+                    dismissProgress()
+                }
+
                 override fun createKeySuccess(address: String?, key: String?) {
                     address?.let {
                         SPUtils.getInstance().put(address, key)

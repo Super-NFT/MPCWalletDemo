@@ -283,8 +283,6 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
 
     private fun toSign(data: PreTokenSend) {
         val sign = Sign()
-        val key1 = Go23WalletManage.getInstance()
-            .getLocalMpcKey(Go23WalletManage.getInstance().walletAddress)
         sign.type = 1
         sign.decimal = data.decimal
         sign.chainId = UserWalletInfoManager.getUserWalletInfo().userChain.chain_id
@@ -298,7 +296,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         sign.middleContractAddress =
             UserWalletInfoManager.getUserWalletInfo().userChain.middle_contract_address
         Go23WalletManage.getInstance()
-            .sign(this, supportFragmentManager, key1, sign, object : MpcUtil.SignCallBack {
+            .sign(this, supportFragmentManager, sign, object : MpcUtil.SignCallBack {
                 override fun success(response: SignResponse?) {
                     dismissProgress()
                     if (response?.code.toString() == "0") {
