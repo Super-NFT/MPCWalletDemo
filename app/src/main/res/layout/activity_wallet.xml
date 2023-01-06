@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/color_FAFAFA"
     tools:context=".wallet.WalletActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -17,9 +17,18 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="start"
+            android:layout_marginStart="10dp"
+            android:padding="10dp"
+            android:src="@drawable/icon_back" />
+
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ic_more"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="end"
             android:layout_marginEnd="10dp"
             android:padding="10dp"
@@ -42,15 +51,17 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_chain_address"
                 android:layout_width="wrap_content"
-                android:layout_height="38dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/shape_r52_bf_border"
+                android:background="@drawable/shape_r52_d9_border"
                 android:fontFamily="@font/barlowcondensed_regular"
                 android:gravity="center"
                 android:lines="1"
-                android:paddingStart="38dp"
-                android:paddingEnd="26dp"
+                android:paddingStart="34dp"
+                android:paddingTop="7dp"
+                android:paddingEnd="22dp"
+                android:paddingBottom="9dp"
                 android:textColor="@color/color_262626"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -58,10 +69,10 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_down"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="2dp"
                 android:src="@drawable/icon_down"
                 app:layout_constraintBottom_toBottomOf="@id/tv_chain_address"
                 app:layout_constraintEnd_toEndOf="@id/tv_chain_address"
@@ -71,7 +82,7 @@
                 android:id="@+id/iv_chain_icon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="2dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_chain_address"
                 app:layout_constraintStart_toStartOf="@id/tv_chain_address"
@@ -79,8 +90,8 @@
 
             <com.go23wallet.mpcwalletdemo.view.xfer.XfermodeImageView
                 android:id="@+id/iv_avatar"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:layout_marginStart="20dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_chain_address"
                 app:layout_constraintStart_toStartOf="parent"
@@ -90,8 +101,10 @@
                 android:id="@+id/tv_email"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="2dp"
+                android:ellipsize="end"
                 android:fontFamily="@font/barlowcondensed_regular"
                 android:lines="1"
                 android:textColor="@color/color_262626"
@@ -104,8 +117,8 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_address"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_marginTop="16dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="32dp"
                 android:background="@drawable/shape_r33_e1f4f5_bg"
                 android:drawableEnd="@drawable/icon_copy"
                 android:drawablePadding="5dp"
@@ -114,7 +127,7 @@
                 android:lines="1"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:textColor="@color/color_262626"
+                android:textColor="@color/color_8C8C8C"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -125,13 +138,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="26dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginTop="20dp"
                 android:fontFamily="@font/barlowcondensed_medium"
                 android:gravity="center"
                 android:letterSpacing="0.04"
+                android:lineHeight="36dp"
                 android:lines="1"
-                android:padding="10dp"
                 android:text="0"
                 android:textColor="@color/color_262626"
                 android:textSize="32sp"
@@ -142,12 +155,12 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_total_balance_value"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="20dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginEnd="20dp"
                 android:gravity="center"
                 android:lines="1"
-                android:padding="10dp"
                 android:text="0"
                 android:textColor="@color/color_8C8C8C"
                 android:textSize="14sp"
@@ -160,16 +173,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="34dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="26dp"
                 android:drawableTop="@drawable/icon_scan"
-                android:drawablePadding="6dp"
+                android:drawablePadding="3dp"
+                android:gravity="center"
                 android:text="@string/receive"
-                android:textColor="@color/color_848484"
+                android:textColor="@color/color_8C8C8C"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@id/tv_send"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_total_balance_value" />
-
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_send"
@@ -177,10 +190,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="34dp"
                 android:drawableTop="@drawable/icon_send"
-                android:drawablePadding="6dp"
+                android:drawablePadding="3dp"
                 android:gravity="center"
                 android:text="@string/send"
-                android:textColor="@color/color_848484"
+                android:textColor="@color/color_8C8C8C"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_receive"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -191,52 +204,62 @@
                 android:id="@+id/line"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="26dp"
                 android:background="@color/color_F5F5F5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_receive" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/line"
-                app:tabBackground="@android:color/transparent"
-                app:tabIndicator="@drawable/shape_r4_bg"
-                app:tabIndicatorColor="@color/color_E1F4F5"
-                app:tabIndicatorFullWidth="true"
-                app:tabIndicatorGravity="stretch"
-                app:tabMode="scrollable"
-                app:tabRippleColor="@android:color/transparent"
-                app:tabSelectedTextColor="@color/color_262626"
-                app:tabTextAppearance="@style/TabTextAppearance"
-                app:tabTextColor="@color/color_8C8C8C" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_add"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/icon_add"
-                app:layout_constraintBottom_toBottomOf="@id/tab"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tab" />
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/view_pager"
-                android:layout_width="0dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="16dp"
+                android:background="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tab" />
+                app:layout_constraintTop_toBottomOf="@id/line">
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab"
+                    android:layout_width="160dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tabBackground="@android:color/transparent"
+                    app:tabIndicator="@drawable/shape_r4_bg"
+                    app:tabIndicatorColor="@color/color_35C1D8"
+                    app:tabIndicatorFullWidth="true"
+                    app:tabIndicatorGravity="stretch"
+                    app:tabMode="scrollable"
+                    app:tabRippleColor="@android:color/transparent"
+                    app:tabSelectedTextColor="@color/white"
+                    app:tabTextAppearance="@style/TabTextAppearance"
+                    app:tabTextColor="@color/color_262626" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_add"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:src="@drawable/icon_add"
+                    app:layout_constraintBottom_toBottomOf="@id/tab"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tab" />
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/view_pager"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tab" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.go23wallet.mpcwalletdemo.view.RefreshLayout>

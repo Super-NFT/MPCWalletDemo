@@ -13,7 +13,9 @@
         android:layout_marginTop="14dp"
         android:text="@string/transaction_result"
         android:textColor="@color/color_262626"
-        android:textSize="24sp"
+        android:fontFamily="@font/barlowcondensed_medium"
+        android:letterSpacing="0.04"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

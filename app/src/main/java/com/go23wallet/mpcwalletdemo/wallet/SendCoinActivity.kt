@@ -147,7 +147,9 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                     data
                 }
             }
-            binding.etToAddress.setText(content)
+            if (!content.isNullOrEmpty()) {
+                binding.etToAddress.setText(content)
+            }
         }
         binding.ivBack.setOnClickListener {
             finish()
@@ -165,6 +167,9 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
             initData()
         }
 
+        binding.tvFromAddress.setOnClickListener {
+            CopyUtils.copyText(this, chainTokenInfo?.user_wallet_address ?: "")
+        }
         binding.vCoinType.setOnClickListener {
             selectTokenSendDialog.show(supportFragmentManager, "selectTokenSendDialog")
         }
@@ -178,7 +183,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
 
             override fun afterTextChanged(s: Editable?) {
                 if (s.isNullOrEmpty()) {
-                    binding.tvTotalValue.text = ""
+//                    binding.tvTotalValue.text = ""
                     binding.tvInputValue.text = ""
                     binding.tvSend.isEnabled = false
                     return
@@ -335,16 +340,15 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                 it.token_balance_sort.toString()
             ) as? BigDecimal ?: BigDecimal(0)
         }
-        binding.tvTotalValue.text =
-            "${if (isAll) availableNum else inputStr} ${chainTokenInfo?.symbol}"
+//        binding.tvTotalValue.text =
+//            "${if (isAll) availableNum else inputStr} ${chainTokenInfo?.symbol}"
         binding.tvSend.isEnabled =
             totalValue > BigDecimal(0) && if (chainTokenInfo?.contract_address.isNullOrEmpty()) {
                 totalValue <= (availableNum - BigDecimal(preTokenSend?.gas ?: "0"))
             } else {
                 totalValue <= availableNum
             } && (preTokenSend?.trans_type
-                ?: 0) != 0 && !TextUtils.isEmpty(binding.etToAddress.text) && isSelectGas && !TextUtils.isEmpty(
-                binding.tvTotalValue.text
-            )
+                ?: 0) != 0 && !TextUtils.isEmpty(binding.etToAddress.text) && isSelectGas
+//                    && !TextUtils.isEmpty(binding.tvTotalValue.text)
     }
 }

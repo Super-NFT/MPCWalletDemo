@@ -94,7 +94,9 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
                     data
                 }
             }
-            binding.etAddress.setText(content)
+            if (!content.isNullOrEmpty()) {
+                binding.etAddress.setText(content)
+            }
         }
         binding.ivBack.setOnClickListener {
             finish()

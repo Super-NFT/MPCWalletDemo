@@ -17,7 +17,7 @@ class ReceiveDialog(private val mContext: Context, private val symbol: String, p
         super.onAttach(context)
         setCanceledOnTouchOutside(true)
         isCancelable = true
-        setWidth((ScreenUtils.getScreenWidth() * 0.8).toInt())
+        setWidth((ScreenUtils.getScreenWidth() * 0.9).toInt())
         setGravity(Gravity.CENTER)
     }
 
