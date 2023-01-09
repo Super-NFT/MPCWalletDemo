@@ -27,6 +27,8 @@ class TokenTransactionsAdapter :
             item.value
         }
         tvBalance.text = "-${valueStr}${item.symbol}"
+        tvValue.visibility =
+            if (item.balance_u.toDouble() > 0) View.VISIBLE else View.INVISIBLE
         when (item.status) {
             3 -> {
                 ivIcon.setImageResource(R.drawable.icon_type_failed)
@@ -46,6 +48,7 @@ class TokenTransactionsAdapter :
                     "Approve" -> {
                         ivIcon.setImageResource(R.drawable.icon_type_approve)
                         tvBalance.text = "${item.value}${item.symbol}"
+                        tvValue.visibility = View.INVISIBLE
                     }
                     "Mint" -> {
                         ivIcon.setImageResource(R.drawable.icon_type_transfer)
@@ -61,8 +64,7 @@ class TokenTransactionsAdapter :
         }
 
         tvTime.text = item.time
-        tvValue.visibility =
-            if (item.balance_u.toDouble() > 0) View.VISIBLE else View.INVISIBLE
+
         tvValue.text = "$${item.balance_u}"
     }
 }

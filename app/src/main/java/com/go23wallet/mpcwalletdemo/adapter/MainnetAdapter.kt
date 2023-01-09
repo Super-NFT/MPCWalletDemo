@@ -19,6 +19,11 @@ class MainnetAdapter :
         GlideUtils.loadImg(context, item.image_url, ivAvatar)
         tvTitle.text = item.name
         ivSelect.visibility = if (item.isHas_default) View.VISIBLE else View.GONE
+        holder.itemView.setBackgroundColor(
+            if (item.isHas_default) context.getColor(R.color.color_F5F5F5) else context.getColor(
+                R.color.white
+            )
+        )
     }
 
 }

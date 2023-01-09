@@ -54,7 +54,7 @@ class EmailVerifyDialog(private val mContext: Context, val dialogType: Int = 0) 
                 viewBinding.llVerify.visibility = View.VISIBLE
                 viewBinding.tvVerify.text = getString(R.string.verify)
             } else {
-                if (verifyCode.isNullOrEmpty() && (verifyCode?.length ?: 0) > 6) {
+                if (verifyCode.isNullOrEmpty() || (verifyCode?.length ?: 0) > 6) {
                     Toast.makeText(context, R.string.verify_error, Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 } else {

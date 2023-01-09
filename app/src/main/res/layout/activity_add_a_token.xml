@@ -17,8 +17,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_back"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginStart="10dp"
             android:padding="10dp"
             android:layout_gravity="start"
@@ -32,7 +32,7 @@
             android:letterSpacing="0.04"
             android:text="@string/add_a_token"
             android:textColor="@color/color_262626"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
 
     </androidx.appcompat.widget.Toolbar>
 

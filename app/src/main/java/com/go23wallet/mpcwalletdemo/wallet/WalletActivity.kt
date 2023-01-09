@@ -161,6 +161,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                         }
 
                                         override fun emailVerifySuccess() {
+                                            dismissProgress()
                                             emailVerifyDialog.dismissAllowingStateLoss()
                                         }
                                     })
@@ -316,6 +317,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                 }
 
                                 override fun emailVerifySuccess() {
+                                    dismissProgress()
                                     emailVerifyDialog.dismissAllowingStateLoss()
                                 }
 
@@ -428,7 +430,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                 UpdateDataLiveData.clearType()
             }
         }
-        binding.toolbar.setNavigationOnClickListener {
+        binding.ivBack.setOnClickListener {
             finish()
         }
         setUserDialog.callback = {

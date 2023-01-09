@@ -40,12 +40,14 @@ class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
     }
 
     private fun initData() {
+        showProgress()
         Go23WalletManage.getInstance().requestNftDetail(contractAddress,
             UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
             UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
             tokenId,
             object : BaseCallBack<NftResponse> {
                 override fun success(data: NftResponse?) {
+                    dismissProgress()
                     data?.data?.let {
                         nft = it
                         GlideUtils.loadImg(this@NFTDetailsActivity, it.image, binding.ivNft)
@@ -68,6 +70,7 @@ class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
                 }
 
                 override fun failed() {
+                    dismissProgress()
                 }
 
             })

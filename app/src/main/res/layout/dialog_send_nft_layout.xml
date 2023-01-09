@@ -16,7 +16,7 @@
         android:letterSpacing="0.04"
         android:text="@string/send_nft"
         android:textColor="@color/color_262626"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
