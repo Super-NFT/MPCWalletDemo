@@ -18,14 +18,13 @@ class TokenTransactionsAdapter :
         val tvTime = holder.getView<AppCompatTextView>(R.id.tv_time)
         val tvBalance = holder.getView<AppCompatTextView>(R.id.tv_charge_balance)
         val tvValue = holder.getView<AppCompatTextView>(R.id.tv_value)
-        tvBalance.setTextColor(context.getColor(R.color.color_262626))
         tvTitle.text = "${item.type} ${item.to_addr.parseAddress()}"
-        tvBalance.setTextColor(context.getColor(R.color.color_262626))
         val valueStr = if (item.value.length > 12) {
             item.value.substring(0, 12) + "..."
         } else {
             item.value
         }
+        tvBalance.setTextColor(context.getColor(R.color.color_D83548))
         tvBalance.text = "-${valueStr}${item.symbol}"
         tvValue.visibility =
             if (item.balance_u.toDouble() > 0) View.VISIBLE else View.INVISIBLE
@@ -46,6 +45,7 @@ class TokenTransactionsAdapter :
                         tvBalance.text = "+${item.value}${item.symbol}"
                     }
                     "Approve" -> {
+                        tvBalance.setTextColor(context.getColor(R.color.color_262626))
                         ivIcon.setImageResource(R.drawable.icon_type_approve)
                         tvBalance.text = "${item.value}${item.symbol}"
                         tvValue.visibility = View.INVISIBLE

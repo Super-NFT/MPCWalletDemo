@@ -27,9 +27,6 @@ class SetUserDialog(val activity: Activity) : BaseDialogFragment<DialogSetUserLa
     }
 
     override fun initViews(v: View?) {
-        viewBinding.ivClose.setOnClickListener {
-            activity.finish()
-        }
         viewBinding.etSetEmail.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }

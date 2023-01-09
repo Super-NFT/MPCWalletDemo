@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import com.coins.app.BaseCallBack
 import com.coins.app.Go23WalletManage
 import com.coins.app.bean.token.TokenResponse
@@ -73,17 +74,26 @@ class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
             UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
             object : BaseCallBack<TokenResponse> {
                 override fun success(data: TokenResponse?) {
-                    data?.data?.let {
-                        contractAddress = it.contract_address ?: ""
-                        binding.tvTokenSymbol.text = it.symbol
-                        binding.tvTokenPrecision.text = it.decimal.toString()
-                    } ?: kotlin.run {
-                        binding.tvTokenSymbol.text = ""
-                        binding.tvTokenPrecision.text = ""
+                    data?.let { tokenResponse ->
+                        if (tokenResponse.code == 0) {
+                            tokenResponse.data?.let {
+                                binding.group.visibility = View.VISIBLE
+                                contractAddress = it.contract_address ?: ""
+                                binding.tvTokenSymbol.text = it.symbol
+                                binding.tvTokenPrecision.text = it.decimal.toString()
+                            } ?: kotlin.run {
+                                binding.group.visibility = View.GONE
+                                binding.tvTokenSymbol.text = ""
+                                binding.tvTokenPrecision.text = ""
+                            }
+                        } else {
+                            binding.group.visibility = View.GONE
+                        }
                     }
                 }
 
                 override fun failed() {
+                    binding.group.visibility = View.GONE
                 }
             })
     }

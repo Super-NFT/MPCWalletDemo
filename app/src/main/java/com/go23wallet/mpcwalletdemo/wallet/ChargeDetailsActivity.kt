@@ -89,7 +89,7 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
                 binding.vLending.visibility = View.VISIBLE
                 binding.tvLending.visibility = View.VISIBLE
                 binding.tvLendingContent.visibility = View.VISIBLE
-                binding.tvLendingContent.text = it.lending_gas_fee
+                binding.tvLendingContent.text = "${it.lending_gas_fee}${it.symbol}"
             }
             binding.tvTime.visibility = if (it.status == 1) View.INVISIBLE else View.VISIBLE
             binding.tvTime.text = it.time

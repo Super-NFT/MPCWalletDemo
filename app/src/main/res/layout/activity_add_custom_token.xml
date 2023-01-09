@@ -19,9 +19,9 @@
             android:id="@+id/iv_back"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_gravity="start"
             android:layout_marginStart="10dp"
             android:padding="10dp"
-            android:layout_gravity="start"
             android:src="@drawable/icon_back" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -144,6 +144,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_precision_content" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="tv_symbol_content,tv_token_symbol,tv_precision_content,tv_token_precision" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_confirm"

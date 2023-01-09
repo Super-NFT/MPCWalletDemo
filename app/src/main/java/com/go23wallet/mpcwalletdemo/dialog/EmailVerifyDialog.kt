@@ -10,7 +10,7 @@ import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogForgetPswLayoutBinding
 import com.go23wallet.mpcwalletdemo.view.InputCodeView.OnCodeCompleteListener
 
-class EmailVerifyDialog(private val mContext: Context, val dialogType: Int = 0) :
+class EmailVerifyDialog(private val mContext: Context, private var dialogType: Int = 0) :
     BaseDialogFragment<DialogForgetPswLayoutBinding>() {
 
     override val layoutId: Int = R.layout.dialog_forget_psw_layout
@@ -26,7 +26,14 @@ class EmailVerifyDialog(private val mContext: Context, val dialogType: Int = 0) 
         setHeight((ScreenUtils.getScreenHeight() * 0.8).toInt())
     }
 
+    fun setDialogType(type: Int) {
+        dialogType = type
+    }
+
     override fun initViews(v: View?) {
+        if (dialogType == 1) {
+            viewBinding.ivBack.visibility = View.GONE
+        }
         val emailStr = SPUtils.getInstance().getString("email")
         viewBinding.tvEmail.text = emailStr
         viewBinding.ivBack.setOnClickListener {
@@ -62,14 +69,7 @@ class EmailVerifyDialog(private val mContext: Context, val dialogType: Int = 0) 
                         Toast.makeText(context, R.string.verifying, Toast.LENGTH_SHORT).show()
                         return@setOnClickListener
                     }
-                    // TODO
-                    if (dialogType == 0) {
-                        // recover  set pin code
-                        callback.invoke(verifyCode)
-                    } else {
-                        // resharding  two set pin code
-                        callback.invoke(verifyCode)
-                    }
+                    callback.invoke(verifyCode)
                 }
             }
         }

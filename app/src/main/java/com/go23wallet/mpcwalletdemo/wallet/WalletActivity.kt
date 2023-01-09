@@ -112,6 +112,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         Go23WalletManage.getInstance().setUniqueId(emailStr).setEmail(emailStr)
             .start(this@WalletActivity, object : Go23WalletCallBack {
                 override fun reStore(p0: MutableList<WalletInfo>?) {
+                    emailVerifyDialog.setDialogType(1)
                     emailVerifyDialog.show(supportFragmentManager, "")
                     emailVerifyDialog.callback = {
                         it?.let {
@@ -141,6 +142,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                         }
 
                                         override fun failed() {
+                                            emailVerifyDialog.setDialogType(1)
                                             emailVerifyDialog.show(
                                                 supportFragmentManager,
                                                 ""
@@ -379,6 +381,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                 }
 
                                 override fun emailVerifySuccess() {
+                                    showProgress()
                                     emailVerifyDialog.dismissAllowingStateLoss()
                                 }
 
@@ -400,6 +403,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
     private fun toReSharding() {
         showProgress()
+        emailVerifyDialog.setDialogType(0)
         emailVerifyDialog.show(supportFragmentManager, "emailVerifyDialog")
         emailVerifyDialog.callback = {
             it?.let {

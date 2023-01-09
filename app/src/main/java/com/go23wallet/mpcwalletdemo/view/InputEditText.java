@@ -47,9 +47,18 @@ public class InputEditText extends AppCompatEditText {
                     && event.getKeyCode() == KeyEvent.KEYCODE_DEL) {
                 String text = getText().toString();
                 if (text.length() > 0) {//判断文本框是否有文字，如果有就去掉最后一位
-                    String newText = text.substring(0, text.length() - 1);
-                    setText(newText);
-                    setSelection(newText.length(), newText.length());//设置焦点在最后
+                    int selectionIndex = getSelectionStart();
+                    if (selectionIndex == 0) {
+                        return super.sendKeyEvent(event);
+                    }
+                    String preText = text.substring(0, selectionIndex - 1);
+                    String nextText = "";
+                    if (selectionIndex != text.length()) {
+                        nextText = text.substring(selectionIndex, text.length() - 1);
+                    }
+                    setText(String.format("%s%s", preText, nextText));
+
+                    setSelection(selectionIndex - 1, selectionIndex - 1);//设置焦点在最后
                 }
             }
             return super.sendKeyEvent(event);
