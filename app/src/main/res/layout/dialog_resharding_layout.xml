@@ -135,7 +135,7 @@
         android:layout_marginTop="17dp"
         android:layout_marginBottom="20dp"
         android:text="@string/forget_psw"
-        android:textColor="@color/color_35C1D8"
+        android:textColor="@color/color_00D6E1"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

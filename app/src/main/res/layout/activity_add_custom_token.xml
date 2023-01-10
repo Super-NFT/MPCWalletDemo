@@ -74,7 +74,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
-        android:background="@drawable/shape_r8_f5_bg_35c1d8_border"
+        android:background="@drawable/shape_r8_f5_bg_00d6e1_border"
         android:gravity="center_vertical"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"

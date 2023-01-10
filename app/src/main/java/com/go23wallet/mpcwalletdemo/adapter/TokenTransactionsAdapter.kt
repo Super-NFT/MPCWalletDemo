@@ -42,7 +42,7 @@ class TokenTransactionsAdapter :
                         ivIcon.setImageResource(R.drawable.icon_type_send)
                     }
                     "Receive" -> {
-                        tvBalance.setTextColor(context.getColor(R.color.color_35C1D8))
+                        tvBalance.setTextColor(context.getColor(R.color.color_00D6E1))
                         ivIcon.setImageResource(R.drawable.icon_type_receive)
                         tvTitle.text = "${item.type} ${item.from_addr.parseAddress()}"
                         tvBalance.text = "+${item.value}${item.symbol}"

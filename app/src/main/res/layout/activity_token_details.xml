@@ -159,11 +159,11 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_receive"
                 app:tabBackground="@android:color/transparent"
                 app:tabIndicator="@drawable/shape_r4_bg"
-                app:tabIndicatorColor="@color/color_35C1D8"
+                app:tabIndicatorColor="@color/color_00D6E1"
                 app:tabIndicatorFullWidth="true"
                 app:tabIndicatorHeight="2dp"
                 app:tabRippleColor="@android:color/transparent"
-                app:tabSelectedTextColor="@color/color_35C1D8"
+                app:tabSelectedTextColor="@color/color_00D6E1"
                 app:tabTextAppearance="@style/TabTextAppearance"
                 app:tabTextColor="@color/color_8C8C8C" />
 

@@ -79,7 +79,7 @@
         android:layout_marginEnd="12dp"
         android:gravity="center"
         android:text="@string/receive_qrcode_tips"
-        android:textColor="@color/color_35C1D8"
+        android:textColor="@color/color_00D6E1"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -227,7 +227,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:tabBackground="@android:color/transparent"
                     app:tabIndicator="@drawable/shape_r4_bg"
-                    app:tabIndicatorColor="@color/color_35C1D8"
+                    app:tabIndicatorColor="@color/color_00D6E1"
                     app:tabIndicatorFullWidth="true"
                     app:tabIndicatorGravity="stretch"
                     app:tabMode="scrollable"

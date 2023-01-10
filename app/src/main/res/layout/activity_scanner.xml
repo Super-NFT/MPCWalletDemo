@@ -18,12 +18,12 @@
             android:id="@+id/viewfinder_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:corner_color="@color/color_35C1D8"
-            app:frame_color="@color/color_35C1D8_20"
+            app:corner_color="@color/color_00D6E1"
+            app:frame_color="@color/color_00D6E1_20"
             app:label_text="@string/scan_qrcode"
             app:label_text_color="@color/white"
             app:label_text_size="20"
-            app:laser_color="@color/color_35C1D8"
+            app:laser_color="@color/color_00D6E1"
             app:mask_color="@color/black_70" />
 
     </RelativeLayout>
