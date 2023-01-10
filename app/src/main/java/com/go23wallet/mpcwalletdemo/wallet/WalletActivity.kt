@@ -17,7 +17,6 @@ import com.coins.app.bean.walletinfo.WalletInfoResponse
 import com.coins.app.callback.EmailCallBack
 import com.coins.app.callback.ReShareCallBack
 import com.coins.app.callback.RestoreCallBack
-import com.coins.app.manage.Go23WalletChainManage
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
@@ -237,7 +236,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     }
 
     private fun loadData(info: WalletInfo) {
-        Go23WalletChainManage.getInstance()
+        Go23WalletManage.getInstance()
             .requestUserChains(
                 info.wallet_address,
                 1,
