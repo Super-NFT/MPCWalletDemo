@@ -6,11 +6,11 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
-import android.widget.Toast
 import com.blankj.utilcode.util.ScreenUtils
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogSetPinCodeLayoutBinding
+import com.go23wallet.mpcwalletdemo.utils.CustomToast
 
 class SetPinCodeDialog(mContext: Context) : BaseDialogFragment<DialogSetPinCodeLayoutBinding>() {
 
@@ -62,7 +62,7 @@ class SetPinCodeDialog(mContext: Context) : BaseDialogFragment<DialogSetPinCodeL
                     dismissAllowingStateLoss()
                 }, 1000)
             } else {
-                Toast.makeText(context, R.string.confirm_error, Toast.LENGTH_SHORT).show()
+                CustomToast.showShort(R.string.confirm_error)
             }
         }
     }

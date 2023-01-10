@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.SPUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.coins.app.BaseCallBack
 import com.coins.app.Go23WalletCallBack
 import com.coins.app.Go23WalletManage
@@ -119,7 +118,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                             if (it.isEmpty()) {
                                 Go23WalletManage.getInstance().verifyEmailCode(1,object :EmailCallBack{
                                     override fun success() {
-                                        ToastUtils.showShort(R.string.verify_code_sent)
+                                        CustomToast.showShort(R.string.verify_code_sent)
                                     }
 
                                     override fun failed() {
@@ -158,7 +157,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                         }
 
                                         override fun emailVerifyFailed() {
-                                            ToastUtils.showShort(R.string.verify_code_fail)
+                                            CustomToast.showShort(R.string.verify_code_fail)
                                             emailVerifyDialog.clearText()
                                         }
 
@@ -200,6 +199,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     }
 
     private fun geWalletInfo() {
+        showProgress()
         Go23WalletManage.getInstance()
             .requestWallets(object : BaseCallBack<WalletInfoResponse?> {
                 override fun success(data: WalletInfoResponse?) {
@@ -306,7 +306,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
                                 override fun failed() {
                                     dismissProgress()
-                                    ToastUtils.showShort(R.string.resharding_fail)
+                                    CustomToast.showShort(R.string.resharding_fail)
                                 }
 
                                 override fun reShareForEmail() {
@@ -314,12 +314,12 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                 }
 
                                 override fun emailVerifyFailed() {
-                                    ToastUtils.showShort(R.string.verify_code_fail)
+                                    CustomToast.showShort(R.string.verify_code_fail)
                                     emailVerifyDialog.clearText()
                                 }
 
                                 override fun emailVerifySuccess() {
-                                    dismissProgress()
+                                    showProgress()
                                     emailVerifyDialog.dismissAllowingStateLoss()
                                 }
 
@@ -368,7 +368,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
                                 override fun failed() {
                                     dismissProgress()
-                                    ToastUtils.showShort(R.string.resharding_fail)
+                                    CustomToast.showShort(R.string.resharding_fail)
                                 }
 
                                 override fun reShareForEmail() {
@@ -376,12 +376,14 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                 }
 
                                 override fun emailVerifyFailed() {
-                                    ToastUtils.showShort(R.string.verify_code_fail)
+                                    CustomToast.showShort(R.string.verify_code_fail)
                                     emailVerifyDialog.clearText()
                                 }
 
                                 override fun emailVerifySuccess() {
-                                    showProgress()
+                                    if (walletInfo == null) {
+                                        showProgress()
+                                    }
                                     emailVerifyDialog.dismissAllowingStateLoss()
                                 }
 
@@ -390,7 +392,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                 }
                             })
                     } ?: kotlin.run {
-                        ToastUtils.showShort(R.string.resharding_fail)
+                        CustomToast.showShort(R.string.resharding_fail)
                         dismissProgress()
                     }
                 }
@@ -410,7 +412,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                 if (it.isEmpty()) {
                     Go23WalletManage.getInstance().verifyEmailCode(0,object :EmailCallBack{
                         override fun success() {
-                            ToastUtils.showShort(R.string.verify_code_sent)
+                            CustomToast.showShort(R.string.verify_code_sent)
                         }
 
                         override fun failed() {

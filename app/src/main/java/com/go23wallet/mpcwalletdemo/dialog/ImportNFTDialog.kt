@@ -5,7 +5,6 @@ import android.text.TextWatcher
 import android.view.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
-import com.blankj.utilcode.util.ToastUtils
 import com.coins.app.BaseCallBack
 import com.coins.app.Go23WalletManage
 import com.coins.app.bean.nft.NftResponse
@@ -14,6 +13,7 @@ import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogImportNftLayoutBinding
 import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
+import com.go23wallet.mpcwalletdemo.utils.CustomToast
 import com.go23wallet.mpcwalletdemo.utils.KeyboardStatusWatcher
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 
@@ -63,12 +63,13 @@ class ImportNFTDialog :
                 s,
                 object : BaseCallBack<NftResponse> {
                     override fun success(data: NftResponse?) {
+                        CustomToast.showShort(R.string.add_success)
                         UpdateDataLiveData.setUpdateType(2)
                         dismissAllowingStateLoss()
                     }
 
                     override fun failed() {
-                        ToastUtils.showShort("add fail")
+                        CustomToast.showShort(R.string.add_fail)
                     }
                 })
         }

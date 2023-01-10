@@ -4,7 +4,6 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.widget.EditText
-import android.widget.Toast
 import com.go23wallet.mpcwalletdemo.R
 
 /**
@@ -16,7 +15,7 @@ object CopyUtils {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clipData = ClipData.newPlainText(null, text)
         clipboard.setPrimaryClip(clipData)
-        Toast.makeText(context, context.getText(R.string.copy_success), Toast.LENGTH_SHORT).show()
+        CustomToast.showShort(R.string.copy_success)
     }
 
     fun pasteText(context: Context, etView: EditText) {
@@ -27,8 +26,7 @@ object CopyUtils {
             val text = clipData.getItemAt(0).text
             etView.setText(text)
         } else {
-            Toast.makeText(context, context.getText(R.string.paste_error), Toast.LENGTH_SHORT)
-                .show()
+            CustomToast.showShort(R.string.paste_error)
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.go23wallet.mpcwalletdemo.dialog
 
 import android.content.Context
+import android.content.Intent
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ScreenUtils
@@ -14,7 +15,9 @@ import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.SelectTokenAdapter
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogSelectTokenSendLayoutBinding
+import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
+import com.go23wallet.mpcwalletdemo.wallet.AddATokenActivity
 
 class SelectTokenSendDialog(private val mContext: Context) :
     BaseDialogFragment<DialogSelectTokenSendLayoutBinding>() {
@@ -30,6 +33,13 @@ class SelectTokenSendDialog(private val mContext: Context) :
     }
 
     override fun initViews(v: View?) {
+        getData()
+        UpdateDataLiveData.liveData.observe(this) {
+            if (it == 1) {
+                getData()
+                UpdateDataLiveData.clearType()
+            }
+        }
         viewBinding.ivClose.setOnClickListener {
             dismissAllowingStateLoss()
         }
@@ -49,6 +59,12 @@ class SelectTokenSendDialog(private val mContext: Context) :
             }
         })
 
+        viewBinding.tvAdd.setOnClickListener {
+            startActivity(Intent(mContext, AddATokenActivity::class.java))
+        }
+    }
+
+    private fun getData() {
         Go23WalletManage.getInstance().requestUserTokens(
             UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
             UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,

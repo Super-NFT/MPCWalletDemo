@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
@@ -23,6 +22,7 @@ import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivitySendNftBinding
 import com.go23wallet.mpcwalletdemo.dialog.SendCoinResultDialog
 import com.go23wallet.mpcwalletdemo.utils.CopyUtils
+import com.go23wallet.mpcwalletdemo.utils.CustomToast
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 import com.google.gson.Gson
@@ -113,21 +113,12 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
                                 )
                             )
                         } catch (ignored: Exception) {
-                            Toast.makeText(
-                                this@SendNFTActivity,
-                                getString(R.string.request_camera_permission_fail),
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            CustomToast.showShort(R.string.request_camera_permission_fail)
                         }
                     }
 
                     override fun onDenied() {
-                        Toast.makeText(
-                            this@SendNFTActivity,
-                            getString(R.string.request_camera_permission_fail),
-                            Toast.LENGTH_SHORT
-                        ).show();
-
+                        CustomToast.showShort(R.string.request_camera_permission_fail)
                     }
                 }).request();
         }
@@ -198,13 +189,13 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
                             )
                         sendCoinResultDialog?.show(supportFragmentManager, "sendCoinResultDialog")
                     } else {
-                        Toast.makeText(baseContext, "Transaction failed", Toast.LENGTH_SHORT).show()
+                        CustomToast.showShort(R.string.transaction_failed)
                     }
                 }
 
                 override fun failed() {
                     dismissProgress()
-                    Toast.makeText(baseContext, "Transaction failed", Toast.LENGTH_SHORT).show()
+                    CustomToast.showShort(R.string.transaction_failed)
                 }
             }
         )

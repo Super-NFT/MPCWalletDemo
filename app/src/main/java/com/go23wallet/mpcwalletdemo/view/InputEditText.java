@@ -54,7 +54,7 @@ public class InputEditText extends AppCompatEditText {
                     String preText = text.substring(0, selectionIndex - 1);
                     String nextText = "";
                     if (selectionIndex != text.length()) {
-                        nextText = text.substring(selectionIndex, text.length() - 1);
+                        nextText = text.substring(selectionIndex);
                     }
                     setText(String.format("%s%s", preText, nextText));
 
