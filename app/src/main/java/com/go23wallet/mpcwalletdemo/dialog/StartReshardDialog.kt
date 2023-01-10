@@ -4,11 +4,11 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.view.*
-import android.widget.Toast
 import com.blankj.utilcode.util.ScreenUtils
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogStartReshardLayoutBinding
+import com.go23wallet.mpcwalletdemo.utils.CustomToast
 
 class StartReshardDialog(private val mContext: Context) :
     BaseDialogFragment<DialogStartReshardLayoutBinding>() {
@@ -33,8 +33,7 @@ class StartReshardDialog(private val mContext: Context) :
 
         viewBinding.tvStartLoading.setOnClickListener {
             if (viewBinding.tvStartLoading.text == getString(R.string.loading)) {
-                Toast.makeText(mContext, getString(R.string.resharding_loading), Toast.LENGTH_SHORT)
-                    .show()
+                CustomToast.showShort(R.string.resharding_loading)
                 return@setOnClickListener
             }
             viewBinding.tvStartLoading.text = getString(R.string.loading)

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.coins.app.BaseCallBack
@@ -18,6 +17,7 @@ import com.go23wallet.mpcwalletdemo.adapter.AddTokenListAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivityAddATokenBinding
 import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
+import com.go23wallet.mpcwalletdemo.utils.CustomToast
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 
 class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
@@ -77,7 +77,7 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
                                 item.isIs_selected = !item.isIs_selected
                                 hasChange = true
                                 mAdapter?.notifyItemChanged(position)
-                                ToastUtils.showShort(getString(R.string.remove_success))
+                                CustomToast.showShort(getString(R.string.remove_success))
                             }
 
                             override fun failed() {
@@ -96,7 +96,7 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
                                 hasChange = true
                                 item.isIs_selected = !item.isIs_selected
                                 mAdapter?.notifyItemChanged(position)
-                                ToastUtils.showShort(getString(R.string.add_success))
+                                CustomToast.showShort(getString(R.string.add_success))
                             }
 
                             override fun failed() {

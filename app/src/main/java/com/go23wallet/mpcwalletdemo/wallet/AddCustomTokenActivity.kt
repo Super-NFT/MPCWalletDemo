@@ -12,6 +12,7 @@ import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivityAddCustomTokenBinding
 import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
+import com.go23wallet.mpcwalletdemo.utils.CustomToast
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 
 class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
@@ -77,22 +78,27 @@ class AddCustomTokenActivity : BaseActivity<ActivityAddCustomTokenBinding>() {
                     data?.let { tokenResponse ->
                         if (tokenResponse.code == 0) {
                             tokenResponse.data?.let {
+                                binding.tvConfirm.isEnabled = true
                                 binding.group.visibility = View.VISIBLE
                                 contractAddress = it.contract_address ?: ""
                                 binding.tvTokenSymbol.text = it.symbol
                                 binding.tvTokenPrecision.text = it.decimal.toString()
                             } ?: kotlin.run {
+                                binding.tvConfirm.isEnabled = false
                                 binding.group.visibility = View.GONE
                                 binding.tvTokenSymbol.text = ""
                                 binding.tvTokenPrecision.text = ""
                             }
                         } else {
+                            CustomToast.showShort(tokenResponse.message)
+                            binding.tvConfirm.isEnabled = false
                             binding.group.visibility = View.GONE
                         }
                     }
                 }
 
                 override fun failed() {
+                    binding.tvConfirm.isEnabled = false
                     binding.group.visibility = View.GONE
                 }
             })

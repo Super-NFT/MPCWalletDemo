@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">GO23 Wallet</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
@@ -46,6 +46,7 @@
     <string name="loading">Loading…</string>
     <string name="resharding_loading">Resharding, please wait</string>
     <string name="resharding_fail">Resharding fail, please retry</string>
+    <string name="send_error">Send error, please retry</string>
     <string name="verify_code">Verification code</string>
     <string name="email_input_error">Email input error</string>
     <string name="verify_code_sent">Verification code has been sent</string>
@@ -53,7 +54,7 @@
 
     <string name="choose_mainnet">Choose Mainnets</string>
 
-    <string name="copy_success">Copy Success</string>
+    <string name="copy_success">Copy Successfully</string>
     <string name="paste_error">Paste Error</string>
     <string name="receive_tips">Scan the QR code to pay \n Mainnet ERC-20</string>
     <string name="receive_qrcode_tips">This address only accepts tokens from \n%s. Do not send from other Mainnets.</string>
@@ -117,7 +118,9 @@
     <string name="gas_insufficient">Insufficient Gas Fee</string>
     <string name="input_amount">Enter Amount</string>
 
-    <string name="add_success">Add Success</string>
+    <string name="add_success">Add Successfully</string>
+    <string name="add_fail">Add Fail</string>
+    <string name="transaction_failed">Transaction failed</string>
     <string name="remove_success">Remove Success</string>
 
     <string name="empty_tips">No Records</string>

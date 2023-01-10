@@ -2,12 +2,12 @@ package com.go23wallet.mpcwalletdemo.dialog
 
 import android.content.Context
 import android.view.*
-import android.widget.Toast
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogForgetPswLayoutBinding
+import com.go23wallet.mpcwalletdemo.utils.CustomToast
 import com.go23wallet.mpcwalletdemo.view.InputCodeView.OnCodeCompleteListener
 
 class EmailVerifyDialog(private val mContext: Context, private var dialogType: Int = 0) :
@@ -51,7 +51,7 @@ class EmailVerifyDialog(private val mContext: Context, private var dialogType: I
         viewBinding.tvVerify.setOnClickListener {
             if (type == TYPE_SEND) {
                 if (viewBinding.progress.visibility == View.VISIBLE) {
-                    Toast.makeText(context, R.string.sending, Toast.LENGTH_SHORT).show()
+                    CustomToast.showShort(R.string.sending)
                     return@setOnClickListener
                 }
                 callback.invoke("")
@@ -62,11 +62,11 @@ class EmailVerifyDialog(private val mContext: Context, private var dialogType: I
                 viewBinding.tvVerify.text = getString(R.string.verify)
             } else {
                 if (verifyCode.isNullOrEmpty() || (verifyCode?.length ?: 0) > 6) {
-                    Toast.makeText(context, R.string.verify_error, Toast.LENGTH_SHORT).show()
+                    CustomToast.showShort(R.string.verify_error)
                     return@setOnClickListener
                 } else {
                     if (viewBinding.progress.visibility == View.VISIBLE) {
-                        Toast.makeText(context, R.string.verifying, Toast.LENGTH_SHORT).show()
+                        CustomToast.showShort(R.string.verifying)
                         return@setOnClickListener
                     }
                     callback.invoke(verifyCode)

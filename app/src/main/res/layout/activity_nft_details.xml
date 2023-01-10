@@ -87,6 +87,14 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_nft_name"
                 tools:text="nft #001" />
 
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/color_F5F5F5"
+                app:layout_constraintTop_toBottomOf="@+id/tv_series_name" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_description"
                 android:layout_width="wrap_content"
@@ -99,7 +107,7 @@
                 android:textColor="@color/color_262626"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_series_name" />
+                app:layout_constraintTop_toBottomOf="@id/line1" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_description_content"
@@ -115,6 +123,14 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_description"
                 tools:text="nft" />
 
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/color_F5F5F5"
+                app:layout_constraintTop_toBottomOf="@+id/tv_description_content" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_attributes"
                 android:layout_width="wrap_content"
@@ -127,7 +143,7 @@
                 android:textColor="@color/color_262626"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_description_content" />
+                app:layout_constraintTop_toBottomOf="@id/line2" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
@@ -138,6 +154,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_attributes" />
+
+            <View
+                android:id="@+id/line3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/color_F5F5F5"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_details"
@@ -151,7 +175,7 @@
                 android:textColor="@color/color_262626"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recyclerView" />
+                app:layout_constraintTop_toBottomOf="@id/line3" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_contact_address"

@@ -7,11 +7,9 @@ import android.text.InputFilter
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.coins.app.BaseCallBack
 import com.coins.app.Go23WalletManage
 import com.coins.app.bean.Sign
@@ -27,10 +25,7 @@ import com.go23wallet.mpcwalletdemo.dialog.SelectTokenSendDialog
 import com.go23wallet.mpcwalletdemo.dialog.SendCoinResultDialog
 import com.go23wallet.mpcwalletdemo.ext.parseAddress
 import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
-import com.go23wallet.mpcwalletdemo.utils.CopyUtils
-import com.go23wallet.mpcwalletdemo.utils.FloatLengthFilter
-import com.go23wallet.mpcwalletdemo.utils.GlideUtils
-import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
+import com.go23wallet.mpcwalletdemo.utils.*
 import com.google.zxing.activity.CaptureActivity
 import java.math.BigDecimal
 import java.text.DecimalFormat
@@ -83,7 +78,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                             dismissProgress()
                             data?.let { msg ->
                                 if (msg.code != 0) {
-                                    ToastUtils.showShort("Send error, please retry")
+                                    CustomToast.showShort(R.string.send_error)
                                     return@let
                                 }
                                 msg.data?.let { preToken ->
@@ -110,7 +105,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                                     binding.tvGasValue.visibility =
                                         if (preToken.platform_u_per.toDouble() > 0) View.VISIBLE else View.GONE
                                     binding.tvGasValue.text =
-                                        "=$${preToken.platform_u_per.toDouble() * (preToken.gas ?: "0.00").toDouble()}"
+                                        "$${preToken.platform_u_per.toDouble() * (preToken.gas ?: "0.00").toDouble()}"
                                 }
                             }
                         }
@@ -232,7 +227,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                 binding.etInputNum.setText(
                     "${
                         if (availableNum < BigDecimal(0)) {
-                            ToastUtils.showShort(R.string.gas_insufficient)
+                            CustomToast.showShort(R.string.gas_insufficient)
                             "0"
                         } else availableNum
                     }"
@@ -253,21 +248,12 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                                 )
                             )
                         } catch (ignored: Exception) {
-                            Toast.makeText(
-                                this@SendCoinActivity,
-                                getString(R.string.request_camera_permission_fail),
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            CustomToast.showShort(R.string.request_camera_permission_fail)
                         }
                     }
 
                     override fun onDenied() {
-                        Toast.makeText(
-                            this@SendCoinActivity,
-                            getString(R.string.request_camera_permission_fail),
-                            Toast.LENGTH_SHORT
-                        ).show()
-
+                        CustomToast.showShort(R.string.request_camera_permission_fail)
                     }
                 }).request()
         }
@@ -313,15 +299,13 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                             supportFragmentManager, "sendCoinResultDialog"
                         )
                     } else {
-                        Toast.makeText(
-                            baseContext, response?.msg ?: "Transaction failed", Toast.LENGTH_SHORT
-                        ).show()
+                        CustomToast.showShort(response?.msg ?: getString(R.string.transaction_failed))
                     }
                 }
 
                 override fun failed() {
                     dismissProgress()
-                    Toast.makeText(baseContext, "Transaction failed", Toast.LENGTH_SHORT).show()
+                    CustomToast.showShort(R.string.transaction_failed)
                 }
             })
     }

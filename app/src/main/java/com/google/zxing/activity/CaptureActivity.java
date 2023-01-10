@@ -32,10 +32,10 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.ScreenUtils;
 import com.go23wallet.mpcwalletdemo.R;
+import com.go23wallet.mpcwalletdemo.utils.CustomToast;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
@@ -424,7 +424,7 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
         final String resultString = result.getText();
 
         if (TextUtils.isEmpty(resultString)) {
-            Toast.makeText(CaptureActivity.this, "Scan failed!", Toast.LENGTH_SHORT).show();
+            CustomToast.INSTANCE.showShort("Scan failed!");
         } else {
             //对话框
             Intent intent = getIntent();

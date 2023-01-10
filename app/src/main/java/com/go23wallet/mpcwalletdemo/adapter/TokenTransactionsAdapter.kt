@@ -32,6 +32,9 @@ class TokenTransactionsAdapter :
             3 -> {
                 ivIcon.setImageResource(R.drawable.icon_type_failed)
                 tvTitle.text = "${item.type} ${item.to_addr.parseAddress()}"
+                if (item.type == "Approve") {
+                    tvValue.visibility = View.INVISIBLE
+                }
             }
             else -> {
                 when (item.type) {
