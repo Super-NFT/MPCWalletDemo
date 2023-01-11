@@ -63,9 +63,17 @@ class ImportNFTDialog :
                 s,
                 object : BaseCallBack<NftResponse> {
                     override fun success(data: NftResponse?) {
-                        CustomToast.showShort(R.string.add_success)
-                        UpdateDataLiveData.setUpdateType(2)
-                        dismissAllowingStateLoss()
+                        data?.let {
+                            if (it.code == 0) {
+                                CustomToast.showShort(R.string.add_success)
+                                UpdateDataLiveData.setUpdateType(2)
+                                dismissAllowingStateLoss()
+                            } else {
+                                CustomToast.showShort(it.message)
+                            }
+                        }?: kotlin.run {
+                            CustomToast.showShort(R.string.add_fail)
+                        }
                     }
 
                     override fun failed() {

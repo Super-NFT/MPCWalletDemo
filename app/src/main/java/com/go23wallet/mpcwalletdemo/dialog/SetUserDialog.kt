@@ -5,11 +5,13 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.coins.app.util.KeyboardUtils
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogSetUserLayoutBinding
+import com.go23wallet.mpcwalletdemo.utils.CustomToast
 import com.go23wallet.mpcwalletdemo.utils.Validator
 
 
@@ -49,8 +51,12 @@ class SetUserDialog(val activity: Activity) : BaseDialogFragment<DialogSetUserLa
         }
 
         viewBinding.tvConfirm.setOnClickListener {
-            dismissAllowingStateLoss()
-            callback.invoke(setEmail)
+            if (NetworkUtils.isConnected()) {
+                dismissAllowingStateLoss()
+                callback.invoke(setEmail)
+            } else {
+                CustomToast.showShort(R.string.network_error)
+            }
         }
     }
 }

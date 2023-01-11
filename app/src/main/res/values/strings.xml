@@ -10,6 +10,8 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
+    <string name="network_error">Network error</string>
+
     <string name="total_balance">Total Balance</string>
     <string name="receive">Receive</string>
     <string name="send">Send</string>
@@ -54,7 +56,7 @@
 
     <string name="choose_mainnet">Choose Mainnets</string>
 
-    <string name="copy_success">Copy Successfully</string>
+    <string name="copy_success">Copied</string>
     <string name="paste_error">Paste Error</string>
     <string name="receive_tips">Scan the QR code to pay \n Mainnet ERC-20</string>
     <string name="receive_qrcode_tips">This address only accepts tokens from \n%s. Do not send from other Mainnets.</string>

@@ -26,6 +26,9 @@ class EmailVerifyDialog(private val mContext: Context, private var dialogType: I
         setHeight((ScreenUtils.getScreenHeight() * 0.8).toInt())
     }
 
+    /**
+     * @param type 0 resharding 1 recover
+     */
     fun setDialogType(type: Int) {
         dialogType = type
     }
