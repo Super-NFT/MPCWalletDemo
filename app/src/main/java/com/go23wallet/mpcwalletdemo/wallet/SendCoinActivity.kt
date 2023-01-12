@@ -2,10 +2,7 @@ package com.go23wallet.mpcwalletdemo.wallet
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.InputFilter
-import android.text.TextUtils
-import android.text.TextWatcher
+import android.text.*
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import com.blankj.utilcode.constant.PermissionConstants
@@ -87,8 +84,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                                     binding.tvGasTips.text = String.format(
                                         getString(R.string.gas_tips), chainTokenInfo?.symbol
                                     )
-                                    binding.tvMinTipsMiddle.text = preToken.token_minimum
-                                    binding.tvMinTipsEnd.text = chainTokenInfo?.symbol
+                                    binding.tvMinTips.text = Html.fromHtml(String.format(getString(R.string.min_tips), preToken.token_minimum, chainTokenInfo?.symbol))
                                     binding.groupTips.visibility =
                                         if (preToken.isIs_lending_gas) View.VISIBLE else View.GONE
                                     binding.tvFromAddress.text =

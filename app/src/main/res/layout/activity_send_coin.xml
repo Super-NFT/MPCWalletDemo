@@ -405,50 +405,25 @@
                 app:layout_constraintTop_toBottomOf="@id/v_gas_view" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_min_tips_pre"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_min_tips"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="@string/min_tips_pre"
+                android:layout_marginEnd="20dp"
+                android:text="@string/min_tips"
                 android:textColor="@color/color_8C8C8C"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@id/tv_min_tips_middle"
-                app:layout_constraintHorizontal_chainStyle="packed"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_gas_tips" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_min_tips_middle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawablePadding="8dp"
-                android:textColor="@color/color_8C8C8C"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_min_tips_pre"
-                app:layout_constraintEnd_toStartOf="@id/tv_min_tips_end"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toEndOf="@id/tv_min_tips_pre"
-                app:layout_constraintTop_toTopOf="@id/tv_min_tips_pre" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_min_tips_end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:textColor="@color/color_00D6E1"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_min_tips_pre"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toEndOf="@id/tv_min_tips_middle"
-                app:layout_constraintTop_toTopOf="@id/tv_min_tips_pre" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_tips"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:constraint_referenced_ids="tv_gas_tips,tv_min_tips_pre,tv_min_tips_middle,tv_min_tips_end" />
+                app:constraint_referenced_ids="tv_gas_tips,tv_min_tips" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
