@@ -162,3 +162,12 @@
 -keep class sun.misc.Unsafe { *; }
 -keep class com.google.gson.stream.** { *; }
 -keep class com.google.gson.examples.android.model.** { *; }
+
+-keep class com.coins.app.bean.** { *; }
+-keep class com.coins.app.callback.** { *; }
+-keep class com.coins.app.Go23WalletManage { *; }
+-keep class com.coins.app.BaseCallBack { *; }
+-keep class com.coins.app.Go23WalletCallBack { *; }
+-keep class com.coins.app.util.** { *; }
+-keep class com.coins.app.C { *; }
+-keep class com.coins.app.entity.** { *; }
