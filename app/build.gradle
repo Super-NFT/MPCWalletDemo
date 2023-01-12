@@ -27,7 +27,7 @@ android {
             storePassword "111111"
             keyAlias "coins"
             keyPassword "111111"
-            storeFile file("coins")
+            storeFile file("coins.keystore")
 
             enableV3Signing true
             enableV4Signing true
@@ -42,8 +42,16 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug{
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
@@ -94,7 +102,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
-    implementation files('debug')
+    implementation files('libs/wallet.aar')
     implementation files('libs/mpc.aar')
 
     testImplementation 'junit:junit:4.13.2'

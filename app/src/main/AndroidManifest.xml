@@ -26,6 +26,7 @@
         <activity
             android:name=".wallet.WalletActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.WalletMain">
 
             <intent-filter>
@@ -37,15 +38,30 @@
 
         <activity
             android:name=".wallet.TokenDetailsActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.WalletMain" />
-        <activity android:name=".wallet.ChargeDetailsActivity" />
-        <activity android:name=".wallet.NFTDetailsActivity" />
-        <activity android:name=".wallet.SendNFTActivity" />
-        <activity android:name=".wallet.AddATokenActivity" />
-        <activity android:name=".wallet.AddCustomTokenActivity" />
-        <activity android:name=".wallet.SendCoinActivity" />
+        <activity
+            android:name=".wallet.ChargeDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".wallet.NFTDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".wallet.SendNFTActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".wallet.AddATokenActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".wallet.AddCustomTokenActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".wallet.SendCoinActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name="com.google.zxing.activity.CaptureActivity" />
+        <activity
+            android:name="com.google.zxing.activity.CaptureActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

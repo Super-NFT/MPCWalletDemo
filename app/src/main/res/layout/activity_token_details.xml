@@ -167,18 +167,27 @@
                 app:tabTextAppearance="@style/TabTextAppearance"
                 app:tabTextColor="@color/color_8C8C8C" />
 
+            <View
+                android:id="@+id/line"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/color_F5F5F5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tab" />
+
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:background="@color/white"
                 android:paddingStart="20dp"
                 android:paddingTop="10dp"
-                android:background="@color/white"
                 android:paddingEnd="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tab" />
+                app:layout_constraintTop_toBottomOf="@id/line" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

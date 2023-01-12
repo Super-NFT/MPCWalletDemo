@@ -100,6 +100,12 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                                         } ${it.symbol}"
                                     )
                                     binding.tvCoinSymbol.text = it.symbol
+                                    val uPer = if (chainTokenInfo?.contract_address.isNullOrEmpty()) {
+                                        preTokenSend?.platform_u_per?.toDouble() ?: 0.0
+                                    } else {
+                                        preTokenSend?.token_u_per?.toDouble() ?: 0.0
+                                    }
+                                    binding.tvInputValue.visibility = if (uPer > 0) View.VISIBLE else View.GONE
                                     binding.tvGasBalance.text =
                                         "${preToken.gas} ${UserWalletInfoManager.getUserWalletInfo().userChain.symbol}"
                                     binding.tvGasValue.visibility =
@@ -179,7 +185,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
             override fun afterTextChanged(s: Editable?) {
                 if (s.isNullOrEmpty()) {
 //                    binding.tvTotalValue.text = ""
-                    binding.tvInputValue.text = ""
+                    binding.tvInputValue.text = "$0.00"
                     binding.tvSend.isEnabled = false
                     return
                 }
@@ -195,7 +201,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                 } else {
                     preTokenSend?.token_u_per?.toDouble() ?: 0.0
                 }
-                binding.tvInputValue.text = if (uPer == null || uPer <= 0) "" else "=$${num * uPer}"
+                binding.tvInputValue.text = if (uPer == null || uPer <= 0) "$0.00" else "$${num * uPer}"
 
                 updateSendStatus(isClickAll)
             }
@@ -299,7 +305,9 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                             supportFragmentManager, "sendCoinResultDialog"
                         )
                     } else {
-                        CustomToast.showShort(response?.msg ?: getString(R.string.transaction_failed))
+                        CustomToast.showShort(
+                            response?.msg ?: getString(R.string.transaction_failed)
+                        )
                     }
                 }
 

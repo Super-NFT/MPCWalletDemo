@@ -279,6 +279,7 @@
                 android:letterSpacing="0.04"
                 android:textColor="@color/color_BFBFBF"
                 android:textSize="12sp"
+                android:text="$0.00"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/input_view"
                 app:layout_constraintEnd_toEndOf="@id/et_input_num"

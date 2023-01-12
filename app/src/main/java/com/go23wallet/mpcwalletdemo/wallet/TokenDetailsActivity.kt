@@ -17,6 +17,7 @@ import com.go23wallet.mpcwalletdemo.data.ChainTokenInfo
 import com.go23wallet.mpcwalletdemo.databinding.ActivityTokenDetailsBinding
 import com.go23wallet.mpcwalletdemo.dialog.ReceiveDialog
 import com.go23wallet.mpcwalletdemo.fragment.TokenTransactionsFragment
+import com.go23wallet.mpcwalletdemo.utils.CustomToast
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 import kotlinx.coroutines.delay
@@ -65,7 +66,8 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
             binding.tvCoinName.text = UserWalletInfoManager.getUserWalletInfo().userChain.name
 
             binding.tvBalance.text = it.balance
-            binding.tvValue.visibility = if (it.balance_u.toDouble() > 0) View.VISIBLE else View.INVISIBLE
+            binding.tvValue.visibility =
+                if (it.balance_u.toDouble() > 0) View.VISIBLE else View.INVISIBLE
             binding.tvValue.text = "$${it.balance_u}"
             initView()
         }
@@ -77,11 +79,18 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
             token?.contract_address ?: "",
             object : BaseCallBack<TokenResponse> {
                 override fun success(data: TokenResponse?) {
-                    data?.data?.let {
-                        binding.tvValue.visibility = if (it.balance_u.toDouble() > 0) View.VISIBLE else View.GONE
-                        binding.tvBalance.text = it.balance
-                        binding.tvValue.text = "$${it.balance_u}"
-                        tabAdapter?.notifyDataSetChanged()
+                    data?.let { response ->
+                        if (response.code == 0) {
+                            response.data?.let {
+                                binding.tvValue.visibility =
+                                    if (it.balance_u.toDouble() > 0) View.VISIBLE else View.INVISIBLE
+                                binding.tvBalance.text = it.balance
+                                binding.tvValue.text = "$${it.balance_u}"
+                                tabAdapter?.notifyDataSetChanged()
+                            }
+                        } else {
+                            CustomToast.showShort(response.message)
+                        }
                     }
                 }
 
