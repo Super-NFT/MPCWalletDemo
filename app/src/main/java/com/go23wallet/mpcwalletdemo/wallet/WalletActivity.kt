@@ -15,7 +15,7 @@ import com.coins.app.bean.user.MerchantResponse
 import com.coins.app.bean.walletinfo.WalletInfo
 import com.coins.app.bean.walletinfo.WalletInfoResponse
 import com.coins.app.callback.EmailCallBack
-import com.coins.app.callback.ReShareCallBack
+import com.coins.app.callback.ReShardingCallBack
 import com.coins.app.callback.RestoreCallBack
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
@@ -151,7 +151,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                             dismissProgress()
                                         }
 
-                                        override fun reShare() {
+                                        override fun reSharding() {
                                             toReSharding()
                                         }
 
@@ -284,11 +284,11 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             object : BaseCallBack<MerchantResponse> {
                 override fun success(data: MerchantResponse?) {
                     data?.data?.let { key ->
-                        Go23WalletManage.getInstance().startReShareForPinCode(
+                        Go23WalletManage.getInstance().startReShardingForPinCode(
                             this@WalletActivity,
                             key.keygen,
                             Go23WalletManage.getInstance().walletAddress,
-                            object : ReShareCallBack {
+                            object : ReShardingCallBack {
 
                                 override fun success(key3: String?) {
                                     //update key
@@ -308,7 +308,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                     CustomToast.showShort(R.string.resharding_fail)
                                 }
 
-                                override fun reShareForEmail() {
+                                override fun reShardingForEmail() {
                                     toReSharding()
                                 }
 
@@ -344,12 +344,12 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             object : BaseCallBack<MerchantResponse> {
                 override fun success(data: MerchantResponse?) {
                     data?.data?.let { key ->
-                        Go23WalletManage.getInstance().startReShareForEmail(
+                        Go23WalletManage.getInstance().startReShardingForEmail(
                             this@WalletActivity,
                             key.keygen,
                             Go23WalletManage.getInstance().walletAddress,
                             code,
-                            object : ReShareCallBack {
+                            object : ReShardingCallBack {
 
                                 override fun success(key3: String?) {
                                     emailVerifyDialog.dismissAllowingStateLoss()
@@ -370,7 +370,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                     CustomToast.showShort(R.string.resharding_fail)
                                 }
 
-                                override fun reShareForEmail() {
+                                override fun reShardingForEmail() {
                                     toReSharding()
                                 }
 
