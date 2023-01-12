@@ -42,7 +42,7 @@
 -dontoptimize
 #---------------------------------默认保留区---------------------------------
 #继承activity,application,service,broadcastReceiver,contentprovider....不进行混淆
-#-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
 -keep public class * extends android.support.multidex.MultiDexApplication
 -keep public class * extends android.app.Service
