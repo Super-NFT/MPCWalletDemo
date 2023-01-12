@@ -117,6 +117,7 @@
     <string name="pending_block_validation">Pending block validation. Please go to Detail page to view details of this transaction.</string>
     <string name="view_details">View Details</string>
     <string name="gas_tips">%s support to lend users gas for trading</string>
+    <string name="min_tips_pre">Minimum transfer amount</string>
     <string name="gas_insufficient">Insufficient Gas Fee</string>
     <string name="input_amount">Enter Amount</string>
 

@@ -87,7 +87,9 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                                     binding.tvGasTips.text = String.format(
                                         getString(R.string.gas_tips), chainTokenInfo?.symbol
                                     )
-                                    binding.tvGasTips.visibility =
+                                    binding.tvMinTipsMiddle.text = preToken.token_minimum
+                                    binding.tvMinTipsEnd.text = chainTokenInfo?.symbol
+                                    binding.groupTips.visibility =
                                         if (preToken.isIs_lending_gas) View.VISIBLE else View.GONE
                                     binding.tvFromAddress.text =
                                         it.user_wallet_address.parseAddress()
@@ -100,12 +102,14 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                                         } ${it.symbol}"
                                     )
                                     binding.tvCoinSymbol.text = it.symbol
-                                    val uPer = if (chainTokenInfo?.contract_address.isNullOrEmpty()) {
-                                        preTokenSend?.platform_u_per?.toDouble() ?: 0.0
-                                    } else {
-                                        preTokenSend?.token_u_per?.toDouble() ?: 0.0
-                                    }
-                                    binding.tvInputValue.visibility = if (uPer > 0) View.VISIBLE else View.GONE
+                                    val uPer =
+                                        if (chainTokenInfo?.contract_address.isNullOrEmpty()) {
+                                            preTokenSend?.platform_u_per?.toDouble() ?: 0.0
+                                        } else {
+                                            preTokenSend?.token_u_per?.toDouble() ?: 0.0
+                                        }
+                                    binding.tvInputValue.visibility =
+                                        if (uPer > 0) View.VISIBLE else View.GONE
                                     binding.tvGasBalance.text =
                                         "${preToken.gas} ${UserWalletInfoManager.getUserWalletInfo().userChain.symbol}"
                                     binding.tvGasValue.visibility =
@@ -201,7 +205,8 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                 } else {
                     preTokenSend?.token_u_per?.toDouble() ?: 0.0
                 }
-                binding.tvInputValue.text = if (uPer == null || uPer <= 0) "$0.00" else "$${num * uPer}"
+                binding.tvInputValue.text =
+                    if (uPer == null || uPer <= 0) "$0.00" else "$${num * uPer}"
 
                 updateSendStatus(isClickAll)
             }
@@ -339,8 +344,12 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                 totalValue <= (availableNum - BigDecimal(preTokenSend?.gas ?: "0"))
             } else {
                 totalValue <= availableNum
-            } && (preTokenSend?.trans_type
-                ?: 0) != 0 && !TextUtils.isEmpty(binding.etToAddress.text) && isSelectGas
+            }
+                    && (preTokenSend?.trans_type ?: 0) != 0
+                    && !TextUtils.isEmpty(binding.etToAddress.text)
+                    && isSelectGas
+                    && totalValue > (format.parse(preTokenSend?.token_minimum ?: "0") as? BigDecimal
+                ?: BigDecimal(0))
 //                    && !TextUtils.isEmpty(binding.tvTotalValue.text)
     }
 }
