@@ -81,10 +81,24 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                                 msg.data?.let { preToken ->
                                     preTokenSend = preToken
                                     binding.etToAddress.setText("")
-                                    binding.tvGasTips.text = String.format(
-                                        getString(R.string.gas_tips), chainTokenInfo?.symbol
+                                    binding.tvGasTips.text = Html.fromHtml(
+                                        String.format(
+                                            getString(R.string.gas_tips), chainTokenInfo?.symbol
+                                        )
                                     )
-                                    binding.tvMinTips.text = Html.fromHtml(String.format(getString(R.string.min_tips), preToken.token_minimum, chainTokenInfo?.symbol))
+                                    binding.tvNotSupportTips.text = Html.fromHtml(
+                                        String.format(
+                                            getString(R.string.not_support_tips),
+                                            chainTokenInfo?.symbol
+                                        )
+                                    )
+                                    binding.tvMinTips.text = Html.fromHtml(
+                                        String.format(
+                                            getString(R.string.min_tips),
+                                            preToken.token_minimum,
+                                            chainTokenInfo?.symbol
+                                        )
+                                    )
                                     binding.groupTips.visibility =
                                         if (preToken.isIs_lending_gas) View.VISIBLE else View.GONE
                                     binding.tvFromAddress.text =
@@ -335,16 +349,26 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         }
 //        binding.tvTotalValue.text =
 //            "${if (isAll) availableNum else inputStr} ${chainTokenInfo?.symbol}"
+        val isEnough = if (chainTokenInfo?.contract_address.isNullOrEmpty()) {
+            totalValue <= (availableNum - BigDecimal(preTokenSend?.gas ?: "0"))
+        } else {
+            totalValue <= availableNum
+        }
+        if (!isEnough) {
+            CustomToast.showShort(R.string.balance_insufficient)
+        }
+        binding.tvNotSupportTips.visibility =
+            if ((preTokenSend?.trans_type ?: 0) == 0) View.VISIBLE else View.GONE
+
         binding.tvSend.isEnabled =
-            totalValue > BigDecimal(0) && if (chainTokenInfo?.contract_address.isNullOrEmpty()) {
-                totalValue <= (availableNum - BigDecimal(preTokenSend?.gas ?: "0"))
-            } else {
-                totalValue <= availableNum
-            }
+            totalValue > BigDecimal(0) && isEnough
                     && (preTokenSend?.trans_type ?: 0) != 0
                     && !TextUtils.isEmpty(binding.etToAddress.text)
                     && isSelectGas
-                    && totalValue > (format.parse(preTokenSend?.token_minimum ?: "0") as? BigDecimal
+                    && totalValue > (format.parse(
+                if (preTokenSend?.token_minimum?.isNullOrEmpty() == true) "0" else preTokenSend?.token_minimum
+                    ?: "0"
+            ) as? BigDecimal
                 ?: BigDecimal(0))
 //                    && !TextUtils.isEmpty(binding.tvTotalValue.text)
     }

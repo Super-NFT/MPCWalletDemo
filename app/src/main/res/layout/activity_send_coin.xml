@@ -389,11 +389,28 @@
                 app:layout_constraintVertical_chainStyle="packed" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_not_support_tips"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="27dp"
+                android:layout_marginEnd="20dp"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:text="@string/not_support_tips"
+                android:textColor="@color/color_8C8C8C"
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/v_gas_view" />
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_gas_tips"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="27dp"
+                android:layout_marginTop="0dp"
                 android:layout_marginEnd="20dp"
                 android:drawableStart="@drawable/icon_checked"
                 android:drawablePadding="8dp"
@@ -402,7 +419,8 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/v_gas_view" />
+                app:layout_constraintTop_toBottomOf="@id/tv_not_support_tips"
+                app:layout_goneMarginTop="27dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_min_tips"
@@ -410,10 +428,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
+                android:gravity="center"
                 android:text="@string/min_tips"
                 android:textColor="@color/color_8C8C8C"
                 android:textSize="14sp"
-                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_gas_tips" />

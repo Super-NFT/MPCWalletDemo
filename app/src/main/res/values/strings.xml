@@ -116,9 +116,11 @@
     <string name="request_sent">The request is sent</string>
     <string name="pending_block_validation">Pending block validation. Please go to Detail page to view details of this transaction.</string>
     <string name="view_details">View Details</string>
-    <string name="gas_tips">%s support to lend users gas for trading</string>
+    <string name="not_support_tips"><![CDATA[ <font color="#00D6E1">%s</font> doesn’t support lending gas to users for transaction.]]></string>
+    <string name="gas_tips"><![CDATA[ <font color="#00D6E1">%s</font> support to lend users gas for trading]]></string>
     <string name="min_tips"><![CDATA[ Minimum transfer amount <font color="#00D6E1">%s</font> %s]]></string>
     <string name="gas_insufficient">Insufficient Gas Fee</string>
+    <string name="balance_insufficient">Insufficient balance</string>
     <string name="input_amount">Enter Amount</string>
 
     <string name="add_success">Add Successfully</string>

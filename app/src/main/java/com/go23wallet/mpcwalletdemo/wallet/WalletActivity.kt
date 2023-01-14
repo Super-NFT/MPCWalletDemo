@@ -313,6 +313,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                 }
 
                                 override fun emailVerifyFailed() {
+                                    dismissProgress()
                                     CustomToast.showShort(R.string.verify_code_fail)
                                     emailVerifyDialog.clearText()
                                 }
@@ -375,6 +376,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                 }
 
                                 override fun emailVerifyFailed() {
+                                    dismissProgress()
                                     CustomToast.showShort(R.string.verify_code_fail)
                                     emailVerifyDialog.clearText()
                                 }

@@ -2,7 +2,6 @@ package com.go23wallet.mpcwalletdemo.utils;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.coins.app.BaseCallBack;
-import com.coins.app.C;
 import com.coins.app.Go23WalletManage;
 import com.coins.app.bean.user.MerchantResponse;
 import com.coins.app.bean.user.UserResponse;
@@ -25,6 +24,8 @@ public class KeygenUtils {
 
     private static KeygenUtils utils;
 
+    public static final String HOST = "https://api.go23.test.dbytothemoon.com";
+
     private KeygenUtils() {
     }
 
@@ -42,7 +43,7 @@ public class KeygenUtils {
                     RequestBody body = RequestBody.create(
                             MediaType.parse("application/json"), object.toString());
                     Request request = new Request.Builder()
-                            .url(C.GAME_CENTER_URL + "/merchant/get_keygen")
+                            .url(HOST + "/merchant/get_keygen")
                             .addHeader("Authorization", "Bearer " + Go23WalletManage.getInstance().getGameCenterToken().getAccess_token())
                             .addHeader("Uuid", Go23WalletManage.getInstance().getUser().getUuid())
                             .post(body)
@@ -87,7 +88,7 @@ public class KeygenUtils {
                     RequestBody body = RequestBody.create(
                             MediaType.parse("application/json"), object.toString());
                     Request request = new Request.Builder()
-                            .url(C.GAME_CENTER_URL + "/merchant/create_keygen")
+                            .url(HOST+ "/merchant/create_keygen")
                             .addHeader("Authorization", "Bearer " + Go23WalletManage.getInstance().getGameCenterToken().getAccess_token())
                             .addHeader("Uuid", Go23WalletManage.getInstance().getUser().getUuid())
                             .post(body)
@@ -132,7 +133,7 @@ public class KeygenUtils {
                     RequestBody body = RequestBody.create(
                             MediaType.parse("application/json"), object.toString());
                     Request request = new Request.Builder()
-                            .url(C.GAME_CENTER_URL + "/merchant/update_keygen")
+                            .url(HOST + "/merchant/update_keygen")
                             .addHeader("Authorization", "Bearer " + Go23WalletManage.getInstance().getGameCenterToken().getAccess_token())
                             .addHeader("Uuid", Go23WalletManage.getInstance().getUser().getUuid())
                             .post(body)
