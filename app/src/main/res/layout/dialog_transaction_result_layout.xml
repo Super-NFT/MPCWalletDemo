@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="@string/successfully"
+        android:text="@string/successful"
         android:fontFamily="@font/barlowcondensed_medium"
         android:letterSpacing="0.04"
         android:textColor="@color/color_262626"

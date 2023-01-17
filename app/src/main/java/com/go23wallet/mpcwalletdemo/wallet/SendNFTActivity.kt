@@ -153,6 +153,24 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
             }
 
         })
+
+        binding.etQuantity.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                val str = s?.toString() ?: ""
+                if (str.isNullOrEmpty()) {
+                    return
+                }
+                val num = str.toInt()
+                binding.tvQuantityFailTip.visibility = if (num > 0) View.VISIBLE else View.GONE
+            }
+
+        })
         binding.tvCancel.setOnClickListener {
             finish()
         }

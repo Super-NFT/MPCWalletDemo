@@ -121,6 +121,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                     }
 
                                     override fun failed() {
+                                        CustomToast.showShort(R.string.send_code_fail)
                                     }
 
                                 })
@@ -417,6 +418,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                         }
 
                         override fun failed() {
+                            CustomToast.showShort(R.string.send_code_fail)
                         }
 
                     })

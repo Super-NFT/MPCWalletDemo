@@ -39,7 +39,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingBottom="15dp"
+        android:paddingBottom="67dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -268,6 +268,34 @@
                 tools:text="asdasasdasdadsadasdaasda" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_standard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/token_standard"
+                android:textColor="@color/color_8C8C8C"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_website" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_standard_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="end"
+                android:lines="1"
+                android:textColor="@color/color_262626"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_standard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_standard"
+                app:layout_constraintTop_toTopOf="@id/tv_standard"
+                tools:text="asdasasdasdadsadasdaasda" />
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_blockchain"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -277,7 +305,7 @@
                 android:textColor="@color/color_8C8C8C"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_website" />
+                app:layout_constraintTop_toBottomOf="@id/tv_standard" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_blockchain_address"
@@ -295,24 +323,26 @@
                 app:layout_constraintTop_toTopOf="@id/tv_blockchain"
                 tools:text="asdasasdasdadsadasdaasda" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_transfer"
-                android:layout_width="0dp"
-                android:layout_height="52dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="66dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/shape_r8_00d6e1_bg"
-                android:fontFamily="@font/barlowcondensed_medium"
-                android:gravity="center"
-                android:letterSpacing="0.04"
-                android:text="@string/transfer"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_website" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_transfer"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="66dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/shape_r8_00d6e1_bg"
+        android:fontFamily="@font/barlowcondensed_medium"
+        android:gravity="center"
+        android:letterSpacing="0.04"
+        android:text="@string/transfer"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

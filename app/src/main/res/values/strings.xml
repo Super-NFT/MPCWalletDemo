@@ -19,8 +19,8 @@
     <string name="tokens">Tokens</string>
     <string name="nfts">NFTs</string>
     <string name="setting">Setting</string>
-    <string name="successfully">Successfully</string>
-    <string name="resharding">Resharding Private Key</string>
+    <string name="successful">Successful</string>
+    <string name="resharding">Reshard Private Key</string>
     <string name="recover_wallet">Recover Wallet</string>
     <string name="email">Email</string>
     <string name="pin_code">PIN code</string>
@@ -30,15 +30,16 @@
     <string name="confirm">Confirm</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
-    <string name="forget_psw">Forget password</string>
-    <string name="send_code">Send a code to your email to verify</string>
-    <string name="has_send_tips">An email with code has been sent to your email.</string>
+    <string name="forget_psw">Forget Pincode</string>
+    <string name="send_code">Send verification email</string>
+    <string name="send_code_fail">Sending failed, please try again</string>
+    <string name="has_send_tips">Enter the 6-digit code sent to your email.</string>
     <string name="sending">Sending， please wait</string>
     <string name="verifying">Verifying， please wait</string>
     <string name="verify_error">Verify code is error, please check it</string>
     <string name="confirm_error">The two pincode are different, please check it</string>
     <string name="dont_receive">Didn\'t receive it?</string>
-    <string name="resend">Please click resend</string>
+    <string name="resend">Resend</string>
     <string name="login_in">Login in</string>
     <string name="set_pin_code">Set Pincode</string>
     <string name="confirm_pin_code">Confirm Pincode</string>
@@ -75,10 +76,12 @@
     <string name="network">Network</string>
     <string name="amount">Amount</string>
     <string name="gas">Gas</string>
+    <string name="quantity">Quantity</string>
+    <string name="quantity_hint">Input Quantity</string>
     <string name="gas_free">Gas Fee</string>
-    <string name="lending_gas_free">lending gas fee</string>
+    <string name="lending_gas_free">Equivalent Gas Fee</string>
     <string name="total">Total</string>
-    <string name="coin_mark">Standard:ERC-20</string>
+    <string name="coin_mark">Standard: ERC-20</string>
 
     <string name="description">Description</string>
     <string name="attributes">Attributes</string>
@@ -86,6 +89,7 @@
     <string name="contract_address">Contract address</string>
     <string name="blockchain">Blockchain</string>
     <string name="website">Website</string>
+    <string name="token_standard">Token Standard</string>
     <string name="transfer">Transfer</string>
     <string name="paste">Paste</string>
     <string name="receiving_address">Receiving Address</string>
@@ -104,22 +108,23 @@
     <string name="add_a_token">Add a Token</string>
     <string name="add_custom_token">Add Custom Token</string>
     <string name="nft_contact_address">NFT Contract Address</string>
-    <string name="add_token_warning">Anyone can create a token, including creating fake version of existing tokens.</string>
-    <string name="token_contract">Token Contract</string>
+    <string name="add_token_warning">Anyone can create a fake token. Make sure you trust a token before you import it.</string>
+    <string name="token_contract">Token Contract Address</string>
     <string name="token_symbol">Token Symbol</string>
-    <string name="token_precision">Token of Precision</string>
+    <string name="token_precision">Token Decimal</string>
     <string name="available">Available: %s</string>
     <string name="all">All</string>
 
     <string name="select_token_send">Select token to send</string>
     <string name="confirm_transfer">Confirm Transfer</string>
-    <string name="request_sent">The request is sent</string>
-    <string name="pending_block_validation">Pending block validation. Please go to Detail page to view details of this transaction.</string>
+    <string name="request_sent">Request is sent</string>
+    <string name="pending_block_validation">Pending block validation…</string>
     <string name="view_details">View Details</string>
     <string name="not_support_tips"><![CDATA[ <font color="#00D6E1">%s</font> doesn’t support lending gas to users for transaction.]]></string>
-    <string name="gas_tips"><![CDATA[ <font color="#00D6E1">%s</font> support to lend users gas for trading]]></string>
+    <string name="gas_tips"><![CDATA[ <font color="#00D6E1">%s</font> support lending gas to users for trading]]></string>
     <string name="min_tips"><![CDATA[ Minimum transfer amount <font color="#00D6E1">%s</font> %s]]></string>
     <string name="gas_insufficient">Insufficient Gas Fee</string>
+    <string name="quantity_exceed">Exceed the maximum number of NFT</string>
     <string name="balance_insufficient">Insufficient balance</string>
     <string name="input_amount">Enter Amount</string>
 

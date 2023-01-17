@@ -59,15 +59,63 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/quantity"
+                android:textColor="@color/color_262626"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_nft" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_quantity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/shape_r8_f5_border_d9_bg"
+                android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                android:hint="@string/quantity_hint"
+                android:minHeight="48dp"
+                android:inputType="number"
+                android:paddingStart="8dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="60dp"
+                android:paddingBottom="12dp"
+                android:textColor="@color/color_262626"
+                android:textColorHint="@color/color_BFBFBF"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_quantity" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_quantity_fail_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/quantity_exceed"
+                android:textColor="@color/color_D83548"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_quantity" />
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_scan_code"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="20dp"
                 android:src="@drawable/icon_scan_qrcode"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_nft" />
+                app:layout_constraintTop_toBottomOf="@id/tv_quantity_fail_tip" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_to"

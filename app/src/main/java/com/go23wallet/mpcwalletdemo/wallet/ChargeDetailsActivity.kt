@@ -74,7 +74,7 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
                 }
                 2 -> {
                     binding.ivChargeType.setImageResource(R.drawable.icon_charge_success)
-                    binding.tvType.text = getString(R.string.successfully)
+                    binding.tvType.text = getString(R.string.successful)
                 }
                 else -> {
                     binding.ivChargeType.setImageResource(R.drawable.icon_charge_failed)
