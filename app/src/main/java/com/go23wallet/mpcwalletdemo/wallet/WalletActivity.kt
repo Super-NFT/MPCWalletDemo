@@ -81,6 +81,13 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         } else {
             initUserInfo()
         }
+        deeplink()
+    }
+
+    private fun deeplink(){
+        intent.dataString?.let {
+            AuthorizeManage.getInstance().startAuthorize(this)
+        }
     }
 
     private fun initUserInfo() {

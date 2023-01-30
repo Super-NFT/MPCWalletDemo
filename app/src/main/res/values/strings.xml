@@ -134,4 +134,7 @@
     <string name="remove_success">Remove Success</string>
 
     <string name="empty_tips">No Records</string>
+    <string name="v2_oauth_title" translatable="false">Authorize {%1$s} to access your Coins account?</string>
+    <string name="v2_oauth_sub" translatable="false">{%1$s} is requesting access to:</string>
+
 </resources>
