@@ -77,7 +77,7 @@ public class AuthorizeManage {
                     public Unit invoke(Boolean aBoolean) {
                         if (aBoolean) {
                             PreferenceManager.getDefaultSharedPreferences(activity).edit().putBoolean(o.getClientId(), false).apply();
-                            authorize(activity, o.getClientId());
+                            authorize(activity);
                         } else {
                             finishA(activity);
                         }
@@ -106,11 +106,11 @@ public class AuthorizeManage {
         }
     }
 
-    private void authorize(Activity activity, String clientId) {
+    private void authorize(Activity activity) {
         Observable.create((ObservableOnSubscribe<Authorize>) emitter -> {
             Request request = new Request.Builder().url("https://serv4.be.test.dbytothemoon.com/api/oauth2/authorize_direct?scope=read" +
                     "&&response_type=code" + "&&wallet_client_id=1" + "&&unique_id=4d50bad18537456998a9270ea7eac077" +
-                    "&&wallet_client_secret=40ad7c25" + "&&client_id=1" + clientId).addHeader("Authorization", "Bearer " + Go23WalletManage.getInstance().getGameCenterToken().getAccess_token()).get().build();
+                    "&&wallet_client_secret=40ad7c25" + "&&client_id=1").addHeader("Authorization", "Bearer " + Go23WalletManage.getInstance().getGameCenterToken().getAccess_token()).get().build();
             try {
                 Response response = OkhttpUtil.getInstance().getOkHttpClient().newCall(request).execute();
                 //get result
@@ -136,7 +136,7 @@ public class AuthorizeManage {
             @Override
             public void onNext(Authorize o) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                Uri uri = Uri.parse("cs" + clientId + "://coins-oauth?code=" + o.getCode());
+                Uri uri = Uri.parse("cs1://coins-oauth?code=" + o.getCode());
                 intent.setData(uri);
                 activity.startActivity(intent);
                 finishA(activity);
