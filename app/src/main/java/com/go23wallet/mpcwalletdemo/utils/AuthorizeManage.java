@@ -136,7 +136,7 @@ public class AuthorizeManage {
             @Override
             public void onNext(Authorize o) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                Uri uri = Uri.parse("cs1://coins-oauth?code=" + o.getCode());
+                Uri uri = Uri.parse("deeplink://coins-oauth?code=" + o.getCode());
                 intent.setData(uri);
                 activity.startActivity(intent);
                 finishA(activity);
