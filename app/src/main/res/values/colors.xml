@@ -9,6 +9,8 @@
     <color name="black_70">#B3000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="tab_checked">@color/color_00D6E1</color>
+    <color name="tab_unchecked">#848484</color>
     <color name="color_D9D9D9">#D9D9D9</color>
     <color name="color_F5F5F5">#F5F5F5</color>
     <color name="color_F0F0F0">#F0F0F0</color>

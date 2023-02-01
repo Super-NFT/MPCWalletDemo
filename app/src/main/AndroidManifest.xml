@@ -24,7 +24,7 @@
         android:theme="@style/Theme.WalletDemo"
         tools:targetApi="31">
         <activity
-            android:name=".wallet.WalletActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.WalletMain">
@@ -35,6 +35,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".wallet.WalletActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.WalletMain" />
 
         <activity
             android:name=".wallet.TokenDetailsActivity"

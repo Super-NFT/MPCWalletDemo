@@ -1,61 +1,81 @@
 package com.go23wallet.mpcwalletdemo
 
-import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
+import androidx.viewbinding.ViewBinding
+import com.go23wallet.mpcwalletdemo.base.BaseActivity
+import com.go23wallet.mpcwalletdemo.base.BaseFragment
 import com.go23wallet.mpcwalletdemo.databinding.ActivityMainBinding
-import com.go23wallet.mpcwalletdemo.wallet.WalletActivity
+import com.go23wallet.mpcwalletdemo.fragment.DappFragment
+import com.go23wallet.mpcwalletdemo.fragment.MineFragment
+import com.go23wallet.mpcwalletdemo.fragment.WalletFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityMainBinding
+    override val layoutRes: Int = R.layout.activity_main
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private var lastIndex = 0
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    private val walletFragment: BaseFragment<out ViewBinding> by lazy {
+        WalletFragment.newInstance(this)
+    }
 
-        setSupportActionBar(binding.toolbar)
+    private val dappFragment: BaseFragment<out ViewBinding> by lazy {
+        DappFragment.newInstance()
+    }
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+    private val mineFragment: BaseFragment<out ViewBinding> by lazy {
+        MineFragment.newInstance()
+    }
 
-        binding.fab.setOnClickListener { view ->
-            startActivity(Intent(this, WalletActivity::class.java))
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
+    private val fragments = mutableListOf(walletFragment, dappFragment, mineFragment)
+
+    override fun initViews(savedInstanceState: Bundle?) {
+        binding.navView.itemIconTintList = null
+        supportFragmentManager.beginTransaction().replace(
+            R.id.main_pager, fragments[0]
+        ).commitAllowingStateLoss()
+        binding.navView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.navigation_wallet -> {
+                    switchFragment(0)
+                }
+                R.id.navigation_dapp -> {
+                    switchFragment(1)
+                }
+                R.id.navigation_mine -> {
+                    switchFragment(2)
+                }
+            }
+            return@setOnItemSelectedListener true
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+    private fun switchFragment(index: Int) {
+        if (index >= fragments.size || lastIndex >= fragments.size || index == lastIndex) {
+            return
         }
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
+        val transaction = supportFragmentManager.beginTransaction()
+        val lastFragment = fragments[lastIndex]
+        if (lastFragment != null) {
+            transaction.hide(lastFragment)
+        }
+        val fragment = fragments[index]
+        if (!fragment.isAdded) {
+            try {
+                transaction.add(R.id.main_pager, fragments[index])
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+            }
+        }
+        window.statusBarColor = getColor(
+            if (index == 0) {
+                R.color.color_FAFAFA
+            } else {
+                R.color.white
+            }
+        )
+        lastIndex = index
+        transaction.show(fragment)
+        transaction.commitAllowingStateLoss()
     }
 }

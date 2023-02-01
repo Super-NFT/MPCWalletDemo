@@ -15,7 +15,7 @@ import com.go23wallet.mpcwalletdemo.utils.CustomToast
 import com.go23wallet.mpcwalletdemo.utils.Validator
 
 
-class SetUserDialog(val activity: Activity) : BaseDialogFragment<DialogSetUserLayoutBinding>() {
+class SetUserDialog(val activity: Context) : BaseDialogFragment<DialogSetUserLayoutBinding>() {
 
     override val layoutId: Int = R.layout.dialog_set_user_layout
 
