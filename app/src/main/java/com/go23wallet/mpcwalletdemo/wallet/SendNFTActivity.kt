@@ -44,12 +44,17 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
             finish()
             return
         }
+        nftInfo?.let {
+            binding.tvQuantity.visibility = if (it.value > 1) View.VISIBLE else View.GONE
+            binding.etQuantity.visibility = if (it.value > 1) View.VISIBLE else View.GONE
+        }
         initView()
         setListener()
     }
 
     private fun initView() {
         GlideUtils.loadImg(this, nftInfo?.image, binding.ivNft)
+        binding.tvNftNum.text = "x${nftInfo?.value ?: 0}"
         showProgress()
         Go23WalletManage.getInstance().requestPreNFTSend(
             UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
@@ -59,7 +64,6 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
                     dismissProgress()
                     data?.data?.let {
                         preNft = it
-                        binding.tvConfirm.isEnabled = it.isIs_ok
                         binding.tvGasNum.text =
                             "${it.gas} ${UserWalletInfoManager.getUserWalletInfo().userChain.symbol}"
                         binding.tvGasFailTip.visibility =
@@ -142,7 +146,9 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
                         UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
                         object : BaseCallBack<TokenResponse> {
                             override fun success(p0: TokenResponse?) {
-                                binding.tvConfirm.isEnabled = preNft?.isIs_ok ?: false
+                                binding.tvConfirm.isEnabled =
+                                    preNft?.isIs_ok ?: false && (nftInfo?.value
+                                        ?: 0) > (binding.etQuantity.text?.toString()?.toInt() ?: 0)
                             }
 
                             override fun failed() {
@@ -164,10 +170,15 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
             override fun afterTextChanged(s: Editable?) {
                 val str = s?.toString() ?: ""
                 if (str.isNullOrEmpty()) {
+                    binding.tvConfirm.isEnabled = false
+                    binding.tvQuantityFailTip.visibility = View.GONE
                     return
                 }
                 val num = str.toInt()
-                binding.tvQuantityFailTip.visibility = if (num > 0) View.VISIBLE else View.GONE
+                binding.tvConfirm.isEnabled =
+                    preNft?.isIs_ok ?: false && (nftInfo?.value ?: 0) > num
+                binding.tvQuantityFailTip.visibility =
+                    if (num > (nftInfo?.value ?: 0)) View.VISIBLE else View.GONE
             }
 
         })

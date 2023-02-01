@@ -51,6 +51,7 @@ class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
                     data?.data?.let {
                         nft = it
                         GlideUtils.loadImg(this@NFTDetailsActivity, it.image, binding.ivNft)
+                        binding.tvNftNum.text = "x${it.value}"
                         binding.tvNftName.text = it.name
                         binding.tvSeriesName.text = it.series
                         binding.tvDescriptionContent.text =
@@ -63,6 +64,7 @@ class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
                         }
                         binding.tvAddress.text = it.contract_address.parseAddress()
                         binding.tvTokenAddress.text = it.token_id
+                        binding.tvStandardAddress.text = it.token_standard
                         binding.tvWebsiteAddress.text =
                             if (it.external_url.isNullOrEmpty()) "none" else it.external_url
                         binding.tvBlockchainAddress.text = it.block_chain_name.toString()
