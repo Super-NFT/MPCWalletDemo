@@ -451,10 +451,11 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             geWalletInfo()
         }
         binding.icMore.setOnClickListener {
-            settingDialog.show(supportFragmentManager, "settingDialog")
-            settingDialog.callback = {
-                toReshardingForPinCode()
-            }
+            Go23WalletManage.getInstance().startDappView(this@WalletActivity,"https://v3.metaderby.fe.test.dbytothemoon.com/open-race#/",43113)
+//            settingDialog.show(supportFragmentManager, "settingDialog")
+//            settingDialog.callback = {
+//                toReshardingForPinCode()
+//            }
         }
 
         binding.tvChainAddress.setOnClickListener {

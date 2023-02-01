@@ -4,6 +4,13 @@ pluginManagement {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven {
+            url = uri("https://maven.pkg.github.com/trustwallet/wallet-core")
+            credentials {
+                username = "smarttokenlabs@hotmail.com"
+                password = new String("Z2hwX3NFR09PbXRkOFQ2M09RcEdmY0xvR1VXTVJ6ODJBSDAxWWQ4OA".decodeBase64())
+            }
+        }
     }
 }
 dependencyResolutionManagement {
@@ -12,7 +19,15 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven {
+            url = uri("https://maven.pkg.github.com/trustwallet/wallet-core")
+            credentials {
+                username = "smarttokenlabs@hotmail.com"
+                password = new String("Z2hwX3NFR09PbXRkOFQ2M09RcEdmY0xvR1VXTVJ6ODJBSDAxWWQ4OA".decodeBase64())
+            }
+        }
     }
 }
+
 rootProject.name = "MPCWalletDemo"
 include ':app'
