@@ -3,6 +3,7 @@ package com.go23wallet.mpcwalletdemo.wallet
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.coins.app.BaseCallBack
@@ -51,7 +52,10 @@ class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
                     data?.data?.let {
                         nft = it
                         GlideUtils.loadImg(this@NFTDetailsActivity, it.image, binding.ivNft)
-                        binding.tvNftNum.text = "x${it.value}"
+                        binding.tvNftNum.visibility = if (it.value > 1) View.VISIBLE else View.GONE
+                        binding.lineNum.visibility = if (it.value > 1) View.VISIBLE else View.GONE
+                        binding.tvNftNum.text =
+                            String.format(getString(R.string.nft_own_num_tips), it.value)
                         binding.tvNftName.text = it.name
                         binding.tvSeriesName.text = it.series
                         binding.tvDescriptionContent.text =
@@ -59,6 +63,7 @@ class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
                         if (it.attributes.isNullOrEmpty()) {
                             binding.tvAttributes.visibility = View.GONE
                             binding.recyclerView.visibility = View.GONE
+                            binding.line3.visibility = View.GONE
                         } else {
                             mAdapter?.setNewInstance(it.attributes)
                         }
