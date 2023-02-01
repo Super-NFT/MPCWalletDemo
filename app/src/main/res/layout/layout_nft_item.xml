@@ -16,6 +16,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_num"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_circle_white"
+        android:gravity="center"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:textColor="@color/color_262626"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/iv_img"
+        app:layout_constraintTop_toTopOf="@id/iv_img" />
+
     <com.go23wallet.mpcwalletdemo.view.AlignTextView
         android:id="@+id/tv_name"
         android:layout_width="0dp"

@@ -39,7 +39,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingBottom="67dp"
+        android:paddingBottom="75dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,17 +60,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_nft_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="22dp"
-                android:layout_marginBottom="10dp"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@id/iv_nft"
-                app:layout_constraintEnd_toEndOf="@id/iv_nft" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_nft_name"
@@ -107,6 +96,30 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_series_name" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_nft_num"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:drawableStart="@drawable/icon_own"
+                android:drawablePadding="4dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_262626"
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line1" />
+
+            <View
+                android:id="@+id/line_num"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_F5F5F5"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/tv_nft_num" />
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -118,7 +131,7 @@
                 android:textColor="@color/color_262626"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/line1" />
+                app:layout_constraintTop_toBottomOf="@id/line_num" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_description_content"
@@ -161,6 +174,7 @@
                 android:layout_width="0dp"
                 android:layout_height="58dp"
                 android:layout_marginStart="14dp"
+                android:paddingBottom="20dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -170,7 +184,6 @@
                 android:id="@+id/line3"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="20dp"
                 android:background="@color/color_F5F5F5"
                 app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 

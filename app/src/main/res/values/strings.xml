@@ -90,6 +90,8 @@
     <string name="blockchain">Blockchain</string>
     <string name="website">Website</string>
     <string name="token_standard">Token Standard</string>
+    <string name="nft_own_num_tips">You own %d</string>
+    <string name="amount_own">Amount Owned:%d</string>
     <string name="transfer">Transfer</string>
     <string name="paste">Paste</string>
     <string name="receiving_address">Receiving Address</string>

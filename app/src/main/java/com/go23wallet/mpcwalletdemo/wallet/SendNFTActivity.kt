@@ -45,8 +45,8 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
             return
         }
         nftInfo?.let {
-            binding.tvQuantity.visibility = if (it.value > 1) View.VISIBLE else View.GONE
-            binding.etQuantity.visibility = if (it.value > 1) View.VISIBLE else View.GONE
+            binding.groupQuantity.visibility = if (it.value > 1) View.VISIBLE else View.GONE
+            binding.tvAmountTip.text = String.format(getString(R.string.amount_own), it.value)
         }
         initView()
         setListener()
@@ -54,7 +54,6 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
 
     private fun initView() {
         GlideUtils.loadImg(this, nftInfo?.image, binding.ivNft)
-        binding.tvNftNum.text = "x${nftInfo?.value ?: 0}"
         showProgress()
         Go23WalletManage.getInstance().requestPreNFTSend(
             UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
@@ -126,6 +125,11 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
                     }
                 }).request();
         }
+        binding.tvAllQuantity.setOnClickListener {
+            val num = (nftInfo?.value ?: 1).toString()
+            binding.etQuantity.setText((nftInfo?.value ?: 1).toString())
+            binding.etQuantity.setSelection(num.length)
+        }
         binding.tvPaste.setOnClickListener {
             CopyUtils.pasteText(this, binding.etAddress)
         }
@@ -147,8 +151,10 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
                         object : BaseCallBack<TokenResponse> {
                             override fun success(p0: TokenResponse?) {
                                 binding.tvConfirm.isEnabled =
-                                    preNft?.isIs_ok ?: false && (nftInfo?.value
-                                        ?: 0) > (binding.etQuantity.text?.toString()?.toInt() ?: 0)
+                                    preNft?.isIs_ok ?: false && if (binding.etQuantity.text.toString()
+                                            .isEmpty()
+                                    ) false else (nftInfo?.value
+                                        ?: 0) >= (binding.etQuantity.text.toString().toInt())
                             }
 
                             override fun failed() {
@@ -176,7 +182,7 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
                 }
                 val num = str.toInt()
                 binding.tvConfirm.isEnabled =
-                    preNft?.isIs_ok ?: false && (nftInfo?.value ?: 0) > num
+                    preNft?.isIs_ok ?: false && (nftInfo?.value ?: 0) >= num
                 binding.tvQuantityFailTip.visibility =
                     if (num > (nftInfo?.value ?: 0)) View.VISIBLE else View.GONE
             }
