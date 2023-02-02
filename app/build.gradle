@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
 }
@@ -9,7 +9,6 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.go23wallet.mpcwalletdemo"
         minSdk 23
         targetSdk 32
         versionCode 1
@@ -22,37 +21,17 @@ android {
         }
     }
 
-    signingConfigs {
-        release {
-            storePassword "111111"
-            keyAlias "coins"
-            keyPassword "111111"
-            storeFile file("coins.keystore")
-
-            enableV3Signing true
-            enableV4Signing true
-        }
-        debug {
-            storePassword "111111"
-            keyAlias "coins"
-            keyPassword "111111"
-            storeFile file("coins.keystore")
-        }
-    }
-
     buildTypes {
         release {
             minifyEnabled true
-            shrinkResources true
+//            shrinkResources true
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
         }
         debug{
             minifyEnabled true
-            shrinkResources true
+//            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
