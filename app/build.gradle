@@ -28,7 +28,7 @@ android {
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-        debug{
+        debug {
             minifyEnabled true
 //            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -47,7 +47,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    compileOnly fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
@@ -82,13 +82,16 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
-    implementation files('libs/wallet.aar')
-    implementation files('libs/mpc.aar')
+//    implementation files('libs/wallet.aar')
+//    implementation files('libs/mpc.aar')
+    compileOnly files('libs/wallet.aar')
+    compileOnly files('libs/mpc.aar')
+
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
-    debugImplementation files('libs/wallet.aar')
+//    debugImplementation files('libs/wallet.aar')
     api 'org.bouncycastle:bcprov-jdk15on:1.62'
     api 'org.slf4j:slf4j-nop:1.7.25'
 

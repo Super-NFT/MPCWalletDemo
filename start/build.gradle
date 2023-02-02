@@ -43,7 +43,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
-        debug{
+        debug {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -63,7 +63,9 @@ android {
 }
 
 dependencies {
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation files('libs/wallet.aar')
+    implementation files('libs/mpc.aar')
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'com.google.android.material:material:1.8.0'
