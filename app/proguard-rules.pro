@@ -80,7 +80,7 @@
 
 #-----------实体类[Bean类]---------
 #修改成你对应的包名
--keep public class com.go23wallet.mpcwalletdemo.**{*;}
+#-keep public class com.go23wallet.mpcwalletdemo.**{*;}
 
 #保持 Serializable 不被混淆
 -keepnames class * implements java.io.Serializable
@@ -158,7 +158,7 @@
 #------gson------
 -dontwarn com.google.gson.**
 -keep class com.google.gson.** {*;}
--keep class com.google.**{*;}
+#-keep class com.google.**{*;}
 -keep class sun.misc.Unsafe { *; }
 -keep class com.google.gson.stream.** { *; }
 -keep class com.google.gson.examples.android.model.** { *; }
