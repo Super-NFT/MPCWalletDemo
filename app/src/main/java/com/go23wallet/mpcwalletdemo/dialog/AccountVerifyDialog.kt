@@ -6,14 +6,15 @@ import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
-import com.go23wallet.mpcwalletdemo.databinding.DialogForgetPswLayoutBinding
+import com.go23wallet.mpcwalletdemo.databinding.DialogAccountVerifyLayoutBinding
 import com.go23wallet.mpcwalletdemo.utils.CustomToast
+import com.go23wallet.mpcwalletdemo.utils.Validator
 import com.go23wallet.mpcwalletdemo.view.InputCodeView.OnCodeCompleteListener
 
-class EmailVerifyDialog(private val mContext: Context, private var dialogType: Int = 0) :
-    BaseDialogFragment<DialogForgetPswLayoutBinding>() {
+class AccountVerifyDialog(private val mContext: Context, private var dialogType: Int = 0) :
+    BaseDialogFragment<DialogAccountVerifyLayoutBinding>() {
 
-    override val layoutId: Int = R.layout.dialog_forget_psw_layout
+    override val layoutId: Int = R.layout.dialog_account_verify_layout
 
     var callback: (code: String?) -> Unit = {}
 
@@ -37,8 +38,15 @@ class EmailVerifyDialog(private val mContext: Context, private var dialogType: I
         if (dialogType == 1) {
             viewBinding.ivBack.visibility = View.GONE
         }
-        val emailStr = SPUtils.getInstance().getString("email")
-        viewBinding.tvEmail.text = emailStr
+        val accountStr = SPUtils.getInstance().getString("account")
+        if (Validator.isEmail(accountStr)) {
+            viewBinding.tvSendTips.text = getString(R.string.send_email_code)
+            viewBinding.hasSendTips.text = getString(R.string.has_send_email_tips)
+        } else {
+            viewBinding.tvSendTips.text = getString(R.string.send_sms_code)
+            viewBinding.hasSendTips.text = getString(R.string.has_send_sms_tips)
+        }
+        viewBinding.tvAccount.text = accountStr
         viewBinding.ivBack.setOnClickListener {
             callback.invoke(null)
             dismissAllowingStateLoss()
