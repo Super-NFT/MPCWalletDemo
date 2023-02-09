@@ -182,7 +182,12 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
                 }
                 val num = str.toInt()
                 binding.tvConfirm.isEnabled =
-                    preNft?.isIs_ok ?: false && (nftInfo?.value ?: 0) >= num
+                    try {
+                        preNft?.isIs_ok ?: false && (nftInfo?.value
+                            ?: 0) >= num && binding.etAddress.text.toString().length > 30
+                    } catch (e: Exception) {
+                        false
+                    }
                 binding.tvQuantityFailTip.visibility =
                     if (num > (nftInfo?.value ?: 0)) View.VISIBLE else View.GONE
             }

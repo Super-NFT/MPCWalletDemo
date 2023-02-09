@@ -13,6 +13,7 @@ import com.go23wallet.mpcwalletdemo.base.BaseFragment
 import com.go23wallet.mpcwalletdemo.data.DappItem
 import com.go23wallet.mpcwalletdemo.databinding.FragmentDappChildBinding
 import com.go23wallet.mpcwalletdemo.utils.KeygenUtils
+import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -63,7 +64,7 @@ class DappChildFragment : BaseFragment<FragmentDappChildBinding>() {
                                     activity,
                                     it.keygen,
                                     url,
-                                    0
+                                    UserWalletInfoManager.getUserWalletInfo().userChain.chain_id
                                 )
                                 lifecycleScope.launch {
                                     delay(3000)

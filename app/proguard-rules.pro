@@ -80,7 +80,7 @@
 
 #-----------实体类[Bean类]---------
 #修改成你对应的包名
--keep public class 当前包名.**{*;}
+#-keep public class 当前包名.**{*;}
 
 #保持 Serializable 不被混淆
 -keepnames class * implements java.io.Serializable
