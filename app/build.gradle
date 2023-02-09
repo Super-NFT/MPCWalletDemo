@@ -41,6 +41,8 @@ android {
             keyAlias "coins"
             keyPassword "111111"
             storeFile file("coins.keystore")
+//            enableV3Signing true
+//            enableV4Signing true
         }
     }
 

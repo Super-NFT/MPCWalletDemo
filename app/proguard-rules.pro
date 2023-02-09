@@ -172,13 +172,20 @@
 -keep class com.coins.app.C { *; }
 -keep class com.coins.app.entity.** { *; }
 
+-optimizations !code/simplification/arithmetic,!code/simplification/cast,!field/*,!class/merging/*
+-optimizationpasses 5
+-allowaccessmodification
 
--dontwarn com.alibaba.fastjson.**
--keep class com.alibaba.fastjson.** { *; }
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-verbose
 
-## ---- start game center -----
--keep class wallet.core {*;}
--keep class com.coins.app.** { *; }
+# Preserve some attributes that may be required for reflection.
+-keepattributes *Annotation*,Signature,InnerClasses,EnclosingMethod
+
+-dontnote com.android.vending.licensing.ILicensingService
+-dontnote com.google.vending.licensing.ILicensingService
+-dontnote com.google.android.vending.licensing.ILicensingService
 
 # For native methods, see http://proguard.sourceforge.net/manual/examples.html#native
 -keepclasseswithmembernames class * {
@@ -215,6 +222,17 @@
     @android.webkit.JavascriptInterface <methods>;
 }
 
+# The support libraries contains references to newer platform versions.
+# Don't warn about those in case this app is linking against an older
+# platform version. We know about them, and they are safe.
+-dontnote android.support.**
+-dontnote androidx.**
+-dontwarn android.support.**
+-dontwarn androidx.**
+
+# This class is deprecated, but remains for backward compatibility.
+-dontwarn android.util.FloatMath
+
 # Understand the @Keep support annotation.
 -keep class androidx.annotation.Keep
 
@@ -234,6 +252,7 @@
     @androidx.annotation.Keep <init>(...);
 }
 
+-keep public class * extends com.alphawallet.*
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
 -keep public class * extends android.app.Service
@@ -243,5 +262,21 @@
 -keep public class * extends android.preference.Preference
 -keep public class com.android.vending.licensing.ILicensingService
 -keep class javax.** { *; }
--keep class org.web3j.** { *; }
+-keep class org.** { *; }
+
+# These classes are duplicated between android.jar and org.apache.http.legacy.jar.
+-dontnote org.apache.http.**
+-dontnote android.net.http.**
+
+# These classes are duplicated between android.jar and core-lambda-stubs.jar.
+-dontnote java.lang.invoke.**
+-keep class com.coins.app.bean.** { *; }
+-keep class com.coins.app.callback.** { *; }
+-keep class com.coins.app.Go23WalletManage { *; }
+-keep class com.coins.app.C { *; }
+-keep class com.coins.app.BaseCallBack { *; }
+-keep class com.coins.app.Go23WalletCallBack { *; }
+-keep class com.coins.app.util.** { *; }
+-keep class com.coins.app.entity.** { *; }
+-keep class com.coins.app.ethereum.** { *; }
 ##---- end game center ----
