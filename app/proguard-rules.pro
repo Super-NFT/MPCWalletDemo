@@ -241,4 +241,7 @@
 -keep public class * extends android.content.ContentProvider
 -keep public class * extends android.app.backup.BackupAgentHelper
 -keep public class * extends android.preference.Preference
+-keep public class com.android.vending.licensing.ILicensingService
+-keep class javax.** { *; }
+-keep class org.web3j.** { *; }
 ##---- end game center ----
