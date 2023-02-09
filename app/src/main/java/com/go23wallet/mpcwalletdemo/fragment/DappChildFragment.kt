@@ -3,11 +3,15 @@ package com.go23wallet.mpcwalletdemo.fragment
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
+import com.coins.app.BaseCallBack
+import com.coins.app.Go23WalletManage
+import com.coins.app.bean.user.MerchantResponse
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.DappChildAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseFragment
 import com.go23wallet.mpcwalletdemo.data.DappItem
 import com.go23wallet.mpcwalletdemo.databinding.FragmentDappChildBinding
+import com.go23wallet.mpcwalletdemo.utils.KeygenUtils
 
 class DappChildFragment : BaseFragment<FragmentDappChildBinding>() {
 
@@ -47,7 +51,28 @@ class DappChildFragment : BaseFragment<FragmentDappChildBinding>() {
         mAdapter?.setNewInstance(mutableListOf(list[index]))
 
         mAdapter?.setOnItemClickListener { adapter, view, position ->
-            // TODO
+            mAdapter?.data?.get(position)?.url?.let { url ->
+                showProgress()
+                KeygenUtils.getInstance().requestMerchantKey(
+                    Go23WalletManage.getInstance().walletAddress,
+                    object : BaseCallBack<MerchantResponse> {
+                        override fun success(data: MerchantResponse?) {
+                            data?.data?.let {
+                                dismissProgress()
+                                Go23WalletManage.getInstance().startDappViewWithMerchantKey(
+                                    activity,
+                                    it.keygen,
+                                    url,
+                                    0
+                                )
+                            }
+                        }
+
+                        override fun failed() {
+                        }
+                    })
+            }
+
         }
     }
 
