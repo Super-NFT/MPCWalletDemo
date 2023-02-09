@@ -64,6 +64,13 @@
         <item name="android:letterSpacing">0.04</item>
     </style>
 
+    <style name="DappTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">24sp</item>
+        <item name="fontFamily">@font/barlowcondensed_medium</item>
+        <item name="android:letterSpacing">0.04</item>
+    </style>
+
     <style name="CommonDialog" parent="@style/Theme.AppCompat.Light.Dialog">
         <item name="android:windowFrame">@null</item><!--边框-->
         <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->

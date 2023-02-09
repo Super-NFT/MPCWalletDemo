@@ -228,7 +228,7 @@ class WalletFragment(val mContext: Context) : BaseFragment<FragmentWalletBinding
             tabList.add(getString(R.string.nfts))
             fragments.add(TokenFragment.newInstance())
             fragments.add(NFTFragment.newInstance())
-            tabAdapter = TabFragmentAdapter(parentFragmentManager).apply {
+            tabAdapter = TabFragmentAdapter(childFragmentManager).apply {
                 setList(fragments, tabList)
             }
             binding.viewPager.adapter = tabAdapter

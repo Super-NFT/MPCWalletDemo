@@ -68,7 +68,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
         }
         window.statusBarColor = getColor(
-            if (index == 0) {
+            if (index == 0 || index == 1) {
                 R.color.color_FAFAFA
             } else {
                 R.color.white
