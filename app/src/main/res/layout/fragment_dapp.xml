@@ -26,7 +26,7 @@
         app:tabRippleColor="@android:color/transparent"
         app:tabSelectedTextColor="@color/color_00D6E1"
         app:tabTextAppearance="@style/DappTabTextAppearance"
-        app:tabTextColor="@color/color_8C8C8C" />
+        app:tabTextColor="@color/color_262626" />
 
     <View
         android:id="@+id/line"

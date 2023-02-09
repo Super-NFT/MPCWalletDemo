@@ -439,9 +439,9 @@ class WalletFragment(val mContext: Context) : BaseFragment<FragmentWalletBinding
                 UpdateDataLiveData.clearType()
             }
         }
-        binding.ivBack.setOnClickListener {
-            activity?.finish()
-        }
+//        binding.ivBack.setOnClickListener {
+//            activity?.finish()
+//        }
         setUserDialog.callback = {
             emailStr = this
             SPUtils.getInstance().put("email", this)
