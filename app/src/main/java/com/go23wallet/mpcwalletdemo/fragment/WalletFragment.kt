@@ -73,16 +73,16 @@ class WalletFragment(val mContext: Context) : BaseFragment<FragmentWalletBinding
 
     override fun initViews() {
         emailStr = SPUtils.getInstance().getString("email")
-        showProgress()
         setListener()
         if (emailStr.isNullOrEmpty()) {
-            setUserDialog.show(parentFragmentManager, "setUserDialog")
+            setUserDialog.show(childFragmentManager, "setUserDialog")
         } else {
             initUserInfo()
         }
     }
 
     private fun initUserInfo() {
+        showProgress()
         binding.tvEmail.text = emailStr
 
         GlideUtils.loadImg(
@@ -110,7 +110,7 @@ class WalletFragment(val mContext: Context) : BaseFragment<FragmentWalletBinding
             .start(activity, object : Go23WalletCallBack {
                 override fun reStore(p0: MutableList<WalletInfo>?) {
                     emailVerifyDialog.setDialogType(1)
-                    emailVerifyDialog.show(parentFragmentManager, "")
+                    emailVerifyDialog.show(childFragmentManager, "")
                     emailVerifyDialog.callback = {
                         it?.let {
                             if (it.isEmpty()) {
@@ -135,7 +135,7 @@ class WalletFragment(val mContext: Context) : BaseFragment<FragmentWalletBinding
                                     object : RestoreCallBack {
                                         override fun success() {
                                             successDialog.show(
-                                                parentFragmentManager,
+                                                childFragmentManager,
                                                 "successDialog"
                                             )
                                         }
@@ -143,7 +143,7 @@ class WalletFragment(val mContext: Context) : BaseFragment<FragmentWalletBinding
                                         override fun failed() {
                                             emailVerifyDialog.setDialogType(1)
                                             emailVerifyDialog.show(
-                                                parentFragmentManager,
+                                                childFragmentManager,
                                                 ""
                                             )
                                         }
@@ -299,7 +299,7 @@ class WalletFragment(val mContext: Context) : BaseFragment<FragmentWalletBinding
                                     )
                                     dismissProgress()
                                     successDialog.show(
-                                        parentFragmentManager,
+                                        childFragmentManager,
                                         "successDialog"
                                     )
                                 }
@@ -362,7 +362,7 @@ class WalletFragment(val mContext: Context) : BaseFragment<FragmentWalletBinding
                                     )
                                     dismissProgress()
                                     successDialog.show(
-                                        parentFragmentManager,
+                                        childFragmentManager,
                                         "successDialog"
                                     )
                                 }
@@ -408,7 +408,7 @@ class WalletFragment(val mContext: Context) : BaseFragment<FragmentWalletBinding
     private fun toReSharding() {
         showProgress()
         emailVerifyDialog.setDialogType(0)
-        emailVerifyDialog.show(parentFragmentManager, "emailVerifyDialog")
+        emailVerifyDialog.show(childFragmentManager, "emailVerifyDialog")
         emailVerifyDialog.callback = {
             it?.let {
                 if (it.isEmpty()) {
@@ -451,7 +451,7 @@ class WalletFragment(val mContext: Context) : BaseFragment<FragmentWalletBinding
             geWalletInfo()
         }
         binding.icMore.setOnClickListener {
-            settingDialog.show(parentFragmentManager, "settingDialog")
+            settingDialog.show(childFragmentManager, "settingDialog")
             settingDialog.callback = {
                 toReshardingForPinCode()
             }
@@ -459,12 +459,9 @@ class WalletFragment(val mContext: Context) : BaseFragment<FragmentWalletBinding
 
         binding.tvChainAddress.setOnClickListener {
             userChains?.let {
-                chooseMainnetDialog.apply {
-                    setChainList(it)
-                    show(parentFragmentManager, "chooseMainnetDialog")
-                }
+                chooseMainnetDialog.setChainList(it)
+                chooseMainnetDialog.show(childFragmentManager, "chooseMainnetDialog")
             }
-
         }
 
         chooseMainnetDialog.callback = {
@@ -485,9 +482,9 @@ class WalletFragment(val mContext: Context) : BaseFragment<FragmentWalletBinding
                 mContext,
                 userChain?.symbol ?: "",
                 walletInfo?.wallet_address ?: ""
-            ).apply {
-                show(parentFragmentManager, "receiveDialog")
-            }
+            )
+                receiveDialog?.show(childFragmentManager, "receiveDialog")
+
         }
 
         binding.tvSend.setOnClickListener {
@@ -511,7 +508,7 @@ class WalletFragment(val mContext: Context) : BaseFragment<FragmentWalletBinding
         }
 
         binding.ivAdd.setOnClickListener {
-            importAssetDialog.show(parentFragmentManager, "importAssetDialog")
+            importAssetDialog.show(childFragmentManager, "importAssetDialog")
         }
     }
 
