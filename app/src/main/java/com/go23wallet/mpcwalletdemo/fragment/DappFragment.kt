@@ -21,18 +21,8 @@ class DappFragment : BaseFragment<FragmentDappBinding>() {
 
     private fun initView() {
         if (fragments.size > 0) return
-        fragments.add(
-            DappChildFragment.newInstance(
-                0,
-                "https://pancakeswap.finance/swap?utm_source=bitkeep&_needChain=bnb"
-            )
-        )
-        fragments.add(
-            DappChildFragment.newInstance(
-                1,
-                "https://app.uniswap.org/#/swap?chain=mainnet&utm_source=bitkeep&_needChain=matic"
-            )
-        )
+        fragments.add(DappChildFragment.newInstance(0))
+        fragments.add(DappChildFragment.newInstance(1))
         tabAdapter = TabFragmentAdapter(childFragmentManager).apply {
             setList(fragments, tabList)
         }

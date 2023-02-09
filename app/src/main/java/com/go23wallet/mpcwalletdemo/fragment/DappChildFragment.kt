@@ -1,6 +1,7 @@
 package com.go23wallet.mpcwalletdemo.fragment
 
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import com.coins.app.BaseCallBack
@@ -12,10 +13,11 @@ import com.go23wallet.mpcwalletdemo.base.BaseFragment
 import com.go23wallet.mpcwalletdemo.data.DappItem
 import com.go23wallet.mpcwalletdemo.databinding.FragmentDappChildBinding
 import com.go23wallet.mpcwalletdemo.utils.KeygenUtils
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class DappChildFragment : BaseFragment<FragmentDappChildBinding>() {
 
-    private var url = ""
     private var index = 0
 
     private var mAdapter: DappChildAdapter? = null
@@ -32,14 +34,13 @@ class DappChildFragment : BaseFragment<FragmentDappChildBinding>() {
             "Uniswap V3",
             "A protocol for trading and automated liquidity provision on Ethereum",
             "https://app.uniswap.org/#/swap?chain=mainnet&utm_source=bitkeep&_needChain=matic",
-            R.drawable.icon_dapp_1,
+            R.drawable.icon_dapp_2,
             R.drawable.icon_chain_2
         )
     )
 
     override fun initViews() {
         index = arguments?.getInt("index") ?: 0
-        if (url.isNullOrEmpty()) return
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -50,7 +51,7 @@ class DappChildFragment : BaseFragment<FragmentDappChildBinding>() {
         }
         mAdapter?.setNewInstance(mutableListOf(list[index]))
 
-        mAdapter?.setOnItemClickListener { adapter, view, position ->
+        mAdapter?.setOnItemClickListener { _, _, position ->
             mAdapter?.data?.get(position)?.url?.let { url ->
                 showProgress()
                 KeygenUtils.getInstance().requestMerchantKey(
@@ -58,13 +59,16 @@ class DappChildFragment : BaseFragment<FragmentDappChildBinding>() {
                     object : BaseCallBack<MerchantResponse> {
                         override fun success(data: MerchantResponse?) {
                             data?.data?.let {
-                                dismissProgress()
                                 Go23WalletManage.getInstance().startDappViewWithMerchantKey(
                                     activity,
                                     it.keygen,
                                     url,
                                     0
                                 )
+                                lifecycleScope.launch {
+                                    delay(3000)
+                                    dismissProgress()
+                                }
                             }
                         }
 
@@ -78,9 +82,8 @@ class DappChildFragment : BaseFragment<FragmentDappChildBinding>() {
 
 
     companion object {
-        fun newInstance(index: Int, url: String): BaseFragment<out ViewBinding> {
+        fun newInstance(index: Int): BaseFragment<out ViewBinding> {
             val args = Bundle()
-            args.putString("url", url)
             args.putInt("index", index)
             val fragment = DappChildFragment()
             fragment.arguments = args
