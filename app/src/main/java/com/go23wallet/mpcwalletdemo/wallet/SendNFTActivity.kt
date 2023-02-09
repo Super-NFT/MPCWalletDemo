@@ -30,6 +30,10 @@ import com.google.zxing.activity.CaptureActivity
 
 class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
 
+    companion object {
+        const val NFT_CHAIN = "ERC-1155"
+    }
+
     override val layoutRes: Int = R.layout.activity_send_nft
 
     private var nftInfo: Nft? = null
@@ -209,7 +213,7 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
         sign.transType = 3
         sign.contractAddress = nft.contract_address
         sign.tokenId = nft.token_id.toString()
-        sign.value = ""
+        sign.value = if (nft.token_standard == NFT_CHAIN) binding.etQuantity.text.toString() else ""
         sign.nft_name = nft.name
         sign.middleContractAddress = ""
         Go23WalletManage.getInstance().sign(

@@ -40,9 +40,11 @@ class AccountVerifyDialog(private val mContext: Context, private var dialogType:
         }
         val accountStr = SPUtils.getInstance().getString("account")
         if (Validator.isEmail(accountStr)) {
+            viewBinding.llVerify.setTextLen(6)
             viewBinding.tvSendTips.text = getString(R.string.send_email_code)
             viewBinding.hasSendTips.text = getString(R.string.has_send_email_tips)
         } else {
+            viewBinding.llVerify.setTextLen(4)
             viewBinding.tvSendTips.text = getString(R.string.send_sms_code)
             viewBinding.hasSendTips.text = getString(R.string.has_send_sms_tips)
         }

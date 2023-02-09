@@ -529,6 +529,11 @@ public class InputCodeView extends AppCompatEditText implements TextWatcher {
         void inputCodeInput(String verificationCode);
     }
 
+    public void setTextLen(int len) {
+        mTextLen = len;
+        invalidate();
+    }
+
 
     public void setOnCodeCompleteListener(OnCodeCompleteListener onCodeCompleteListener) {
         this.onCodeCompleteListener = onCodeCompleteListener;
