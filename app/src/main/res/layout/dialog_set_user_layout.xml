@@ -59,12 +59,12 @@
         android:textColor="@color/color_262626"
         android:textSize="14sp"
         android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@id/et_set_email"
+        app:layout_constraintEnd_toStartOf="@id/et_set_email_sms"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/et_set_email" />
+        app:layout_constraintTop_toTopOf="@id/et_set_email_sms" />
 
     <com.go23wallet.mpcwalletdemo.view.InputEditText
-        android:id="@+id/et_set_email"
+        android:id="@+id/et_set_email_sms"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -92,7 +92,7 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_set_email" />
+        app:layout_constraintTop_toBottomOf="@id/et_set_email_sms" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_confirm"

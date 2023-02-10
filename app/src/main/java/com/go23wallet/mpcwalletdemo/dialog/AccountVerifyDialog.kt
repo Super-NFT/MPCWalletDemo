@@ -2,13 +2,13 @@ package com.go23wallet.mpcwalletdemo.dialog
 
 import android.content.Context
 import android.view.*
+import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogAccountVerifyLayoutBinding
 import com.go23wallet.mpcwalletdemo.utils.CustomToast
-import com.go23wallet.mpcwalletdemo.utils.Validator
 import com.go23wallet.mpcwalletdemo.view.InputCodeView.OnCodeCompleteListener
 
 class AccountVerifyDialog(private val mContext: Context, private var dialogType: Int = 0) :
@@ -39,7 +39,7 @@ class AccountVerifyDialog(private val mContext: Context, private var dialogType:
             viewBinding.ivBack.visibility = View.GONE
         }
         val accountStr = SPUtils.getInstance().getString("account")
-        if (Validator.isEmail(accountStr)) {
+        if (RegexUtils.isEmail(accountStr)) {
             viewBinding.llVerify.setTextLen(6)
             viewBinding.tvSendTips.text = getString(R.string.send_email_code)
             viewBinding.hasSendTips.text = getString(R.string.has_send_email_tips)

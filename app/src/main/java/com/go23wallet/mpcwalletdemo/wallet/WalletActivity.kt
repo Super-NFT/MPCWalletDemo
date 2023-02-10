@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.SPUtils
 import com.coins.app.BaseCallBack
 import com.coins.app.Go23WalletCallBack
@@ -109,7 +110,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     }
 
     private fun initData() {
-        if (Validator.isEmail(accountStr)) {
+        if (RegexUtils.isEmail(accountStr)) {
             Go23WalletManage.getInstance().email = accountStr
         } else {
             val dialCode: String
@@ -132,7 +133,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                         it?.let {
                             if (it.isEmpty()) {
                                 Go23WalletManage.getInstance()
-                                    .verifyCode(if (Validator.isEmail(accountStr)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
+                                    .verifyCode(if (RegexUtils.isEmail(accountStr)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
                                         OperationType.RECOVER, object : EmailCallBack {
                                             override fun success() {
                                                 CustomToast.showShort(R.string.verify_code_sent)
@@ -150,7 +151,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                 .startReStore(
                                     this@WalletActivity,
                                     it,
-                                    if (Validator.isEmail(accountStr)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
+                                    if (RegexUtils.isEmail(accountStr)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
                                     object : RestoreCallBack {
                                         override fun success() {
                                             successDialog.show(
@@ -370,7 +371,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                             key.keygen,
                             Go23WalletManage.getInstance().walletAddress,
                             code,
-                            if (Validator.isEmail(accountStr)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
+                            if (RegexUtils.isEmail(accountStr)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
                             object : ReShardingCallBack {
 
                                 override fun success(key3: String?) {
@@ -433,7 +434,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             it?.let {
                 if (it.isEmpty()) {
                     Go23WalletManage.getInstance()
-                        .verifyCode(if (Validator.isEmail(accountStr)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
+                        .verifyCode(if (RegexUtils.isEmail(accountStr)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
                             OperationType.RECOVER,
                             object : EmailCallBack {
                                 override fun success() {
