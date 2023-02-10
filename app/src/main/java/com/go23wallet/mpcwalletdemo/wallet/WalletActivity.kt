@@ -17,6 +17,8 @@ import com.coins.app.bean.walletinfo.WalletInfoResponse
 import com.coins.app.callback.EmailCallBack
 import com.coins.app.callback.ReShardingCallBack
 import com.coins.app.callback.RestoreCallBack
+import com.coins.app.go23.enumclass.OperationType
+import com.coins.app.go23.enumclass.VerifyCodeType
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
@@ -110,7 +112,16 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         if (Validator.isEmail(accountStr)) {
             Go23WalletManage.getInstance().email = accountStr
         } else {
-            Go23WalletManage.getInstance().phone = accountStr
+            val dialCode: String
+            val phone: String
+            if (accountStr.contains(" ")) {
+                dialCode = accountStr.split(" ")[0]
+                phone = accountStr.split(" ")[1]
+            } else {
+                dialCode = "+86"
+                phone = accountStr
+            }
+            Go23WalletManage.getInstance().setPhoneAndDialCode(phone, dialCode)
         }
         Go23WalletManage.getInstance().setUniqueId(accountStr)
             .start(this@WalletActivity, object : Go23WalletCallBack {
@@ -120,9 +131,9 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                     accountVerifyDialog.callback = {
                         it?.let {
                             if (it.isEmpty()) {
-                                if (Validator.isEmail(accountStr)) {
-                                    Go23WalletManage.getInstance()
-                                        .verifyEmailCode(1, object : EmailCallBack {
+                                Go23WalletManage.getInstance()
+                                    .verifyCode(if (Validator.isEmail(accountStr)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
+                                        OperationType.RECOVER, object : EmailCallBack {
                                             override fun success() {
                                                 CustomToast.showShort(R.string.verify_code_sent)
                                             }
@@ -132,16 +143,14 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                             }
 
                                         })
-                                    return@let
-                                } else {
-
-                                }
+                                return@let
                             }
                             dismissProgress()
                             Go23WalletManage.getInstance()
                                 .startReStore(
                                     this@WalletActivity,
                                     it,
+                                    if (Validator.isEmail(accountStr)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
                                     object : RestoreCallBack {
                                         override fun success() {
                                             successDialog.show(
@@ -356,11 +365,12 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             object : BaseCallBack<MerchantResponse> {
                 override fun success(data: MerchantResponse?) {
                     data?.data?.let { key ->
-                        Go23WalletManage.getInstance().startReShardingForEmail(
+                        Go23WalletManage.getInstance().startReSharding(
                             this@WalletActivity,
                             key.keygen,
                             Go23WalletManage.getInstance().walletAddress,
                             code,
+                            if (Validator.isEmail(accountStr)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
                             object : ReShardingCallBack {
 
                                 override fun success(key3: String?) {
@@ -422,21 +432,20 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         accountVerifyDialog.callback = {
             it?.let {
                 if (it.isEmpty()) {
-                    if (Validator.isEmail(accountStr)) {
-                        Go23WalletManage.getInstance().verifyEmailCode(0, object : EmailCallBack {
-                            override fun success() {
-                                CustomToast.showShort(R.string.verify_code_sent)
-                            }
+                    Go23WalletManage.getInstance()
+                        .verifyCode(if (Validator.isEmail(accountStr)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
+                            OperationType.RECOVER,
+                            object : EmailCallBack {
+                                override fun success() {
+                                    CustomToast.showShort(R.string.verify_code_sent)
+                                }
 
-                            override fun failed() {
-                                CustomToast.showShort(R.string.send_code_fail)
-                            }
+                                override fun failed() {
+                                    CustomToast.showShort(R.string.send_code_fail)
+                                }
 
-                        })
-                        return@let
-                    } else {
-
-                    }
+                            })
+                    return@let
                 } else {
                     toReshardingForEmail(it)
                 }
