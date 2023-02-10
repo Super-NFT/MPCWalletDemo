@@ -18,11 +18,11 @@ class SetUserDialog(val mContext: Context) : BaseDialogFragment<DialogSetUserLay
 
     override val layoutId: Int = R.layout.dialog_set_user_layout
 
-    private val areaCodeDialog: AreaCodeDialog by lazy {
-        AreaCodeDialog(mContext)
+    private val countryCodeDialog: CountryCodeDialog by lazy {
+        CountryCodeDialog(mContext)
     }
 
-    private var areaCode = "+86"
+    private var countryCode = "+86"
 
     var callback: String.() -> Unit = {}
 
@@ -76,11 +76,11 @@ class SetUserDialog(val mContext: Context) : BaseDialogFragment<DialogSetUserLay
         }
 
         viewBinding.tvAreaCode.setOnClickListener {
-            areaCodeDialog.show(parentFragmentManager, "areaCodeDialog")
+            countryCodeDialog.show(parentFragmentManager, "areaCodeDialog")
         }
 
-        areaCodeDialog.callback = {
-            areaCode = this
+        countryCodeDialog.callback = {
+            countryCode = this
             viewBinding.tvAreaCode.text = this
         }
 
@@ -91,7 +91,7 @@ class SetUserDialog(val mContext: Context) : BaseDialogFragment<DialogSetUserLay
         viewBinding.tvConfirm.setOnClickListener {
             if (NetworkUtils.isConnected()) {
                 dismissAllowingStateLoss()
-                callback.invoke(if (inputType == 0) inputValue else "$areaCode $inputValue")
+                callback.invoke(if (inputType == 0) inputValue else "$countryCode $inputValue")
             } else {
                 CustomToast.showShort(R.string.network_error)
             }

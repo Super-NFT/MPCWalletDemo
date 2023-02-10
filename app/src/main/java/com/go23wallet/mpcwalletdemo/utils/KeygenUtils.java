@@ -20,11 +20,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.go23wallet.mpcwalletdemo.utils.Constant.HOST;
+
 public class KeygenUtils {
 
     private static KeygenUtils utils;
-
-    public static final String HOST = "https://api.go23.test.dbytothemoon.com";
 
     private KeygenUtils() {
     }
