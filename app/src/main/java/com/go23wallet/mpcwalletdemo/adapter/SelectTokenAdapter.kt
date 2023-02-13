@@ -23,7 +23,7 @@ class SelectTokenAdapter :
         tvName.text = item.symbol
         tvTokenNum.text = item.balance
         tvTokenValue.visibility =
-            if (item.balance_u.toDouble() > 0) View.VISIBLE else View.INVISIBLE
+            if (item.balance_u.toDouble() > 0) View.VISIBLE else View.GONE
         tvTokenValue.text = "$${item.balance_u}"
     }
 

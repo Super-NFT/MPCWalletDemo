@@ -1,7 +1,9 @@
 package com.go23wallet.mpcwalletdemo.dialog
 
 import android.content.Context
+import android.os.CountDownTimer
 import android.view.*
+import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ScreenUtils
@@ -10,9 +12,13 @@ import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogAccountVerifyLayoutBinding
 import com.go23wallet.mpcwalletdemo.utils.CustomToast
 import com.go23wallet.mpcwalletdemo.view.InputCodeView.OnCodeCompleteListener
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class AccountVerifyDialog(private val mContext: Context, private var dialogType: Int = 0) :
     BaseDialogFragment<DialogAccountVerifyLayoutBinding>() {
+
+    private var mCountDownTimer: CountDownTimer? = null
 
     override val layoutId: Int = R.layout.dialog_account_verify_layout
 
@@ -56,6 +62,7 @@ class AccountVerifyDialog(private val mContext: Context, private var dialogType:
         viewBinding.llVerify.setOnCodeCompleteListener(object : OnCodeCompleteListener {
             override fun inputCodeComplete(verificationCode: String?) {
                 verifyCode = verificationCode
+                callback.invoke(verifyCode)
             }
 
             override fun inputCodeInput(verificationCode: String?) {
@@ -73,6 +80,10 @@ class AccountVerifyDialog(private val mContext: Context, private var dialogType:
                 viewBinding.bottomGroup.visibility = View.VISIBLE
                 viewBinding.llVerify.visibility = View.VISIBLE
                 viewBinding.tvVerify.text = getString(R.string.verify)
+                lifecycleScope.launch {
+                    delay(1000)
+                    countDown()
+                }
             } else {
                 if (verifyCode.isNullOrEmpty() || (verifyCode?.length ?: 0) > 6) {
                     CustomToast.showShort(R.string.verify_error)
@@ -91,11 +102,32 @@ class AccountVerifyDialog(private val mContext: Context, private var dialogType:
             if (viewBinding.tvResend.visibility == View.VISIBLE) {
                 viewBinding.llVerify.setText("")
                 callback.invoke("")
+                lifecycleScope.launch {
+                    delay(1000)
+                    countDown()
+                }
             }
         }
     }
 
-    public fun clearText() {
+    private fun countDown() {
+        if(viewBinding.tvResend.isEnabled) {
+            mCountDownTimer = object : CountDownTimer(60 * 1000, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    viewBinding.tvResend.isEnabled = false
+                    viewBinding.tvResend.text = "wait ${millisUntilFinished / 1000}s"
+                }
+
+                override fun onFinish() {
+                    viewBinding.tvResend.isEnabled = true
+                    viewBinding.tvResend.text = getString(R.string.resend)
+                }
+            }
+            mCountDownTimer?.start()
+        }
+    }
+
+    fun clearText() {
         viewBinding.llVerify.setText("")
     }
 
@@ -113,6 +145,7 @@ class AccountVerifyDialog(private val mContext: Context, private var dialogType:
         super.dismissAllowingStateLoss()
         type = TYPE_SEND
         viewBinding.llVerify.setText("")
+        mCountDownTimer?.cancel()
     }
 
     companion object {

@@ -124,11 +124,14 @@ abstract class BaseDialogFragment<T : ViewBinding> : DialogFragment() {
     protected abstract fun initViews(v: View?)
 
     override fun show(manager: FragmentManager, tag: String?) {
-        if (!isAdded) {
-            super.show(manager, tag)
+        try {
+            if (!isAdded) {
+                super.show(manager, tag)
 //            dismissAllowingStateLoss()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-
     }
 
     fun isLateinited(): Boolean {

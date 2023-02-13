@@ -107,6 +107,7 @@
     <string name="transaction_result">Transaction Result</string>
     <string name="go_it">GO it</string>
     <string name="album">Album</string>
+    <string name="qrcode">QR code</string>
     <string name="scan_qrcode">Scan QR-CODE</string>
     <string name="request_camera_permission_fail">Failed to obtain camera permission</string>
 
@@ -142,4 +143,5 @@
     <string name="remove_success">Remove Success</string>
 
     <string name="empty_tips">No Records</string>
+    <string name="empty_transaction_tips">No transaction records</string>
 </resources>

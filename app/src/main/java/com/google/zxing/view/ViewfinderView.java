@@ -206,10 +206,10 @@ public final class ViewfinderView extends View {
   private void drawLaserScanner(Canvas canvas, Rect frame) {
     paint.setColor(laserColor);
    // 扫描线闪烁效果
-    paint.setAlpha(SCANNER_ALPHA[scannerAlpha]);
+//    paint.setAlpha(SCANNER_ALPHA[scannerAlpha]);
     scannerAlpha = (scannerAlpha + 1) % SCANNER_ALPHA.length;
-    int middle = frame.height() / 2 + frame.top;
-    canvas.drawRect(frame.left + 2, middle - 1, frame.right - 1, middle + 2, paint);
+//    int middle = frame.height() / 2 + frame.top;
+//    canvas.drawRect(frame.left + 2, middle - 1, frame.right - 1, middle + 2, paint);
    // 线性渐变
     LinearGradient linearGradient = new LinearGradient(
             frame.left, scannerStart,

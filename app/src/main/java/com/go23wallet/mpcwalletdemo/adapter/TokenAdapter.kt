@@ -8,20 +8,31 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.go23.bean.token.Token
 import com.go23wallet.mpcwalletdemo.R
+import com.go23wallet.mpcwalletdemo.ext.hideOrShowValue
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 
 class TokenAdapter(private val mContext: Context) :
     BaseQuickAdapter<Token, BaseViewHolder>(R.layout.layout_token_item) {
 
+    private var isShowBalance = true
+
+    fun setIsShowBalance(isShowBalance: Boolean) {
+        this.isShowBalance = isShowBalance
+        notifyDataSetChanged()
+    }
+
     override fun convert(holder: BaseViewHolder, item: Token) {
         val ivIcon = holder.getView<AppCompatImageView>(R.id.iv_icon)
         val ivCorner = holder.getView<AppCompatImageView>(R.id.iv_corner)
-        val tvTitle = holder.getView<AppCompatTextView>(R.id.tv_title)
-        val tvContent = holder.getView<AppCompatTextView>(R.id.tv_content)
+        val tvName = holder.getView<AppCompatTextView>(R.id.tv_name)
+        val tvPrice = holder.getView<AppCompatTextView>(R.id.tv_price)
+        val tvBalance = holder.getView<AppCompatTextView>(R.id.tv_balance)
+        val tvBalanceU = holder.getView<AppCompatTextView>(R.id.tv_balance_u)
         GlideUtils.loadImg(mContext, item.image_url, ivIcon)
         GlideUtils.loadImg(mContext, item.chain_image_url, ivCorner)
-        tvTitle.text = "${item.balance} ${item.symbol}"
-        tvContent.text = "$${item.balance_u}"
-        tvContent.visibility = if (item.balance_u.toDouble() > 0) View.VISIBLE else View.GONE
+        tvName.text = item.symbol
+        "$${item.token_value}".also { tvPrice.text = it }
+        tvBalance.text = item.balance.hideOrShowValue(isShowBalance)
+        "$${item.balance_u}".hideOrShowValue(isShowBalance).also { tvBalanceU.text = it }
     }
 }

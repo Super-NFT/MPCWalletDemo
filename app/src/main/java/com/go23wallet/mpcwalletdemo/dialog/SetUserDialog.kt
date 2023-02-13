@@ -1,10 +1,10 @@
 package com.go23wallet.mpcwalletdemo.dialog
 
 import android.content.Context
+import android.telephony.PhoneNumberUtils
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
-import android.text.method.DigitsKeyListener
 import android.view.View
 import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.RegexUtils
@@ -62,7 +62,7 @@ class SetUserDialog(val mContext: Context) : BaseDialogFragment<DialogSetUserLay
                 }
                 val isEnable = if (inputType == TYPE_EMAIL) {
                     RegexUtils.isEmail(inputValue)
-                } else inputValue.length > 5
+                } else PhoneNumberUtils.isGlobalPhoneNumber(inputValue) && inputValue.length > 5
                 viewBinding.tvErrorTips.visibility =
                     if (isEnable) View.INVISIBLE else View.VISIBLE
                 viewBinding.tvErrorTips.text =
@@ -109,8 +109,6 @@ class SetUserDialog(val mContext: Context) : BaseDialogFragment<DialogSetUserLay
             viewBinding.tvAreaCode.visibility = if (type == TYPE_EMAIL) View.GONE else View.VISIBLE
             if (RomUtils.isSamsung()) {
                 viewBinding.etSetEmailSms.inputType = InputType.TYPE_CLASS_TEXT
-                viewBinding.etSetEmailSms.keyListener =
-                    DigitsKeyListener.getInstance(if (type == TYPE_EMAIL) "" else "0123456789")
             } else {
                 viewBinding.etSetEmailSms.inputType =
                     if (type == TYPE_EMAIL) InputType.TYPE_CLASS_TEXT else InputType.TYPE_CLASS_NUMBER

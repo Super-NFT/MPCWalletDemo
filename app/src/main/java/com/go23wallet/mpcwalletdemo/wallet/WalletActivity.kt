@@ -27,6 +27,7 @@ import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.data.ChainTokenInfo
 import com.go23wallet.mpcwalletdemo.databinding.ActivityWalletBinding
 import com.go23wallet.mpcwalletdemo.dialog.*
+import com.go23wallet.mpcwalletdemo.ext.hideOrShowValue
 import com.go23wallet.mpcwalletdemo.ext.parseAddress
 import com.go23wallet.mpcwalletdemo.fragment.NFTFragment
 import com.go23wallet.mpcwalletdemo.fragment.TokenFragment
@@ -34,6 +35,7 @@ import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
 import com.go23wallet.mpcwalletdemo.utils.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.math.abs
 
 class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
@@ -47,6 +49,10 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     private var walletInfo: WalletInfo? = null
 
     private var accountStr = ""
+
+    private var balanceData: Balance? = null
+
+    private var isBalanceShow = true
 
     private val setUserDialog: SetUserDialog by lazy {
         SetUserDialog(this)
@@ -147,7 +153,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                         })
                                 return@let
                             }
-                            dismissProgress()
+                            showProgress()
                             Go23WalletManage.getInstance()
                                 .startReStore(
                                     this@WalletActivity,
@@ -178,6 +184,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                         }
 
                                         override fun emailVerifyFailed() {
+                                            dismissProgress()
                                             CustomToast.showShort(R.string.verify_code_fail)
                                             accountVerifyDialog.clearText()
                                         }
@@ -282,6 +289,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                     info.wallet_address,
                                     object : BaseCallBack<BalanceResponse> {
                                         override fun success(data: BalanceResponse?) {
+                                            balanceData = data?.data
                                             binding.tvTotalBalance.text =
                                                 "${data?.data?.balance ?: "0"} ${it.symbol}"
                                             binding.tvTotalBalanceValue.text =
@@ -456,6 +464,17 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     }
 
     private fun setListener() {
+        binding.appbarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+            binding.refreshView.isEnabled = verticalOffset >= 0
+            val color = if (abs(verticalOffset) >= appBarLayout.totalScrollRange) {
+                getColor(R.color.white)
+            } else {
+                getColor(R.color.color_FAFAFA)
+            }
+            binding.toolbar.setBackgroundColor(color)
+            binding.layoutInfo.setBackgroundColor(color)
+            window.statusBarColor = color
+        }
         UpdateDataLiveData.liveData.observe(this) {
             if (it == 2) {
                 binding.viewPager.currentItem = 1
@@ -479,6 +498,18 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             settingDialog.show(supportFragmentManager, "settingDialog")
             settingDialog.callback = {
                 toReshardingForPinCode()
+            }
+        }
+
+        binding.ivHideShow.setOnClickListener {
+            isBalanceShow = !isBalanceShow
+            binding.ivHideShow.setImageResource(if (isBalanceShow) R.drawable.icon_balance_show else R.drawable.icon_balance_hide)
+            binding.tvTotalBalance.text =
+                balanceData?.balance?.hideOrShowValue(isBalanceShow, userChain?.symbol)
+            binding.tvTotalBalanceValue.text =
+                balanceData?.balance_u?.hideOrShowValue(isBalanceShow)
+            if (fragments.size>0) {
+                (fragments[0] as TokenFragment).showOrHideBalance(isBalanceShow)
             }
         }
 

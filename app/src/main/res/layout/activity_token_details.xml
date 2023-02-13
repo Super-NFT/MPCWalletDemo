@@ -74,123 +74,130 @@
     <com.go23wallet.mpcwalletdemo.view.RefreshLayout
         android:id="@+id/refresh_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_chain_address">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_balance"
-                android:layout_width="wrap_content"
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appbar_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/barlowcondensed_medium"
-                android:letterSpacing="0.04"
-                android:textColor="@color/color_262626"
-                android:textSize="32sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="123" />
+                app:elevation="0dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/color_8C8C8C"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_balance"
-                tools:text="$123" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_FAFAFA"
+                    android:paddingBottom="12dp"
+                    app:layout_scrollFlags="scroll|enterAlways">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_receive"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="34dp"
-                android:layout_marginTop="25dp"
-                android:drawableTop="@drawable/icon_scan"
-                android:drawablePadding="6dp"
-                android:gravity="center"
-                android:text="@string/receive"
-                android:textColor="@color/color_8C8C8C"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@id/tv_send"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_value" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/barlowcondensed_medium"
+                        android:letterSpacing="0.04"
+                        android:textColor="@color/color_262626"
+                        android:textSize="32sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="123" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_send"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="34dp"
-                android:drawableTop="@drawable/icon_send"
-                android:drawablePadding="6dp"
-                android:gravity="center"
-                android:text="@string/send"
-                android:textColor="@color/color_8C8C8C"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_receive"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tv_receive"
-                app:layout_constraintTop_toTopOf="@id/tv_receive" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/color_8C8C8C"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_balance"
+                        tools:text="$123" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="@color/color_F5F5F5"
-                app:layout_constraintBottom_toBottomOf="@id/tab"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_receive"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="34dp"
+                        android:layout_marginTop="25dp"
+                        android:drawableTop="@drawable/icon_scan"
+                        android:drawablePadding="6dp"
+                        android:gravity="center"
+                        android:text="@string/receive"
+                        android:textColor="@color/color_8C8C8C"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toStartOf="@id/tv_send"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_value" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="13dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_receive"
-                app:tabBackground="@android:color/transparent"
-                app:tabIndicator="@drawable/shape_r4_bg"
-                app:tabIndicatorColor="@color/color_00D6E1"
-                app:tabIndicatorFullWidth="true"
-                app:tabIndicatorHeight="2dp"
-                app:tabRippleColor="@android:color/transparent"
-                app:tabSelectedTextColor="@color/color_00D6E1"
-                app:tabTextAppearance="@style/TabTextAppearance"
-                app:tabTextColor="@color/color_8C8C8C" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_send"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="34dp"
+                        android:drawableTop="@drawable/icon_send"
+                        android:drawablePadding="6dp"
+                        android:gravity="center"
+                        android:text="@string/send"
+                        android:textColor="@color/color_8C8C8C"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_receive"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_receive"
+                        app:layout_constraintTop_toTopOf="@id/tv_receive" />
 
-            <View
-                android:id="@+id/line"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="@color/color_F5F5F5"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tab" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_FAFAFA"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tab"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        app:tabBackground="@android:color/transparent"
+                        app:tabIndicator="@drawable/shape_r4_bg"
+                        app:tabIndicatorColor="@color/color_00D6E1"
+                        app:tabIndicatorFullWidth="true"
+                        app:tabIndicatorHeight="2dp"
+                        app:tabRippleColor="@android:color/transparent"
+                        app:tabSelectedTextColor="@color/color_00D6E1"
+                        app:tabTextAppearance="@style/TabTextAppearance"
+                        app:tabTextColor="@color/color_8C8C8C" />
+
+                    <View
+                        android:id="@+id/line"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/color_F5F5F5" />
+                </LinearLayout>
+
+            </com.google.android.material.appbar.AppBarLayout>
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/view_pager"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@color/white"
                 android:paddingStart="20dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/line" />
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </com.go23wallet.mpcwalletdemo.view.RefreshLayout>
 

@@ -29,14 +29,11 @@ class SendCoinResultDialog(
 
     override fun initViews(v: View?) {
         initData()
-        if (isSuccess) {
-            viewBinding.tvOk.visibility = View.GONE
-        } else {
+        if (!isSuccess) {
             viewBinding.ivStatus.setImageResource(R.drawable.icon_charge_failed)
-            viewBinding.tvOk.visibility = View.VISIBLE
-            viewBinding.tvConfirm.visibility = View.GONE
             viewBinding.tvDetails.visibility = View.GONE
             viewBinding.tvSuccessContent.visibility = View.GONE
+            viewBinding.tvStatus.text = getString(R.string.failed)
         }
 
         viewBinding.ivClose.setOnClickListener {
@@ -51,15 +48,14 @@ class SendCoinResultDialog(
 
         viewBinding.tvConfirm.setOnClickListener {
             dismissAllowingStateLoss()
-            mContext.finish()
-            if (isNft) {
-                UpdateDataLiveData.setUpdateType(2)
-            } else {
-                UpdateDataLiveData.setUpdateType(3)
+            if (isSuccess) {
+                mContext.finish()
+                if (isNft) {
+                    UpdateDataLiveData.setUpdateType(2)
+                } else {
+                    UpdateDataLiveData.setUpdateType(3)
+                }
             }
-        }
-        viewBinding.tvOk.setOnClickListener {
-            dismissAllowingStateLoss()
         }
     }
 

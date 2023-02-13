@@ -53,6 +53,10 @@ class TokenFragment : Fragment() {
             })
     }
 
+    fun showOrHideBalance(isShowBalance: Boolean) {
+        mAdapter?.setIsShowBalance(isShowBalance)
+    }
+
     private fun initView() {
         UpdateDataLiveData.liveData.observe(viewLifecycleOwner) {
             if (it == 1) {
