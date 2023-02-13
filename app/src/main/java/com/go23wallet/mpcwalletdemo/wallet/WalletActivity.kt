@@ -2,8 +2,8 @@ package com.go23wallet.mpcwalletdemo.wallet
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.viewbinding.ViewBinding
 import com.Go23WalletManage
 import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.SPUtils
@@ -24,6 +24,7 @@ import com.go23.enumclass.VerifyCodeType
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
+import com.go23wallet.mpcwalletdemo.base.BaseFragment
 import com.go23wallet.mpcwalletdemo.data.ChainTokenInfo
 import com.go23wallet.mpcwalletdemo.databinding.ActivityWalletBinding
 import com.go23wallet.mpcwalletdemo.dialog.*
@@ -40,7 +41,7 @@ import kotlin.math.abs
 class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
     private val tabList = mutableListOf<String>()
-    private val fragments = mutableListOf<Fragment>()
+    private val fragments = mutableListOf<BaseFragment<out ViewBinding>>()
     private var tabAdapter: TabFragmentAdapter? = null
 
     private var userChains: MutableList<UserChain>? = null
@@ -474,6 +475,14 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             binding.toolbar.setBackgroundColor(color)
             binding.layoutInfo.setBackgroundColor(color)
             window.statusBarColor = color
+            try {
+                val offset = appBarLayout.totalScrollRange - abs(verticalOffset)
+                fragments.forEach { fragment ->
+                    fragment.updateOffset(offset)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
         UpdateDataLiveData.liveData.observe(this) {
             if (it == 2) {
@@ -508,7 +517,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                 balanceData?.balance?.hideOrShowValue(isBalanceShow, userChain?.symbol)
             binding.tvTotalBalanceValue.text =
                 balanceData?.balance_u?.hideOrShowValue(isBalanceShow)
-            if (fragments.size>0) {
+            if (fragments.size > 0) {
                 (fragments[0] as TokenFragment).showOrHideBalance(isBalanceShow)
             }
         }

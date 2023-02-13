@@ -24,6 +24,18 @@ fun String.parseContractAddress(): String {
     return sb.toString()
 }
 
+fun String.checkNullOrZero(): String {
+    return try {
+        if (this.isNullOrEmpty() || this.toDouble() == 0.0) {
+            "0.00"
+        } else {
+            this
+        }
+    } catch (e: Exception) {
+        "0.00"
+    }
+}
+
 fun String.hideOrShowValue(isShow: Boolean, suffix: String? = null): String {
     if (StringUtils.isEmpty(this)) {
         return this

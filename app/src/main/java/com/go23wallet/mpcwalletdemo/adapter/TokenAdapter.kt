@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.go23.bean.token.Token
 import com.go23wallet.mpcwalletdemo.R
+import com.go23wallet.mpcwalletdemo.ext.checkNullOrZero
 import com.go23wallet.mpcwalletdemo.ext.hideOrShowValue
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 
@@ -32,7 +33,7 @@ class TokenAdapter(private val mContext: Context) :
         GlideUtils.loadImg(mContext, item.chain_image_url, ivCorner)
         tvName.text = item.symbol
         "$${item.token_value}".also { tvPrice.text = it }
-        tvBalance.text = item.balance.hideOrShowValue(isShowBalance)
-        "$${item.balance_u}".hideOrShowValue(isShowBalance).also { tvBalanceU.text = it }
+        tvBalance.text = item.balance.checkNullOrZero().hideOrShowValue(isShowBalance)
+        tvBalanceU.text = item.balance_u.checkNullOrZero().hideOrShowValue(isShowBalance)
     }
 }

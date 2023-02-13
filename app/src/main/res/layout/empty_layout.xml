@@ -19,7 +19,7 @@
         android:id="@+id/tv_tips"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="200dp"
         android:gravity="center"
         android:text="@string/empty_tips"
         android:textColor="@color/color_BFBFBF"
