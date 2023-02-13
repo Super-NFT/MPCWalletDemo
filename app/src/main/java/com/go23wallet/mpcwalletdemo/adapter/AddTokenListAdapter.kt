@@ -8,6 +8,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.go23.bean.token.Token
 import com.go23wallet.mpcwalletdemo.R
+import com.go23wallet.mpcwalletdemo.ext.parseAddress
+import com.go23wallet.mpcwalletdemo.ext.parseContractAddress
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 
 class AddTokenListAdapter(private val mContext: Context) :
@@ -16,16 +18,15 @@ class AddTokenListAdapter(private val mContext: Context) :
     override fun convert(holder: BaseViewHolder, item: Token) {
         val ivTokenIcon = holder.getView<AppCompatImageView>(R.id.iv_token_icon)
         val tvTokenName = holder.getView<AppCompatTextView>(R.id.tv_token_name)
-        val tvTokenNum = holder.getView<AppCompatTextView>(R.id.tv_token_num)
-        val tvTokenValue = holder.getView<AppCompatTextView>(R.id.tv_token_value)
+        val tvContractAddress = holder.getView<AppCompatTextView>(R.id.tv_contract_address)
+        val tvBalance = holder.getView<AppCompatTextView>(R.id.tv_balance)
+        val tvBalanceU = holder.getView<AppCompatTextView>(R.id.tv_balance_u)
         val ivStatus = holder.getView<AppCompatImageView>(R.id.iv_status)
         GlideUtils.loadImg(mContext, item.image_url, ivTokenIcon)
         tvTokenName.text = item.symbol
-//        tvTokenNum.visibility = if (item.balance.isNullOrEmpty()) View.GONE else View.VISIBLE
-//        tvTokenNum.text = item.balance
-//        tvTokenValue.visibility = if (item.balance_u.isNullOrEmpty()) View.GONE else View.VISIBLE
-//        tvTokenValue.text = "$${item.balance_u ?: 0.00}"
-        ivStatus.visibility = if (item.isIs_platform) View.GONE else View.VISIBLE
+        tvContractAddress.text = if (item.contract_address.isNullOrEmpty()) item.chain_name else item.contract_address.parseContractAddress()
+        tvBalance.text = item.balance
+        "$${item.balance_u ?: 0.00}".also { tvBalanceU.text = it }
         ivStatus.setImageResource(if (item.isIs_selected) R.drawable.icon_checked else R.drawable.icon_uncheck)
     }
 }

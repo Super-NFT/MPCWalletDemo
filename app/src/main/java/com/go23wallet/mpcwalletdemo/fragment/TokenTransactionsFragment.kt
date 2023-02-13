@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.Go23WalletManage
@@ -48,7 +49,10 @@ class TokenTransactionsFragment : Fragment() {
             }
             adapter = mAdapter
         }
-        mAdapter?.setEmptyView(R.layout.empty_layout)
+        val emptyLayout = LayoutInflater.from(context).inflate(R.layout.empty_layout, null, false)
+        emptyLayout.findViewById<AppCompatTextView>(R.id.tv_tips).text =
+            getString(R.string.empty_transaction_tips)
+        mAdapter?.setEmptyView(emptyLayout)
 
         mAdapter?.setOnItemClickListener { _, _, position ->
             val item = mAdapter?.getItem(position) ?: return@setOnItemClickListener

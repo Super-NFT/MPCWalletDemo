@@ -22,6 +22,7 @@ import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.math.abs
 
 class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
 
@@ -132,6 +133,9 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
     }
 
     private fun setListener() {
+        binding.appbarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+            binding.refreshView.isEnabled = verticalOffset >= 0
+        }
         binding.ivBack.setOnClickListener {
             finish()
         }

@@ -35,16 +35,19 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
     }
 
     private fun initData() {
+        showProgress()
         Go23WalletManage.getInstance().requestTokens(
             UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
             1, 20,
             object : BaseCallBack<TokenListResponse> {
                 override fun success(data: TokenListResponse?) {
+                    dismissProgress()
                     val list = data?.data?.list
                     mAdapter?.setNewInstance(list)
                 }
 
                 override fun failed() {
+                    dismissProgress()
                 }
             })
     }
