@@ -3,7 +3,6 @@ package com.go23wallet.mpcwalletdemo.adapter
 import androidx.appcompat.widget.AppCompatTextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.coins.app.bean.nft.Nft
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.data.CountryCodeInfo
 

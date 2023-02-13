@@ -5,7 +5,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.coins.app.bean.transaction.Transaction
+import com.go23.bean.transaction.Transaction
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.ext.parseAddress
 

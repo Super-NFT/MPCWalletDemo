@@ -4,13 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.Go23WalletManage
 import com.blankj.utilcode.util.ScreenUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
-import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletManage
-import com.coins.app.bean.token.Token
-import com.coins.app.bean.token.TokenListResponse
+import com.go23.bean.token.Token
+import com.go23.bean.token.TokenListResponse
+import com.go23.callback.BaseCallBack
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.SelectTokenAdapter
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment

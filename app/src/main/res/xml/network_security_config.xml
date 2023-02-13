@@ -3,7 +3,7 @@
     <domain-config>
         <domain includeSubdomains="true">api.go23.test.dbytothemoon.com</domain>
         <trust-anchors>
-<!--            <certificates src="@raw/ssl"/>-->
+            <certificates src="@raw/ssl"/>
         </trust-anchors>
     </domain-config>
 </network-security-config>

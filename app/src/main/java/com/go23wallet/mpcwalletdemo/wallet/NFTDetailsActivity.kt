@@ -3,13 +3,12 @@ package com.go23wallet.mpcwalletdemo.wallet
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletManage
-import com.coins.app.bean.nft.Nft
-import com.coins.app.bean.nft.NftResponse
+import com.Go23WalletManage
+import com.go23.bean.nft.Nft
+import com.go23.bean.nft.NftResponse
+import com.go23.callback.BaseCallBack
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.NFTAttributeAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
@@ -18,7 +17,6 @@ import com.go23wallet.mpcwalletdemo.ext.parseAddress
 import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
 import com.go23wallet.mpcwalletdemo.utils.CopyUtils
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
-import com.go23wallet.mpcwalletdemo.utils.TextEllipsizeSpanUtil
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 
 class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {

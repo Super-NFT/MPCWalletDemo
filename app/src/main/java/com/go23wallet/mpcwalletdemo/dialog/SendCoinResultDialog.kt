@@ -1,14 +1,13 @@
 package com.go23wallet.mpcwalletdemo.dialog
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.view.*
-import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletManage
-import com.coins.app.bean.transaction.TransactionDetailResponse
+import com.Go23WalletManage
+import com.go23.bean.transaction.TransactionDetailResponse
+import com.go23.callback.BaseCallBack
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogSendCoinResultLayoutBinding

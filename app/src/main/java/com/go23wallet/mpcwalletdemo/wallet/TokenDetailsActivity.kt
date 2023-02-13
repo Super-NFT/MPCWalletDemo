@@ -5,11 +5,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletManage
-import com.coins.app.bean.token.Token
-import com.coins.app.bean.token.TokenDetailResponse
-import com.coins.app.bean.token.TokenResponse
+import com.Go23WalletManage
+import com.go23.bean.token.Token
+import com.go23.bean.token.TokenResponse
+import com.go23.callback.BaseCallBack
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity

@@ -1,6 +1,6 @@
 package com.go23wallet.mpcwalletdemo.utils
 
-import com.coins.app.util.OkhttpUtil
+import com.go23.util.OkhttpUtil
 import com.go23wallet.mpcwalletdemo.data.CountryCodeResponse
 import com.google.gson.Gson
 import io.reactivex.Observable

@@ -6,12 +6,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.Go23WalletManage
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
-import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletManage
-import com.coins.app.bean.token.TokenListResponse
-import com.coins.app.bean.token.TokenResponse
+import com.go23.bean.token.TokenListResponse
+import com.go23.bean.token.TokenResponse
+import com.go23.callback.BaseCallBack
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.AddTokenListAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity

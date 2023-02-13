@@ -5,10 +5,10 @@ import android.text.TextWatcher
 import android.view.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
-import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletManage
-import com.coins.app.bean.nft.NftResponse
+import com.Go23WalletManage
 import com.coins.app.util.KeyboardUtils
+import com.go23.bean.nft.NftResponse
+import com.go23.callback.BaseCallBack
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogImportNftLayoutBinding
