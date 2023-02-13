@@ -1,6 +1,7 @@
 package com.go23wallet.mpcwalletdemo.ext
 
 import com.blankj.utilcode.util.StringUtils
+import org.web3j.abi.datatypes.Bool
 
 fun String.parseAddress(): String {
     if (StringUtils.isEmpty(this)) {
@@ -24,15 +25,15 @@ fun String.parseContractAddress(): String {
     return sb.toString()
 }
 
-fun String.checkNullOrZero(): String {
+fun String.checkNullOrZero(isU: Boolean = false): String {
     return try {
         if (this.isNullOrEmpty() || this.toDouble() == 0.0) {
-            "0.00"
+            if (isU) "$0.00" else "0.00"
         } else {
-            this
+            if (isU) "$${this}" else this
         }
     } catch (e: Exception) {
-        "0.00"
+        if (isU) "$0.00" else "0.00"
     }
 }
 
