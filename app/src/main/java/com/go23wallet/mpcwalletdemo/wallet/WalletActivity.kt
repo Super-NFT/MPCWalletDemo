@@ -16,6 +16,7 @@ import com.go23.bean.walletinfo.WalletInfo
 import com.go23.bean.walletinfo.WalletInfoResponse
 import com.go23.callback.EmailCallBack
 import com.go23.callback.Go23WalletCallBack
+import com.go23.callback.MerchantCodeCallBack
 import com.go23.callback.ReShardingCallBack
 import com.go23.callback.RestoreCallBack
 import com.go23.enumclass.OperationType
@@ -134,7 +135,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                             if (it.isEmpty()) {
                                 Go23WalletManage.getInstance()
                                     .verifyCode(if (RegexUtils.isEmail(accountStr)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
-                                        OperationType.RECOVER, object : EmailCallBack {
+                                        OperationType.RECOVER, object : MerchantCodeCallBack {
                                             override fun success() {
                                                 CustomToast.showShort(R.string.verify_code_sent)
                                             }
@@ -436,7 +437,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                     Go23WalletManage.getInstance()
                         .verifyCode(if (RegexUtils.isEmail(accountStr)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
                             OperationType.RECOVER,
-                            object : EmailCallBack {
+                            object : MerchantCodeCallBack {
                                 override fun success() {
                                     CustomToast.showShort(R.string.verify_code_sent)
                                 }
