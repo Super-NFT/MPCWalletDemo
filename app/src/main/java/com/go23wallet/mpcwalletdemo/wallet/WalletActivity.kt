@@ -10,11 +10,11 @@ import com.blankj.utilcode.util.SPUtils
 import com.go23.callback.BaseCallBack
 import com.go23.bean.chain.UserChain
 import com.go23.bean.chain.UserChainResponse
+import com.go23.bean.user.Balance
 import com.go23.bean.user.BalanceResponse
 import com.go23.bean.user.MerchantResponse
 import com.go23.bean.walletinfo.WalletInfo
 import com.go23.bean.walletinfo.WalletInfoResponse
-import com.go23.callback.EmailCallBack
 import com.go23.callback.Go23WalletCallBack
 import com.go23.callback.MerchantCodeCallBack
 import com.go23.callback.ReShardingCallBack
