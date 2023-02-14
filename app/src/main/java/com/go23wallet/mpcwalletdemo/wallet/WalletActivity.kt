@@ -7,6 +7,7 @@ import androidx.viewbinding.ViewBinding
 import com.Go23WalletManage
 import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.SPUtils
+import com.go23.bean.chain.DefaultUserChainResponse
 import com.go23.callback.BaseCallBack
 import com.go23.bean.chain.UserChain
 import com.go23.bean.chain.UserChainResponse
@@ -267,16 +268,11 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
     private fun loadData(info: WalletInfo) {
         Go23WalletManage.getInstance()
-            .requestUserChains(
+            .requestDefaultUserChain(
                 info.wallet_address,
-                1,
-                20,
-                object : BaseCallBack<UserChainResponse> {
-                    override fun success(data: UserChainResponse?) {
-                        userChains = data?.data?.list
-                        userChains?.find {
-                            it.isHas_default
-                        }?.let {
+                object : BaseCallBack<DefaultUserChainResponse> {
+                    override fun success(data: DefaultUserChainResponse?) {
+                        data?.data?.let {
                             userChain = it
                             UserWalletInfoManager.serUserChain(it)
                             binding.tvChainAddress.text = it.name
@@ -523,13 +519,9 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         }
 
         binding.tvChainAddress.setOnClickListener {
-            userChains?.let {
-                chooseMainnetDialog.apply {
-                    setChainList(it)
-                    show(supportFragmentManager, "chooseMainnetDialog")
-                }
+            chooseMainnetDialog.apply {
+                show(supportFragmentManager, "chooseMainnetDialog")
             }
-
         }
 
         chooseMainnetDialog.callback = {

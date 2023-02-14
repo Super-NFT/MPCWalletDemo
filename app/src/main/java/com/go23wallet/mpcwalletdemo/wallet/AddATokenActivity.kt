@@ -17,8 +17,10 @@ import com.go23wallet.mpcwalletdemo.adapter.AddTokenListAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivityAddATokenBinding
 import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
+import com.go23wallet.mpcwalletdemo.utils.Constant
 import com.go23wallet.mpcwalletdemo.utils.CustomToast
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
+import com.go23wallet.mpcwalletdemo.view.LoadMoreListener
 
 class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
 
@@ -27,6 +29,10 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
     override val layoutRes: Int = R.layout.activity_add_a_token
 
     private var hasChange = false
+
+    private var page = 1
+
+    private var listener: LoadMoreListener? = null
 
     override fun initViews(savedInstanceState: Bundle?) {
         initView()
@@ -38,12 +44,16 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
         showProgress()
         Go23WalletManage.getInstance().requestTokens(
             UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
-            1, 20,
+            page, Constant.PAGE_SIZE,
             object : BaseCallBack<TokenListResponse> {
                 override fun success(data: TokenListResponse?) {
-                    dismissProgress()
-                    val list = data?.data?.list
-                    mAdapter?.setNewInstance(list)
+                    listener?.setIsEnd(data?.data?.list?.isEmpty() ?: true)
+                    if (page == 1) {
+                        dismissProgress()
+                        mAdapter?.setNewInstance(data?.data?.list)
+                    } else {
+                        data?.data?.list?.let { mAdapter?.addData(it) }
+                    }
                 }
 
                 override fun failed() {
@@ -64,6 +74,15 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
     }
 
     private fun setListener() {
+        listener?.let { binding.recyclerView.removeOnScrollListener(it) }
+        listener = object : LoadMoreListener(binding.recyclerView.layoutManager) {
+            override fun onLoadMore() {
+                page++
+                initData()
+            }
+        }
+        binding.recyclerView.addOnScrollListener(listener as LoadMoreListener)
+
         mAdapter?.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
                 val item = mAdapter?.getItem(position) ?: return

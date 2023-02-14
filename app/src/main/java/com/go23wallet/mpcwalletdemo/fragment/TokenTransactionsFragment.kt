@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import com.Go23WalletManage
@@ -17,11 +16,16 @@ import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TokenTransactionsAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseFragment
 import com.go23wallet.mpcwalletdemo.databinding.FragmentTabLayoutBinding
+import com.go23wallet.mpcwalletdemo.utils.Constant
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
+import com.go23wallet.mpcwalletdemo.view.LoadMoreListener
 import com.go23wallet.mpcwalletdemo.wallet.ChargeDetailsActivity
 
 class TokenTransactionsFragment : BaseFragment<FragmentTabLayoutBinding>() {
 
+    private var page = 1
+
+    private var listener: LoadMoreListener? = null
 
     private var mAdapter: TokenTransactionsAdapter? = null
 
@@ -38,6 +42,7 @@ class TokenTransactionsFragment : BaseFragment<FragmentTabLayoutBinding>() {
     private var contractAddress: String = ""
 
     override fun initViews() {
+        page = 1
         transactionType = arguments?.getString("transactionType", "all") ?: "all"
         contractAddress = arguments?.getString("contract_address", "") ?: ""
         initView()
@@ -62,16 +67,35 @@ class TokenTransactionsFragment : BaseFragment<FragmentTabLayoutBinding>() {
             })
         }
 
+        listener?.let { binding.recyclerView.removeOnScrollListener(it) }
+        listener = object : LoadMoreListener(binding.recyclerView.layoutManager) {
+            override fun onLoadMore() {
+                page++
+                getData()
+            }
+        }
+        binding.recyclerView.addOnScrollListener(listener as LoadMoreListener)
+
+        getData()
+
+    }
+
+    fun getData() {
         Go23WalletManage.getInstance().requestTransactionRecords(
             transactionType,
             UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
             contractAddress,
             UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
-            1,
-            20,
+            page,
+            Constant.PAGE_SIZE,
             object : BaseCallBack<TransactionResponse> {
                 override fun success(data: TransactionResponse?) {
-                    mAdapter?.setNewInstance(data?.data?.list)
+                    listener?.setIsEnd(data?.data?.list?.isEmpty() ?: true)
+                    if (page == 1) {
+                        mAdapter?.setNewInstance(data?.data?.list)
+                    } else {
+                        data?.data?.list?.let { mAdapter?.addData(it) }
+                    }
                 }
 
                 override fun failed() {
@@ -81,9 +105,11 @@ class TokenTransactionsFragment : BaseFragment<FragmentTabLayoutBinding>() {
     }
 
     override fun updateOffset(offset: Int) {
-        val params = emptyView.layoutParams
-        params.height = binding.recyclerView.height - offset
-        emptyView.layoutParams = params
+        emptyView.post {
+            val params = emptyView.layoutParams
+            params.height = binding.recyclerView.height - offset
+            emptyView.layoutParams = params
+        }
     }
 
     companion object {
