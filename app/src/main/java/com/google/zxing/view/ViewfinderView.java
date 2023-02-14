@@ -170,11 +170,11 @@ public final class ViewfinderView extends View {
     paint.setColor(labelTextColor);
     paint.setTextSize(sp2px(getContext(), labelTextSize));
     paint.setTextAlign(Paint.Align.CENTER);
-    canvas.drawText(labelText, frame.left + frame.width() / 2, frame.bottom + CORNER_RECT_HEIGHT + 100, paint);
+    canvas.drawText(labelText, frame.left + frame.width() / 2, frame.bottom + CORNER_RECT_HEIGHT + 300, paint);
 
-    paint.setTextSize(sp2px(getContext(), 14));
-    paint.setTextAlign(Paint.Align.CENTER);
-    canvas.drawText("Transfer or Connect Wallet", frame.left + frame.width() / 2, frame.bottom + CORNER_RECT_HEIGHT + 180, paint);
+//    paint.setTextSize(sp2px(getContext(), 14));
+//    paint.setTextAlign(Paint.Align.CENTER);
+//    canvas.drawText("Transfer or Connect Wallet", frame.left + frame.width() / 2, frame.bottom + CORNER_RECT_HEIGHT + 180, paint);
 
   }
 

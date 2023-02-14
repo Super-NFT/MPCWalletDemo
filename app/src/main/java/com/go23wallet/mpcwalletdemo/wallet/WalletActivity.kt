@@ -445,7 +445,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                 if (it.isEmpty()) {
                     Go23WalletManage.getInstance()
                         .verifyCode(if (RegexUtils.isEmail(accountStr)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
-                            OperationType.RECOVER,
+                            OperationType.RESHADING,
                             object : MerchantCodeCallBack {
                                 override fun success() {
                                     CustomToast.showShort(R.string.verify_code_sent)
@@ -492,9 +492,9 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                 UpdateDataLiveData.clearType()
             }
         }
-        binding.ivBack.setOnClickListener {
-            finish()
-        }
+//        binding.ivBack.setOnClickListener {
+//            finish()
+//        }
         setUserDialog.callback = {
             accountStr = this
             SPUtils.getInstance().put("account", this)

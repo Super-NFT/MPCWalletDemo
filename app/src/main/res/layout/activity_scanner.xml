@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             app:corner_color="@color/transparent"
             app:frame_color="@color/transparent"
-            app:label_text="@string/scan_qrcode"
+            app:label_text="Transfer or Connect Wallet"
             app:label_text_color="@color/white"
             app:label_text_size="20"
             app:laser_color="@color/color_00D6E1"

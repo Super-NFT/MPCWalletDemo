@@ -5,6 +5,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 
+import com.go23wallet.mpcwalletdemo.R;
+
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class RefreshLayout extends SwipeRefreshLayout {
@@ -27,6 +29,7 @@ public class RefreshLayout extends SwipeRefreshLayout {
     private void init(Context context){
         //滑动最小距离
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+        setColorSchemeColors(context.getColor(R.color.color_00D6E1));
     }
 
     @Override
