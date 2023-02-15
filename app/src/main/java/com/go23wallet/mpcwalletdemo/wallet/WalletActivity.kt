@@ -2,11 +2,14 @@ package com.go23wallet.mpcwalletdemo.wallet
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.Go23WalletManage
 import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.go23.bean.chain.DefaultUserChainResponse
 import com.go23.callback.BaseCallBack
 import com.go23.bean.chain.UserChain
@@ -59,7 +62,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         SetUserDialog(this)
     }
 
-    private var chooseMainnetDialog: ChooseMainnetDialog ?= null
+    private var chooseMainnetDialog: ChooseMainnetDialog? = null
 
     private val accountVerifyDialog: AccountVerifyDialog by lazy {
         AccountVerifyDialog(this)
@@ -509,7 +512,14 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             binding.tvTotalBalance.text =
                 balanceData?.balance?.hideOrShowValue(isBalanceShow, userChain?.symbol)
             binding.tvTotalBalanceValue.text =
-                balanceData?.balance_u?.hideOrShowValue(isBalanceShow)
+                if (isBalanceShow)
+                    "$${balanceData?.balance_u?.hideOrShowValue(true)}"
+                else balanceData?.balance_u?.hideOrShowValue(false)
+
+            binding.tvTotalBalanceValue.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                topMargin = if (isBalanceShow) SizeUtils.dp2px(8f) else 0
+            }
+
             if (fragments.size > 0) {
                 (fragments[0] as TokenFragment).showOrHideBalance(isBalanceShow)
             }
