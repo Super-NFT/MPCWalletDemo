@@ -37,6 +37,7 @@ class ChooseMainnetDialog(private val mContext: Context) :
     }
 
     override fun initViews(v: View?) {
+        getData()
         viewBinding.ivClose.setOnClickListener {
             dismissAllowingStateLoss()
         }
