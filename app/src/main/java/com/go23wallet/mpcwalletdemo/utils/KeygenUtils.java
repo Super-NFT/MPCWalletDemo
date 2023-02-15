@@ -1,11 +1,11 @@
 package com.go23wallet.mpcwalletdemo.utils;
 
+import com.Go23WalletManage;
 import com.blankj.utilcode.util.SPUtils;
-import com.coins.app.BaseCallBack;
-import com.coins.app.Go23WalletManage;
-import com.coins.app.bean.user.MerchantResponse;
-import com.coins.app.bean.user.UserResponse;
-import com.coins.app.util.OkhttpUtil;
+import com.go23.callback.BaseCallBack;
+import com.go23.bean.user.MerchantResponse;
+import com.go23.bean.user.UserResponse;
+import com.go23.util.OkhttpUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -20,11 +20,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.go23wallet.mpcwalletdemo.utils.Constant.HOST;
+
 public class KeygenUtils {
 
     private static KeygenUtils utils;
-
-    public static final String HOST = "https://api.go23.test.dbytothemoon.com";
 
     private KeygenUtils() {
     }

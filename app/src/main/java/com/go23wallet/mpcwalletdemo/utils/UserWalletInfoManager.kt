@@ -1,7 +1,7 @@
 package com.go23wallet.mpcwalletdemo.utils
 
-import com.coins.app.bean.chain.UserChain
-import com.coins.app.bean.walletinfo.WalletInfo
+import com.go23.bean.chain.UserChain
+import com.go23.bean.walletinfo.WalletInfo
 import com.go23wallet.mpcwalletdemo.data.UserWalletInfo
 
 object UserWalletInfoManager {

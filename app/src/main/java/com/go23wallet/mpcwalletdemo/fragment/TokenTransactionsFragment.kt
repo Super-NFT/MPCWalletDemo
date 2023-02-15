@@ -5,38 +5,46 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.LinearLayout
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletManage
-import com.coins.app.bean.transaction.TransactionResponse
+import androidx.viewbinding.ViewBinding
+import com.Go23WalletManage
+import com.go23.bean.transaction.TransactionResponse
+import com.go23.callback.BaseCallBack
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TokenTransactionsAdapter
+import com.go23wallet.mpcwalletdemo.base.BaseFragment
 import com.go23wallet.mpcwalletdemo.databinding.FragmentTabLayoutBinding
+import com.go23wallet.mpcwalletdemo.utils.Constant
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
+import com.go23wallet.mpcwalletdemo.view.LoadMoreListener
 import com.go23wallet.mpcwalletdemo.wallet.ChargeDetailsActivity
 
-class TokenTransactionsFragment : Fragment() {
+class TokenTransactionsFragment : BaseFragment<FragmentTabLayoutBinding>() {
 
-    private lateinit var binding: FragmentTabLayoutBinding
+    private var page = 1
+
+    private var listener: LoadMoreListener? = null
 
     private var mAdapter: TokenTransactionsAdapter? = null
+
+    private val emptyView: View by lazy {
+        LayoutInflater.from(context).inflate(R.layout.empty_layout, null, false).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+        }
+    }
 
     private var transactionType: String = "all"
     private var contractAddress: String = ""
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun initViews() {
+        page = 1
         transactionType = arguments?.getString("transactionType", "all") ?: "all"
         contractAddress = arguments?.getString("contract_address", "") ?: ""
-        binding = FragmentTabLayoutBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         initView()
     }
 
@@ -48,7 +56,9 @@ class TokenTransactionsFragment : Fragment() {
             }
             adapter = mAdapter
         }
-        mAdapter?.setEmptyView(R.layout.empty_layout)
+        emptyView.findViewById<AppCompatTextView>(R.id.tv_tips).text =
+            getString(R.string.empty_transaction_tips)
+        mAdapter?.setEmptyView(emptyView)
 
         mAdapter?.setOnItemClickListener { _, _, position ->
             val item = mAdapter?.getItem(position) ?: return@setOnItemClickListener
@@ -57,16 +67,35 @@ class TokenTransactionsFragment : Fragment() {
             })
         }
 
+        listener?.let { binding.recyclerView.removeOnScrollListener(it) }
+        listener = object : LoadMoreListener(binding.recyclerView.layoutManager) {
+            override fun onLoadMore() {
+                page++
+                getData()
+            }
+        }
+        binding.recyclerView.addOnScrollListener(listener as LoadMoreListener)
+
+        getData()
+
+    }
+
+    fun getData() {
         Go23WalletManage.getInstance().requestTransactionRecords(
             transactionType,
             UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
             contractAddress,
             UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
-            1,
-            20,
+            page,
+            Constant.PAGE_SIZE,
             object : BaseCallBack<TransactionResponse> {
                 override fun success(data: TransactionResponse?) {
-                    mAdapter?.setNewInstance(data?.data?.list)
+                    listener?.setIsEnd(data?.data?.list?.isEmpty() ?: true)
+                    if (page == 1) {
+                        mAdapter?.setNewInstance(data?.data?.list)
+                    } else {
+                        data?.data?.list?.let { mAdapter?.addData(it) }
+                    }
                 }
 
                 override fun failed() {
@@ -75,8 +104,19 @@ class TokenTransactionsFragment : Fragment() {
             })
     }
 
+    override fun updateOffset(offset: Int) {
+        emptyView.post {
+            val params = emptyView.layoutParams
+            params.height = binding.recyclerView.height - offset
+            emptyView.layoutParams = params
+        }
+    }
+
     companion object {
-        fun newInstance(transactionType: String, contractAddress: String): Fragment {
+        fun newInstance(
+            transactionType: String,
+            contractAddress: String
+        ): BaseFragment<out ViewBinding> {
             val args = Bundle()
 
             val fragment = TokenTransactionsFragment()

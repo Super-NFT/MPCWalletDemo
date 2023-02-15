@@ -130,7 +130,6 @@ public class InputCodeView extends AppCompatEditText implements TextWatcher {
         mTextColor = typedArray.getColor(R.styleable.InputCodeView_tvTextColor, mTextColor);
         mBorderColor = typedArray.getColor(R.styleable.InputCodeView_tvBorderColor, mBorderColor);
         mFocusBorderColor = typedArray.getColor(R.styleable.InputCodeView_tvFocusBorderColor, mFocusBorderColor);
-        mFocusBorderColor = typedArray.getColor(R.styleable.InputCodeView_tvFocusBorderColor, mFocusBorderColor);
         mBgColor = typedArray.getColor(R.styleable.InputCodeView_tvBgColor, mBgColor);
         mStyle = typedArray.getInt(R.styleable.InputCodeView_tvStyle, mStyle);
 //        mSelect = typedArray.getResourceId(R.styleable.InputCodeView_tvCustomSelectIcon, mSelect);
@@ -236,7 +235,7 @@ public class InputCodeView extends AppCompatEditText implements TextWatcher {
             RectF rectF = new RectF(left + (tvWidthSize + intervalSize) * i,
                     bgCenterY - tvWidthSize / 2f, left + (tvWidthSize + intervalSize) * i + tvWidthSize, bgCenterY + tvWidthSize / 2f);
             if (mBgColor != -1) {
-                canvas.drawRect(rectF, bgPaint);
+                canvas.drawRoundRect(rectF, radius, radius, bgPaint);
             }
             canvas.drawRoundRect(rectF, radius, radius, paint);
 
@@ -527,6 +526,11 @@ public class InputCodeView extends AppCompatEditText implements TextWatcher {
 
         //未完成输入
         void inputCodeInput(String verificationCode);
+    }
+
+    public void setTextLen(int len) {
+        mTextLen = len;
+        invalidate();
     }
 
 

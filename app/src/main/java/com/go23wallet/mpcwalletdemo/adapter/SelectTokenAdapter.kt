@@ -5,7 +5,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.coins.app.bean.token.Token
+import com.go23.bean.token.Token
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 
@@ -23,7 +23,7 @@ class SelectTokenAdapter :
         tvName.text = item.symbol
         tvTokenNum.text = item.balance
         tvTokenValue.visibility =
-            if (item.balance_u.toDouble() > 0) View.VISIBLE else View.INVISIBLE
+            if (item.balance_u.toDouble() > 0) View.VISIBLE else View.GONE
         tvTokenValue.text = "$${item.balance_u}"
     }
 

@@ -5,15 +5,15 @@ import android.os.Bundle
 import android.text.*
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import com.Go23WalletManage
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
-import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletManage
-import com.coins.app.bean.Sign
-import com.coins.app.bean.transaction.PreTokenSend
-import com.coins.app.bean.transaction.PreTokenSendResponse
-import com.coins.app.entity.mpc.SignResponse
-import com.coins.app.util.MpcUtil
+import com.go23.bean.Sign
+import com.go23.bean.mpc.SignResponse
+import com.go23.bean.transaction.PreTokenSend
+import com.go23.bean.transaction.PreTokenSendResponse
+import com.go23.callback.BaseCallBack
+import com.go23.callback.Go23SignCallBack
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.data.ChainTokenInfo
@@ -308,7 +308,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
         sign.middleContractAddress =
             UserWalletInfoManager.getUserWalletInfo().userChain.middle_contract_address
         Go23WalletManage.getInstance()
-            .sign(this, supportFragmentManager, sign, object : MpcUtil.SignCallBack {
+            .sign(this, supportFragmentManager, sign, object : Go23SignCallBack {
                 override fun success(response: SignResponse?) {
                     dismissProgress()
                     if (response?.code.toString() == "0") {

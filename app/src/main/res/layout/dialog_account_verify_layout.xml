@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_top_r12_white"
+    android:paddingBottom="10dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:padding="10dp"
+        android:src="@drawable/icon_back"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/barlowcondensed_medium"
+        android:letterSpacing="0.04"
+        android:text="@string/verify_count"
+        android:textColor="@color/color_262626"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+<!--    <androidx.appcompat.widget.AppCompatTextView-->
+<!--        android:id="@+id/tv_email_title"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginTop="24dp"-->
+<!--        android:text="@string/email"-->
+<!--        android:textColor="@color/color_262626"-->
+<!--        android:textSize="16sp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tv_title" />-->
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_email_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
+        android:text="@string/verify_count"
+        android:textColor="@color/color_8C8C8C"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/barlowcondensed_medium"
+        android:letterSpacing="0.04"
+        android:textColor="@color/color_262626"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_email_content"
+        tools:text="12345@gmail.com" />
+
+    <com.go23wallet.mpcwalletdemo.view.InputCodeView
+        android:id="@+id/ll_verify"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_account"
+        app:tvBgColor="@color/color_F0F0F0"
+        app:tvBorderColor="@color/color_F0F0F0"
+        app:tvFocusBorderColor="@color/color_00D6E1"
+        app:tvIsCursor="true"
+        app:tvIsPwd="false"
+        app:tvLen="6"
+        app:tvMargin="8dp"
+        app:tvRadius="8dp"
+        app:tvStyle="defaultStyle"
+        app:tvTextColor="@color/color_262626"
+        app:tvTextSize="16sp"
+        app:tvWidth="42dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_send_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/send_email_code"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_verify" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_verify"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/shape_r8_00d6e1_bg"
+        android:fontFamily="@font/barlowcondensed_medium"
+        android:letterSpacing="0.04"
+        android:gravity="center"
+        android:text="@string/send"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_send_tips" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/has_send_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/has_send_email_tips"
+        android:textColor="@color/color_8C8C8C"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_verify" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_dont_receive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dont_receive"
+        android:textColor="@color/color_8C8C8C"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/tv_resend"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/has_send_tips" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_resend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:text="@string/resend"
+        android:textColor="@color/color_00D6E1"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/tv_dont_receive"
+        app:layout_constraintTop_toTopOf="@id/tv_dont_receive" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/bottomGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="has_send_tips,tv_dont_receive,tv_resend" />
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/progress"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="17dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="90dp"
+        android:indeterminateTint="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/tv_verify"
+        app:layout_constraintEnd_toEndOf="@id/tv_verify"
+        app:layout_constraintStart_toStartOf="@id/tv_verify"
+        app:layout_constraintTop_toTopOf="@id/tv_verify" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

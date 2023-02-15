@@ -23,6 +23,7 @@
     <string name="resharding">Reshard Private Key</string>
     <string name="recover_wallet">Recover Wallet</string>
     <string name="email">Email</string>
+    <string name="sms">SMS</string>
     <string name="pin_code">PIN code</string>
     <string name="pin_code_error">PIN code Error</string>
     <string name="verify_count">Verify your account</string>
@@ -31,9 +32,11 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="forget_psw">Forget Pincode</string>
-    <string name="send_code">Send verification email</string>
+    <string name="send_email_code">Send verification email</string>
+    <string name="send_sms_code">Send verification SMS</string>
     <string name="send_code_fail">Sending failed, please try again</string>
-    <string name="has_send_tips">Enter the 6-digit code sent to your email.</string>
+    <string name="has_send_email_tips">Enter the 6-digit code sent to your email.</string>
+    <string name="has_send_sms_tips">Enter the 6-digit code sent to your SMS.</string>
     <string name="sending">Sending， please wait</string>
     <string name="verifying">Verifying， please wait</string>
     <string name="verify_error">Verify code is error, please check it</string>
@@ -41,6 +44,8 @@
     <string name="dont_receive">Didn\'t receive it?</string>
     <string name="resend">Resend</string>
     <string name="login_in">Login in</string>
+    <string name="search_country">Search country</string>
+    <string name="default_country_code">+86</string>
     <string name="set_pin_code">Set Pincode</string>
     <string name="confirm_pin_code">Confirm Pincode</string>
     <string name="set_pin_code_tips">Please enter 8 characters including letters, numbers and special characters</string>
@@ -52,6 +57,7 @@
     <string name="send_error">Send error, please retry</string>
     <string name="verify_code">Verification code</string>
     <string name="email_input_error">Email input error</string>
+    <string name="sms_input_error">SMS input error</string>
     <string name="verify_code_sent">Verification code has been sent</string>
     <string name="verify_code_fail">Verification code error, please reenter</string>
 
@@ -101,6 +107,7 @@
     <string name="transaction_result">Transaction Result</string>
     <string name="go_it">GO it</string>
     <string name="album">Album</string>
+    <string name="qrcode">QR code</string>
     <string name="scan_qrcode">Scan QR-CODE</string>
     <string name="request_camera_permission_fail">Failed to obtain camera permission</string>
 
@@ -136,4 +143,5 @@
     <string name="remove_success">Remove Success</string>
 
     <string name="empty_tips">No Records</string>
+    <string name="empty_transaction_tips">No transaction records</string>
 </resources>

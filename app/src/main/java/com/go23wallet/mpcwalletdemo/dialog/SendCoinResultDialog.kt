@@ -1,14 +1,13 @@
 package com.go23wallet.mpcwalletdemo.dialog
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.view.*
-import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletManage
-import com.coins.app.bean.transaction.TransactionDetailResponse
+import com.Go23WalletManage
+import com.go23.bean.transaction.TransactionDetailResponse
+import com.go23.callback.BaseCallBack
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogSendCoinResultLayoutBinding
@@ -30,14 +29,11 @@ class SendCoinResultDialog(
 
     override fun initViews(v: View?) {
         initData()
-        if (isSuccess) {
-            viewBinding.tvOk.visibility = View.GONE
-        } else {
+        if (!isSuccess) {
             viewBinding.ivStatus.setImageResource(R.drawable.icon_charge_failed)
-            viewBinding.tvOk.visibility = View.VISIBLE
-            viewBinding.tvConfirm.visibility = View.GONE
             viewBinding.tvDetails.visibility = View.GONE
             viewBinding.tvSuccessContent.visibility = View.GONE
+            viewBinding.tvStatus.text = getString(R.string.failed)
         }
 
         viewBinding.ivClose.setOnClickListener {
@@ -52,15 +48,14 @@ class SendCoinResultDialog(
 
         viewBinding.tvConfirm.setOnClickListener {
             dismissAllowingStateLoss()
-            mContext.finish()
-            if (isNft) {
-                UpdateDataLiveData.setUpdateType(2)
-            } else {
-                UpdateDataLiveData.setUpdateType(3)
+            if (isSuccess) {
+                mContext.finish()
+                if (isNft) {
+                    UpdateDataLiveData.setUpdateType(2)
+                } else {
+                    UpdateDataLiveData.setUpdateType(3)
+                }
             }
-        }
-        viewBinding.tvOk.setOnClickListener {
-            dismissAllowingStateLoss()
         }
     }
 

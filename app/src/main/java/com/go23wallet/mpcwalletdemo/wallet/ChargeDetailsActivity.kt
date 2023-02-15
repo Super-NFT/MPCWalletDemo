@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletManage
-import com.coins.app.bean.transaction.TransactionDetail
-import com.coins.app.bean.transaction.TransactionDetailResponse
+import com.Go23WalletManage
+import com.go23.bean.transaction.TransactionDetail
+import com.go23.bean.transaction.TransactionDetailResponse
+import com.go23.callback.BaseCallBack
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivityChargeDetailsBinding

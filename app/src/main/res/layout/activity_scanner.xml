@@ -16,15 +16,15 @@
 
         <com.google.zxing.view.ViewfinderView
             android:id="@+id/viewfinder_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:corner_color="@color/color_00D6E1"
-            app:frame_color="@color/color_00D6E1_20"
-            app:label_text="@string/scan_qrcode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:corner_color="@color/transparent"
+            app:frame_color="@color/transparent"
+            app:label_text="Transfer or Connect Wallet"
             app:label_text_color="@color/white"
             app:label_text_size="20"
             app:laser_color="@color/color_00D6E1"
-            app:mask_color="@color/black_70" />
+            app:mask_color="@color/transparent" />
 
     </RelativeLayout>
 
@@ -55,7 +55,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/barlowcondensed_medium"
             android:letterSpacing="0.04"
-            android:text="@string/send"
+            android:text="@string/qrcode"
             android:textColor="@color/color_F5F5F5"
             android:textSize="20sp" />
 

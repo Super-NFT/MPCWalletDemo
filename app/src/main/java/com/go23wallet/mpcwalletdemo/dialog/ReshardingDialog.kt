@@ -16,8 +16,8 @@ class ReshardingDialog(mContext: Context) : BaseDialogFragment<DialogReshardingL
 
     private val mHandler: Handler = Handler(Looper.getMainLooper())
 
-    private val emailVerifyDialog: EmailVerifyDialog by lazy {
-        EmailVerifyDialog(mContext, 1)
+    private val accountVerifyDialog: AccountVerifyDialog by lazy {
+        AccountVerifyDialog(mContext, 1)
     }
 
     private val startReshardDialog: StartReshardDialog by lazy {
@@ -34,7 +34,7 @@ class ReshardingDialog(mContext: Context) : BaseDialogFragment<DialogReshardingL
             dismissAllowingStateLoss()
         }
         viewBinding.tvForget.setOnClickListener {
-            emailVerifyDialog.show(parentFragmentManager, "emailVerifyDialog")
+            accountVerifyDialog.show(parentFragmentManager, "emailVerifyDialog")
             dismissAllowingStateLoss()
         }
         viewBinding.tvVerify.setOnClickListener {

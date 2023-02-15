@@ -2,37 +2,30 @@ package com.go23wallet.mpcwalletdemo.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletManage
-import com.coins.app.bean.token.TokenListResponse
-import com.go23wallet.mpcwalletdemo.R
+import androidx.viewbinding.ViewBinding
+import com.Go23WalletManage
+import com.go23.callback.BaseCallBack
+import com.go23.bean.token.TokenListResponse
 import com.go23wallet.mpcwalletdemo.adapter.TokenAdapter
+import com.go23wallet.mpcwalletdemo.base.BaseFragment
 import com.go23wallet.mpcwalletdemo.databinding.FragmentTabLayoutBinding
 import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
+import com.go23wallet.mpcwalletdemo.utils.Constant
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
+import com.go23wallet.mpcwalletdemo.view.LoadMoreListener
 import com.go23wallet.mpcwalletdemo.wallet.TokenDetailsActivity
 
-class TokenFragment : Fragment() {
-
-    private lateinit var binding: FragmentTabLayoutBinding
+class TokenFragment : BaseFragment<FragmentTabLayoutBinding>() {
 
     private var mAdapter: TokenAdapter? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentTabLayoutBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    private var page = 1
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private var listener: LoadMoreListener? = null
+
+    override fun initViews() {
+        page = 1
         initView()
         initData()
     }
@@ -41,16 +34,25 @@ class TokenFragment : Fragment() {
         Go23WalletManage.getInstance().requestUserTokens(
             UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
             UserWalletInfoManager.getUserWalletInfo().userChain.chain_id,
-            1, 20,
+            page,
+            Constant.PAGE_SIZE,
             object : BaseCallBack<TokenListResponse> {
                 override fun success(data: TokenListResponse?) {
-                    val list = data?.data?.list
-                    mAdapter?.setNewInstance(list)
+                    listener?.setIsEnd(data?.data?.list?.isEmpty() ?: true)
+                    if (page == 1) {
+                        mAdapter?.setNewInstance(data?.data?.list)
+                    } else {
+                        data?.data?.list?.let { mAdapter?.addData(it) }
+                    }
                 }
 
                 override fun failed() {
                 }
             })
+    }
+
+    fun showOrHideBalance(isShowBalance: Boolean) {
+        mAdapter?.setIsShowBalance(isShowBalance)
     }
 
     private fun initView() {
@@ -66,13 +68,20 @@ class TokenFragment : Fragment() {
             }
             adapter = mAdapter
         }
-        mAdapter?.setEmptyView(R.layout.empty_layout)
         mAdapter?.setOnItemClickListener { _, _, position ->
             val itemData = mAdapter?.data?.get(position) ?: return@setOnItemClickListener
             startActivity(Intent(context, TokenDetailsActivity::class.java).apply {
                 putExtra("data", itemData)
             })
         }
+        listener?.let { binding.recyclerView.removeOnScrollListener(it) }
+        listener = object : LoadMoreListener(binding.recyclerView.layoutManager) {
+            override fun onLoadMore() {
+                page++
+                initData()
+            }
+        }
+        binding.recyclerView.addOnScrollListener(listener as LoadMoreListener)
     }
 
     override fun onDestroyView() {
@@ -81,7 +90,7 @@ class TokenFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(): Fragment {
+        fun newInstance(): BaseFragment<out ViewBinding> {
             val args = Bundle()
 
             val fragment = TokenFragment()
@@ -89,4 +98,6 @@ class TokenFragment : Fragment() {
             return fragment
         }
     }
+
+
 }
