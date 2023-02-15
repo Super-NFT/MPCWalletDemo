@@ -25,6 +25,8 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
 
     private var details: TransactionDetail? = null
 
+    private var isFirstRequest = true
+
     private val mHandler = Handler(Looper.getMainLooper())
 
     override fun initViews(savedInstanceState: Bundle?) {
@@ -40,7 +42,12 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
             object : BaseCallBack<TransactionDetailResponse> {
                 override fun success(data: TransactionDetailResponse?) {
                     details = data?.data
-                    initView()
+                    if (isFirstRequest) {
+                        isFirstRequest = false
+                        initView()
+                    } else {
+                        updateStatus()
+                    }
                 }
 
                 override fun failed() {
@@ -66,21 +73,7 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
                 binding.nftView.visibility = View.GONE
                 binding.tvAmountValue.text = "${it.amount} ${it.symbol}"
             }
-            when (it.status) {
-                1 -> {
-                    binding.ivChargeType.setImageResource(R.drawable.icon_charge_processing)
-                    binding.tvType.text = getString(R.string.processing)
-                    mHandler.postDelayed(runnable, 3 * 1000)
-                }
-                2 -> {
-                    binding.ivChargeType.setImageResource(R.drawable.icon_charge_success)
-                    binding.tvType.text = getString(R.string.successful)
-                }
-                else -> {
-                    binding.ivChargeType.setImageResource(R.drawable.icon_charge_failed)
-                    binding.tvType.text = getString(R.string.failed)
-                }
-            }
+            updateStatus()
             if (it.lending_gas_fee.isNullOrEmpty() || it.lending_gas_fee == "0") {
                 binding.vLending.visibility = View.GONE
                 binding.tvLending.visibility = View.GONE
@@ -113,6 +106,26 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
             )
             binding.tvNetworkContent.text = it.network
             binding.tvGasValue.text = "${it.gas_fee} ${it.gas_symbol}"
+        }
+    }
+
+    fun updateStatus() {
+        details?.let {
+            when (it.status) {
+                1 -> {
+                    binding.ivChargeType.setImageResource(R.drawable.icon_charge_processing)
+                    binding.tvType.text = getString(R.string.processing)
+                    mHandler.postDelayed(runnable, 3 * 1000)
+                }
+                2 -> {
+                    binding.ivChargeType.setImageResource(R.drawable.icon_charge_success)
+                    binding.tvType.text = getString(R.string.successful)
+                }
+                else -> {
+                    binding.ivChargeType.setImageResource(R.drawable.icon_charge_failed)
+                    binding.tvType.text = getString(R.string.failed)
+                }
+            }
         }
     }
 
