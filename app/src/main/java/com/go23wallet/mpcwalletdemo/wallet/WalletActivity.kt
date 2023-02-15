@@ -45,7 +45,6 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     private val fragments = mutableListOf<BaseFragment<out ViewBinding>>()
     private var tabAdapter: TabFragmentAdapter? = null
 
-    private var userChains: MutableList<UserChain>? = null
     private var userChain: UserChain? = null
 
     private var walletInfo: WalletInfo? = null
