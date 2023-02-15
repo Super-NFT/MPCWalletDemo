@@ -60,9 +60,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         SetUserDialog(this)
     }
 
-    private val chooseMainnetDialog: ChooseMainnetDialog by lazy {
-        ChooseMainnetDialog(this)
-    }
+    private var chooseMainnetDialog: ChooseMainnetDialog ?= null
 
     private val accountVerifyDialog: AccountVerifyDialog by lazy {
         AccountVerifyDialog(this)
@@ -519,18 +517,18 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         }
 
         binding.tvChainAddress.setOnClickListener {
-            chooseMainnetDialog.apply {
+            chooseMainnetDialog = ChooseMainnetDialog(this).apply {
                 show(supportFragmentManager, "chooseMainnetDialog")
-            }
-        }
+                callback = {
+                    userChain = it
+                    GlideUtils.loadImg(this@WalletActivity, it.image_url, binding.ivChainIcon)
+                    binding.tvChainAddress.text = it.name
+                    UserWalletInfoManager.serUserChain(it)
+                    walletInfo?.let { it1 -> loadData(it1) }
+                    tabAdapter?.notifyDataSetChanged()
+                }
 
-        chooseMainnetDialog.callback = {
-            userChain = it
-            GlideUtils.loadImg(this, it.image_url, binding.ivChainIcon)
-            binding.tvChainAddress.text = it.name
-            UserWalletInfoManager.serUserChain(it)
-            walletInfo?.let { it1 -> loadData(it1) }
-            tabAdapter?.notifyDataSetChanged()
+            }
         }
 
         binding.tvAddress.setOnClickListener {
