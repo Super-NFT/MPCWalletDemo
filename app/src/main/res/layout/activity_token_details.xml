@@ -174,7 +174,7 @@
                         app:tabIndicatorHeight="2dp"
                         app:tabRippleColor="@android:color/transparent"
                         app:tabSelectedTextColor="@color/color_00D6E1"
-                        app:tabTextAppearance="@style/TabTextAppearance"
+                        app:tabTextAppearance="@style/WalletTabTextAppearance"
                         app:tabTextColor="@color/color_8C8C8C" />
 
                     <View

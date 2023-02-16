@@ -11,7 +11,11 @@ class StartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
         findViewById<TextView>(R.id.btn).setOnClickListener {
-            startActivity(Intent(this, WalletActivity::class.java))
+            startActivity(Intent(this, WalletActivity::class.java).apply {
+                putExtra("uniqueId", "")
+                putExtra("email", "")
+                putExtra("phone", "")
+            })
         }
     }
 }
