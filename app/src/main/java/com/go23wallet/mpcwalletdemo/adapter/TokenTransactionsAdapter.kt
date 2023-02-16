@@ -5,7 +5,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.coins.app.bean.transaction.Transaction
+import com.go23.bean.transaction.Transaction
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.ext.parseAddress
 
@@ -24,7 +24,7 @@ class TokenTransactionsAdapter :
         } else {
             item.value
         }
-        tvBalance.setTextColor(context.getColor(R.color.color_D83548))
+        tvBalance.setTextColor(context.getColor(R.color.color_262626))
         tvBalance.text = "-${valueStr}${item.symbol}"
         tvValue.visibility =
             if (item.balance_u.toDouble() > 0) View.VISIBLE else View.INVISIBLE

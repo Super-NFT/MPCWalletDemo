@@ -92,7 +92,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="8dp"
                 android:gravity="end"
-                android:text="@string/coin_mark"
+                android:text="@string/change_asset"
                 android:textColor="@color/color_00D6E1"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/v_coin_type"

@@ -17,7 +17,7 @@ object TextEllipsizeSpanUtil {
         view.highlightColor = ContextCompat.getColor(context, android.R.color.transparent);
         view.movementMethod = LinkMovementMethod.getInstance()
         view.post { //获取第一行的宽度
-            val lineWidth: Float = view.layout.getLineWidth(0)
+            val lineWidth: Float = view.layout?.getLineWidth(0) ?: return@post
             //获取第一行最后一个字符的下标
             val lineEnd: Int = view.layout.getLineEnd(0)
             //计算每个字符占的宽度

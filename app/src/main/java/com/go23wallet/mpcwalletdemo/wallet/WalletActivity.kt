@@ -2,27 +2,37 @@ package com.go23wallet.mpcwalletdemo.wallet
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.lifecycleScope
+import androidx.viewbinding.ViewBinding
+import com.Go23WalletManage
+import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.SPUtils
-import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletCallBack
-import com.coins.app.Go23WalletManage
-import com.coins.app.bean.chain.UserChain
-import com.coins.app.bean.chain.UserChainResponse
-import com.coins.app.bean.user.BalanceResponse
-import com.coins.app.bean.user.MerchantResponse
-import com.coins.app.bean.walletinfo.WalletInfo
-import com.coins.app.bean.walletinfo.WalletInfoResponse
-import com.coins.app.callback.EmailCallBack
-import com.coins.app.callback.ReShardingCallBack
-import com.coins.app.callback.RestoreCallBack
+import com.blankj.utilcode.util.SizeUtils
+import com.go23.bean.chain.DefaultUserChainResponse
+import com.go23.callback.BaseCallBack
+import com.go23.bean.chain.UserChain
+import com.go23.bean.chain.UserChainResponse
+import com.go23.bean.user.Balance
+import com.go23.bean.user.BalanceResponse
+import com.go23.bean.user.MerchantResponse
+import com.go23.bean.walletinfo.WalletInfo
+import com.go23.bean.walletinfo.WalletInfoResponse
+import com.go23.callback.Go23WalletCallBack
+import com.go23.callback.MerchantCodeCallBack
+import com.go23.callback.ReShardingCallBack
+import com.go23.callback.RestoreCallBack
+import com.go23.enumclass.OperationType
+import com.go23.enumclass.VerifyCodeType
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.adapter.TabFragmentAdapter
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
+import com.go23wallet.mpcwalletdemo.base.BaseFragment
 import com.go23wallet.mpcwalletdemo.data.ChainTokenInfo
 import com.go23wallet.mpcwalletdemo.databinding.ActivityWalletBinding
 import com.go23wallet.mpcwalletdemo.dialog.*
+import com.go23wallet.mpcwalletdemo.ext.hideOrShowValue
 import com.go23wallet.mpcwalletdemo.ext.parseAddress
 import com.go23wallet.mpcwalletdemo.fragment.NFTFragment
 import com.go23wallet.mpcwalletdemo.fragment.TokenFragment
@@ -30,30 +40,32 @@ import com.go23wallet.mpcwalletdemo.livedata.UpdateDataLiveData
 import com.go23wallet.mpcwalletdemo.utils.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.math.abs
 
 class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
     private val tabList = mutableListOf<String>()
-    private val fragments = mutableListOf<Fragment>()
+    private val fragments = mutableListOf<BaseFragment<out ViewBinding>>()
     private var tabAdapter: TabFragmentAdapter? = null
 
-    private var userChains: MutableList<UserChain>? = null
     private var userChain: UserChain? = null
 
     private var walletInfo: WalletInfo? = null
 
-    private var emailStr = ""
+    private var accountStr = ""
+
+    private var balanceData: Balance? = null
+
+    private var isBalanceShow = true
 
     private val setUserDialog: SetUserDialog by lazy {
         SetUserDialog(this)
     }
 
-    private val chooseMainnetDialog: ChooseMainnetDialog by lazy {
-        ChooseMainnetDialog(this)
-    }
+    private var chooseMainnetDialog: ChooseMainnetDialog? = null
 
-    private val emailVerifyDialog: EmailVerifyDialog by lazy {
-        EmailVerifyDialog(this)
+    private val accountVerifyDialog: AccountVerifyDialog by lazy {
+        AccountVerifyDialog(this)
     }
 
     private val settingDialog by lazy {
@@ -73,10 +85,10 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     override val layoutRes: Int = R.layout.activity_wallet
 
     override fun initViews(savedInstanceState: Bundle?) {
-        emailStr = SPUtils.getInstance().getString("email")
+        accountStr = SPUtils.getInstance().getString("account")
         showProgress()
         setListener()
-        if (emailStr.isNullOrEmpty()) {
+        if (accountStr.isNullOrEmpty()) {
             setUserDialog.show(supportFragmentManager, "setUserDialog")
         } else {
             initUserInfo()
@@ -84,7 +96,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     }
 
     private fun initUserInfo() {
-        binding.tvEmail.text = emailStr
+        binding.tvEmail.text = accountStr
 
         GlideUtils.loadImg(
             this@WalletActivity,
@@ -107,31 +119,48 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     }
 
     private fun initData() {
-        Go23WalletManage.getInstance().setUniqueId(emailStr).setEmail(emailStr)
+        if (RegexUtils.isEmail(accountStr)) {
+            Go23WalletManage.getInstance().email = accountStr
+        } else {
+            val dialCode: String
+            val phone: String
+            if (accountStr.contains(" ")) {
+                dialCode = accountStr.split(" ")[0]
+                phone = accountStr.split(" ")[1]
+            } else {
+                dialCode = "+86"
+                phone = accountStr
+            }
+            Go23WalletManage.getInstance().setPhoneAndDialCode(phone, dialCode)
+        }
+        Go23WalletManage.getInstance().setUniqueId(accountStr)
             .start(this@WalletActivity, object : Go23WalletCallBack {
                 override fun reStore(p0: MutableList<WalletInfo>?) {
-                    emailVerifyDialog.setDialogType(1)
-                    emailVerifyDialog.show(supportFragmentManager, "")
-                    emailVerifyDialog.callback = {
+                    accountVerifyDialog.setDialogType(1)
+                    accountVerifyDialog.show(supportFragmentManager, "")
+                    accountVerifyDialog.callback = {
                         it?.let {
                             if (it.isEmpty()) {
-                                Go23WalletManage.getInstance().verifyEmailCode(1,object :EmailCallBack{
-                                    override fun success() {
-                                        CustomToast.showShort(R.string.verify_code_sent)
-                                    }
+                                Go23WalletManage.getInstance()
+                                    .verifyCode(if (RegexUtils.isEmail(accountStr)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
+                                        OperationType.RECOVER, object : MerchantCodeCallBack {
+                                            override fun success() {
+                                                CustomToast.showShort(R.string.verify_code_sent)
+                                            }
 
-                                    override fun failed() {
-                                        CustomToast.showShort(R.string.send_code_fail)
-                                    }
+                                            override fun failed() {
+                                                CustomToast.showShort(R.string.send_code_fail)
+                                            }
 
-                                })
+                                        })
                                 return@let
                             }
-                            dismissProgress()
+                            showProgress()
                             Go23WalletManage.getInstance()
                                 .startReStore(
                                     this@WalletActivity,
                                     it,
+                                    if (RegexUtils.isEmail(accountStr)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
                                     object : RestoreCallBack {
                                         override fun success() {
                                             successDialog.show(
@@ -141,8 +170,8 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                         }
 
                                         override fun failed() {
-                                            emailVerifyDialog.setDialogType(1)
-                                            emailVerifyDialog.show(
+                                            accountVerifyDialog.setDialogType(1)
+                                            accountVerifyDialog.show(
                                                 supportFragmentManager,
                                                 ""
                                             )
@@ -157,13 +186,14 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                         }
 
                                         override fun emailVerifyFailed() {
+                                            dismissProgress()
                                             CustomToast.showShort(R.string.verify_code_fail)
-                                            emailVerifyDialog.clearText()
+                                            accountVerifyDialog.clearText()
                                         }
 
                                         override fun emailVerifySuccess() {
                                             dismissProgress()
-                                            emailVerifyDialog.dismissAllowingStateLoss()
+                                            accountVerifyDialog.dismissAllowingStateLoss()
                                         }
                                     })
                         } ?: kotlin.run {
@@ -238,16 +268,11 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
     private fun loadData(info: WalletInfo) {
         Go23WalletManage.getInstance()
-            .requestUserChains(
+            .requestDefaultUserChain(
                 info.wallet_address,
-                1,
-                20,
-                object : BaseCallBack<UserChainResponse> {
-                    override fun success(data: UserChainResponse?) {
-                        userChains = data?.data?.list
-                        userChains?.find {
-                            it.isHas_default
-                        }?.let {
+                object : BaseCallBack<DefaultUserChainResponse> {
+                    override fun success(data: DefaultUserChainResponse?) {
+                        data?.data?.let {
                             userChain = it
                             UserWalletInfoManager.serUserChain(it)
                             binding.tvChainAddress.text = it.name
@@ -261,6 +286,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                     info.wallet_address,
                                     object : BaseCallBack<BalanceResponse> {
                                         override fun success(data: BalanceResponse?) {
+                                            balanceData = data?.data
                                             binding.tvTotalBalance.text =
                                                 "${data?.data?.balance ?: "0"} ${it.symbol}"
                                             binding.tvTotalBalanceValue.text =
@@ -316,12 +342,12 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                 override fun emailVerifyFailed() {
                                     dismissProgress()
                                     CustomToast.showShort(R.string.verify_code_fail)
-                                    emailVerifyDialog.clearText()
+                                    accountVerifyDialog.clearText()
                                 }
 
                                 override fun emailVerifySuccess() {
                                     showProgress()
-                                    emailVerifyDialog.dismissAllowingStateLoss()
+                                    accountVerifyDialog.dismissAllowingStateLoss()
                                 }
 
                                 override fun dismiss() {
@@ -346,15 +372,16 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             object : BaseCallBack<MerchantResponse> {
                 override fun success(data: MerchantResponse?) {
                     data?.data?.let { key ->
-                        Go23WalletManage.getInstance().startReShardingForEmail(
+                        Go23WalletManage.getInstance().startReSharding(
                             this@WalletActivity,
                             key.keygen,
                             Go23WalletManage.getInstance().walletAddress,
                             code,
+                            if (RegexUtils.isEmail(accountStr)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
                             object : ReShardingCallBack {
 
                                 override fun success(key3: String?) {
-                                    emailVerifyDialog.dismissAllowingStateLoss()
+                                    accountVerifyDialog.dismissAllowingStateLoss()
                                     //update key
                                     KeygenUtils.getInstance().updateMerchantKey(
                                         Go23WalletManage.getInstance().walletAddress,
@@ -379,14 +406,14 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                 override fun emailVerifyFailed() {
                                     dismissProgress()
                                     CustomToast.showShort(R.string.verify_code_fail)
-                                    emailVerifyDialog.clearText()
+                                    accountVerifyDialog.clearText()
                                 }
 
                                 override fun emailVerifySuccess() {
                                     if (walletInfo == null) {
                                         showProgress()
                                     }
-                                    emailVerifyDialog.dismissAllowingStateLoss()
+                                    accountVerifyDialog.dismissAllowingStateLoss()
                                 }
 
                                 override fun dismiss() {
@@ -407,21 +434,24 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
     private fun toReSharding() {
         showProgress()
-        emailVerifyDialog.setDialogType(0)
-        emailVerifyDialog.show(supportFragmentManager, "emailVerifyDialog")
-        emailVerifyDialog.callback = {
+        accountVerifyDialog.setDialogType(0)
+        accountVerifyDialog.show(supportFragmentManager, "emailVerifyDialog")
+        accountVerifyDialog.callback = {
             it?.let {
                 if (it.isEmpty()) {
-                    Go23WalletManage.getInstance().verifyEmailCode(0,object :EmailCallBack{
-                        override fun success() {
-                            CustomToast.showShort(R.string.verify_code_sent)
-                        }
+                    Go23WalletManage.getInstance()
+                        .verifyCode(if (RegexUtils.isEmail(accountStr)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
+                            OperationType.RESHADING,
+                            object : MerchantCodeCallBack {
+                                override fun success() {
+                                    CustomToast.showShort(R.string.verify_code_sent)
+                                }
 
-                        override fun failed() {
-                            CustomToast.showShort(R.string.send_code_fail)
-                        }
+                                override fun failed() {
+                                    CustomToast.showShort(R.string.send_code_fail)
+                                }
 
-                    })
+                            })
                     return@let
                 } else {
                     toReshardingForEmail(it)
@@ -431,6 +461,25 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
     }
 
     private fun setListener() {
+        binding.appbarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+            binding.refreshView.isEnabled = verticalOffset >= 0
+            val color = if (abs(verticalOffset) >= appBarLayout.totalScrollRange) {
+                getColor(R.color.white)
+            } else {
+                getColor(R.color.color_FAFAFA)
+            }
+            binding.toolbar.setBackgroundColor(color)
+            binding.layoutInfo.setBackgroundColor(color)
+            window.statusBarColor = color
+            try {
+                val offset = appBarLayout.totalScrollRange - abs(verticalOffset)
+                fragments.forEach { fragment ->
+                    fragment.updateOffset(offset)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
         UpdateDataLiveData.liveData.observe(this) {
             if (it == 2) {
                 binding.viewPager.currentItem = 1
@@ -439,12 +488,12 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                 UpdateDataLiveData.clearType()
             }
         }
-        binding.ivBack.setOnClickListener {
-            finish()
-        }
+//        binding.ivBack.setOnClickListener {
+//            finish()
+//        }
         setUserDialog.callback = {
-            emailStr = this
-            SPUtils.getInstance().put("email", this)
+            accountStr = this
+            SPUtils.getInstance().put("account", this)
             initUserInfo()
         }
         successDialog.callback = {
@@ -457,23 +506,38 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             }
         }
 
-        binding.tvChainAddress.setOnClickListener {
-            userChains?.let {
-                chooseMainnetDialog.apply {
-                    setChainList(it)
-                    show(supportFragmentManager, "chooseMainnetDialog")
-                }
+        binding.ivHideShow.setOnClickListener {
+            isBalanceShow = !isBalanceShow
+            binding.ivHideShow.setImageResource(if (isBalanceShow) R.drawable.icon_balance_show else R.drawable.icon_balance_hide)
+            binding.tvTotalBalance.text =
+                balanceData?.balance?.hideOrShowValue(isBalanceShow, userChain?.symbol)
+            binding.tvTotalBalanceValue.text =
+                if (isBalanceShow)
+                    "$${balanceData?.balance_u?.hideOrShowValue(true)}"
+                else balanceData?.balance_u?.hideOrShowValue(false)
+
+            binding.tvTotalBalanceValue.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                topMargin = if (isBalanceShow) SizeUtils.dp2px(8f) else 0
             }
 
+            if (fragments.size > 0) {
+                (fragments[0] as TokenFragment).showOrHideBalance(isBalanceShow)
+            }
         }
 
-        chooseMainnetDialog.callback = {
-            userChain = it
-            GlideUtils.loadImg(this, it.image_url, binding.ivChainIcon)
-            binding.tvChainAddress.text = it.name
-            UserWalletInfoManager.serUserChain(it)
-            walletInfo?.let { it1 -> loadData(it1) }
-            tabAdapter?.notifyDataSetChanged()
+        binding.tvChainAddress.setOnClickListener {
+            chooseMainnetDialog = ChooseMainnetDialog(this).apply {
+                show(supportFragmentManager, "chooseMainnetDialog")
+                callback = {
+                    userChain = it
+                    GlideUtils.loadImg(this@WalletActivity, it.image_url, binding.ivChainIcon)
+                    binding.tvChainAddress.text = it.name
+                    UserWalletInfoManager.serUserChain(it)
+                    walletInfo?.let { it1 -> loadData(it1) }
+                    tabAdapter?.notifyDataSetChanged()
+                }
+
+            }
         }
 
         binding.tvAddress.setOnClickListener {

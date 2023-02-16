@@ -4,14 +4,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewbinding.ViewBinding
+import com.go23wallet.mpcwalletdemo.base.BaseFragment
 
 
 class TabFragmentAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
-    private var fragments = mutableListOf<Fragment>()
+    private var fragments = mutableListOf<BaseFragment<out ViewBinding>>()
     private var titles = mutableListOf<String>()
 
-    fun setList(fragments: MutableList<Fragment>, titles: MutableList<String>) {
+    fun setList(
+        fragments: MutableList<BaseFragment<out ViewBinding>>,
+        titles: MutableList<String>
+    ) {
         this.fragments = fragments
         this.titles = titles
     }
@@ -20,7 +25,7 @@ class TabFragmentAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         return fragments.size
     }
 
-    override fun getItem(position: Int): Fragment {
+    override fun getItem(position: Int): BaseFragment<out ViewBinding> {
         return fragments[position]
     }
 

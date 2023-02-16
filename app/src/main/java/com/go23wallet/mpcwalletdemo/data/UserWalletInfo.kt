@@ -1,8 +1,8 @@
 package com.go23wallet.mpcwalletdemo.data
 
 import androidx.annotation.Keep
-import com.coins.app.bean.chain.UserChain
-import com.coins.app.bean.walletinfo.WalletInfo
+import com.go23.bean.chain.UserChain
+import com.go23.bean.walletinfo.WalletInfo
 
 @Keep
 data class UserWalletInfo(

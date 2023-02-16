@@ -90,7 +90,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/shape_r8_f5_border_d9_bg"
-                android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 android:hint="@string/quantity_hint"
                 android:inputType="number"
                 android:minHeight="48dp"

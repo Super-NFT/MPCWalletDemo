@@ -6,17 +6,17 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import com.Go23WalletManage
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
-import com.coins.app.BaseCallBack
-import com.coins.app.Go23WalletManage
-import com.coins.app.bean.Sign
-import com.coins.app.bean.nft.Nft
-import com.coins.app.bean.token.TokenResponse
-import com.coins.app.bean.transaction.PreNFTSend
-import com.coins.app.bean.transaction.PreNFTSendResponse
-import com.coins.app.entity.mpc.SignResponse
-import com.coins.app.util.MpcUtil
+import com.go23.callback.BaseCallBack
+import com.go23.bean.Sign
+import com.go23.bean.mpc.SignResponse
+import com.go23.bean.nft.Nft
+import com.go23.bean.token.TokenResponse
+import com.go23.bean.transaction.PreNFTSend
+import com.go23.bean.transaction.PreNFTSendResponse
+import com.go23.callback.Go23SignCallBack
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.BaseActivity
 import com.go23wallet.mpcwalletdemo.databinding.ActivitySendNftBinding
@@ -29,6 +29,10 @@ import com.google.gson.Gson
 import com.google.zxing.activity.CaptureActivity
 
 class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
+
+    companion object {
+        const val NFT_CHAIN = "ERC-1155"
+    }
 
     override val layoutRes: Int = R.layout.activity_send_nft
 
@@ -153,7 +157,7 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
                                 binding.tvConfirm.isEnabled =
                                     preNft?.isIs_ok ?: false && if (binding.etQuantity.text.toString()
                                             .isEmpty()
-                                    ) false else (nftInfo?.value
+                                    ) true else (nftInfo?.value
                                         ?: 0) >= (binding.etQuantity.text.toString().toInt())
                             }
 
@@ -182,7 +186,9 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
                 }
                 val num = str.toInt()
                 binding.tvConfirm.isEnabled =
-                    preNft?.isIs_ok ?: false && (nftInfo?.value ?: 0) >= num
+                    preNft?.isIs_ok ?: false && if (binding.etQuantity.text.toString()
+                            .isEmpty()
+                    ) true else (nftInfo?.value ?: 0) >= num
                 binding.tvQuantityFailTip.visibility =
                     if (num > (nftInfo?.value ?: 0)) View.VISIBLE else View.GONE
             }
@@ -207,11 +213,11 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
         sign.transType = 3
         sign.contractAddress = nft.contract_address
         sign.tokenId = nft.token_id.toString()
-        sign.value = ""
+        sign.value = if (nft.token_standard == NFT_CHAIN) binding.etQuantity.text.toString() else ""
         sign.nft_name = nft.name
         sign.middleContractAddress = ""
         Go23WalletManage.getInstance().sign(
-            this, supportFragmentManager, sign, object : MpcUtil.SignCallBack {
+            this, supportFragmentManager, sign, object : Go23SignCallBack {
                 override fun success(response: SignResponse?) {
                     dismissProgress()
                     if (response?.code.toString() == "0") {

@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Messages IDs -->
-    <item type="id" name="auto_focus"/>
-    <item type="id" name="decode"/>
-    <item type="id" name="decode_failed"/>
-    <item type="id" name="decode_succeeded"/>
-    <item type="id" name="encode_failed"/>
-    <item type="id" name="encode_succeeded"/>
-    <item type="id" name="launch_product_query"/>
-    <item type="id" name="quit"/>
-    <item type="id" name="restart_preview"/>
-    <item type="id" name="return_scan_result"/>
-    <item type="id" name="search_book_contents_failed"/>
-    <item type="id" name="search_book_contents_succeeded"/>
+    <item name="auto_focus" type="id" />
+    <item name="decode" type="id" />
+    <item name="decode_failed" type="id" />
+    <item name="decode_succeeded" type="id" />
+    <item name="encode_failed" type="id" />
+    <item name="encode_succeeded" type="id" />
+    <item name="launch_product_query" type="id" />
+    <item name="quit" type="id" />
+    <item name="restart_preview" type="id" />
+    <item name="return_scan_result" type="id" />
+    <item name="search_book_contents_failed" type="id" />
+    <item name="search_book_contents_succeeded" type="id" />
 
     <declare-styleable name="ViewfinderView">
-        <attr name="corner_color" format="color"/>
-        <attr name="laser_color" format="color"/>
+        <attr name="corner_color" format="color" />
+        <attr name="laser_color" format="color" />
         <attr name="frame_color" format="color" />
         <attr name="mask_color" format="color" />
-        <attr name="result_point_color" format="color"/>
+        <attr name="result_point_color" format="color" />
         <attr name="result_color" format="color" />
-        <attr name="label_text_color" format="color"/>
-        <attr name="label_text" format="string"/>
-        <attr name="label_text_size" format="float"/>
+        <attr name="label_text_color" format="color" />
+        <attr name="label_text" format="string" />
+        <attr name="label_text_size" format="float" />
     </declare-styleable>
     <!--XfermodeImageView-->
     <declare-styleable name="XfermodeImageView">
@@ -86,6 +86,15 @@
             <enum name="lineStyle" value="3" />
             <!--自定义图片样式，如果需要设置tvCustomSelectIcon和tvUnCustomSelectIcon 必须选择该属性-->
             <enum name="customStyle" value="-1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="RoundImageView">
+        <!--设置圆角-->
+        <attr name="radius" format="dimension" />
+        <attr name="type" format="enum">
+            <enum name="circle" value="1" />
+            <enum name="round" value="2" />
         </attr>
     </declare-styleable>
 
