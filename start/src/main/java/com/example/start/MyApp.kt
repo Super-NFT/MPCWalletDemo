@@ -7,6 +7,6 @@ class MyApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        InitUtils.initMpc(this, false, "OcHB6Ix8bIWiOyE35ze6Ra9e", "KX6OquHkkKQmzLSncmnmNt2q")
+        InitUtils.initMpc(this, BuildConfig.DEBUG, BuildConfig.APP_KEY, BuildConfig.APP_SECRET)
     }
 }
