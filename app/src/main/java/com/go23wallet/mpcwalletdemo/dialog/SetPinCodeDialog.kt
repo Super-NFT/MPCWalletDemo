@@ -62,7 +62,7 @@ class SetPinCodeDialog(mContext: Context) : BaseDialogFragment<DialogSetPinCodeL
                     dismissAllowingStateLoss()
                 }, 1000)
             } else {
-                CustomToast.showShort(R.string.confirm_error)
+                CustomToast.showShort(R.string.lite_confirm_error)
             }
         }
     }

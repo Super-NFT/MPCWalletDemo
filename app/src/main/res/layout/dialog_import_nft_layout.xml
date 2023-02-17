@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
-        android:text="@string/import_nfts"
+        android:text="@string/lite_import_nfts"
         android:textColor="@color/color_262626"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="28dp"
-        android:text="@string/nft_contact_address"
+        android:text="@string/lite_nft_contact_address"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
@@ -131,7 +131,7 @@
         android:background="@drawable/selector_btn_enable"
         android:enabled="false"
         android:gravity="center"
-        android:text="@string/import_str"
+        android:text="@string/lite_import_str"
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"

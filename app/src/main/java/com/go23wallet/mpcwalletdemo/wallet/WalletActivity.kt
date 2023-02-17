@@ -7,14 +7,12 @@ import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.Go23WalletManage
-import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.go23.bean.chain.DefaultUserChainResponse
 import com.go23.callback.BaseCallBack
 import com.go23.bean.chain.UserChain
-import com.go23.bean.chain.UserChainResponse
 import com.go23.bean.user.Balance
 import com.go23.bean.user.BalanceResponse
 import com.go23.bean.user.MerchantResponse
@@ -134,11 +132,11 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                     .verifyCode(if (RegexUtils.isEmail(account)) VerifyCodeType.EMAIL else VerifyCodeType.PHONE,
                                         OperationType.RECOVER, object : MerchantCodeCallBack {
                                             override fun success() {
-                                                CustomToast.showShort(R.string.verify_code_sent)
+                                                CustomToast.showShort(R.string.lite_verify_code_sent)
                                             }
 
                                             override fun failed() {
-                                                CustomToast.showShort(R.string.send_code_fail)
+                                                CustomToast.showShort(R.string.lite_send_code_fail)
                                             }
 
                                         })
@@ -177,7 +175,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
                                         override fun emailVerifyFailed() {
                                             dismissProgress()
-                                            CustomToast.showShort(R.string.verify_code_fail)
+                                            CustomToast.showShort(R.string.lite_verify_code_fail)
                                             accountVerifyDialog.clearText()
                                         }
 
@@ -244,8 +242,8 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
     private fun initView() {
         if (fragments.size == 0) {
-            tabList.add(getString(R.string.tokens))
-            tabList.add(getString(R.string.nfts))
+            tabList.add(getString(R.string.lite_tokens))
+            tabList.add(getString(R.string.lite_nfts))
             fragments.add(TokenFragment.newInstance())
             fragments.add(NFTFragment.newInstance())
             tabAdapter = TabFragmentAdapter(supportFragmentManager).apply {
@@ -322,7 +320,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
                                 override fun failed() {
                                     dismissProgress()
-                                    CustomToast.showShort(R.string.resharding_fail)
+                                    CustomToast.showShort(R.string.lite_resharding_fail)
                                 }
 
                                 override fun reShardingForEmail() {
@@ -331,7 +329,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
                                 override fun emailVerifyFailed() {
                                     dismissProgress()
-                                    CustomToast.showShort(R.string.verify_code_fail)
+                                    CustomToast.showShort(R.string.lite_verify_code_fail)
                                     accountVerifyDialog.clearText()
                                 }
 
@@ -386,7 +384,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
                                 override fun failed() {
                                     dismissProgress()
-                                    CustomToast.showShort(R.string.resharding_fail)
+                                    CustomToast.showShort(R.string.lite_resharding_fail)
                                 }
 
                                 override fun reShardingForEmail() {
@@ -395,7 +393,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
                                 override fun emailVerifyFailed() {
                                     dismissProgress()
-                                    CustomToast.showShort(R.string.verify_code_fail)
+                                    CustomToast.showShort(R.string.lite_verify_code_fail)
                                     accountVerifyDialog.clearText()
                                 }
 
@@ -411,7 +409,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                                 }
                             })
                     } ?: kotlin.run {
-                        CustomToast.showShort(R.string.resharding_fail)
+                        CustomToast.showShort(R.string.lite_resharding_fail)
                         dismissProgress()
                     }
                 }
@@ -435,11 +433,11 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                             OperationType.RESHADING,
                             object : MerchantCodeCallBack {
                                 override fun success() {
-                                    CustomToast.showShort(R.string.verify_code_sent)
+                                    CustomToast.showShort(R.string.lite_verify_code_sent)
                                 }
 
                                 override fun failed() {
-                                    CustomToast.showShort(R.string.send_code_fail)
+                                    CustomToast.showShort(R.string.lite_send_code_fail)
                                 }
 
                             })

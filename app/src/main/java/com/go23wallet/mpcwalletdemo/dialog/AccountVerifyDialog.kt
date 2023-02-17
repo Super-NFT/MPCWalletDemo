@@ -89,7 +89,7 @@ class AccountVerifyDialog(private val mContext: Context) :
         viewBinding.tvVerify.setOnClickListener {
             if (type == TYPE_SEND) {
                 if (viewBinding.progress.visibility == View.VISIBLE) {
-                    CustomToast.showShort(R.string.sending)
+                    CustomToast.showShort(R.string.lite_sending)
                     return@setOnClickListener
                 }
                 callback.invoke(
@@ -102,18 +102,18 @@ class AccountVerifyDialog(private val mContext: Context) :
                 viewBinding.tvSendTips.visibility = View.INVISIBLE
                 viewBinding.bottomGroup.visibility = View.VISIBLE
                 viewBinding.llVerify.visibility = View.VISIBLE
-                viewBinding.tvVerify.text = getString(R.string.verify)
+                viewBinding.tvVerify.text = getString(R.string.lite_verify)
                 lifecycleScope.launch {
                     delay(1000)
                     countDown()
                 }
             } else {
                 if (verifyCode.isNullOrEmpty() || (verifyCode?.length ?: 0) > 6) {
-                    CustomToast.showShort(R.string.verify_error)
+                    CustomToast.showShort(R.string.lite_verify_error)
                     return@setOnClickListener
                 } else {
                     if (viewBinding.progress.visibility == View.VISIBLE) {
-                        CustomToast.showShort(R.string.verifying)
+                        CustomToast.showShort(R.string.lite_verifying)
                         return@setOnClickListener
                     }
                     callback.invoke(
@@ -156,13 +156,13 @@ class AccountVerifyDialog(private val mContext: Context) :
             if (emailSelect) {
                 viewBinding.tvAccount.text = it.email
                 viewBinding.llVerify.setTextLen(6)
-                viewBinding.tvSendTips.text = getString(R.string.send_code, "email")
-                viewBinding.hasSendTips.text = getString(R.string.has_send_tips, "email")
+                viewBinding.tvSendTips.text = getString(R.string.lite_send_code, "email")
+                viewBinding.hasSendTips.text = getString(R.string.lite_has_send_tips, "email")
             } else {
                 viewBinding.tvAccount.text = it.phone
                 viewBinding.llVerify.setTextLen(4)
-                viewBinding.tvSendTips.text = getString(R.string.send_code, "SMS")
-                viewBinding.hasSendTips.text = getString(R.string.has_send_tips, "SMS")
+                viewBinding.tvSendTips.text = getString(R.string.lite_send_code, "SMS")
+                viewBinding.hasSendTips.text = getString(R.string.lite_has_send_tips, "SMS")
             }
         }
     }
@@ -177,7 +177,7 @@ class AccountVerifyDialog(private val mContext: Context) :
 
                 override fun onFinish() {
                     viewBinding.tvResend.isEnabled = true
-                    viewBinding.tvResend.text = getString(R.string.resend)
+                    viewBinding.tvResend.text = getString(R.string.lite_resend)
                 }
             }
             mCountDownTimer?.start()

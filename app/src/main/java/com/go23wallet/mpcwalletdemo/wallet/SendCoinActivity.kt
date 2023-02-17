@@ -75,7 +75,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                             dismissProgress()
                             data?.let { msg ->
                                 if (msg.code != 0) {
-                                    CustomToast.showShort(R.string.send_error)
+                                    CustomToast.showShort(R.string.lite_send_error)
                                     return@let
                                 }
                                 msg.data?.let { preToken ->
@@ -83,18 +83,18 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                                     binding.etToAddress.setText("")
                                     binding.tvGasTips.text = Html.fromHtml(
                                         String.format(
-                                            getString(R.string.gas_tips), chainTokenInfo?.symbol
+                                            getString(R.string.lite_gas_tips), chainTokenInfo?.symbol
                                         )
                                     )
                                     binding.tvNotSupportTips.text = Html.fromHtml(
                                         String.format(
-                                            getString(R.string.not_support_tips),
+                                            getString(R.string.lite_not_support_tips),
                                             chainTokenInfo?.symbol
                                         )
                                     )
                                     binding.tvMinTips.text = Html.fromHtml(
                                         String.format(
-                                            getString(R.string.min_tips),
+                                            getString(R.string.lite_min_tips),
                                             preToken.token_minimum,
                                             chainTokenInfo?.symbol
                                         )
@@ -104,7 +104,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                                     binding.tvFromAddress.text =
                                         it.user_wallet_address.parseAddress()
                                     binding.tvAvailable.text = String.format(
-                                        getString(R.string.available), "${
+                                        getString(R.string.lite_send_available), "${
                                             if (it.contract_address.isEmpty()) format.parse(
                                                 preToken.platform_balance_sort.toString()
                                             )
@@ -248,7 +248,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                 binding.etInputNum.setText(
                     "${
                         if (availableNum < BigDecimal(0)) {
-                            CustomToast.showShort(R.string.gas_insufficient)
+                            CustomToast.showShort(R.string.lite_gas_insufficient)
                             "0"
                         } else availableNum
                     }"
@@ -269,12 +269,12 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                                 )
                             )
                         } catch (ignored: Exception) {
-                            CustomToast.showShort(R.string.request_camera_permission_fail)
+                            CustomToast.showShort(R.string.lite_request_camera_permission_fail)
                         }
                     }
 
                     override fun onDenied() {
-                        CustomToast.showShort(R.string.request_camera_permission_fail)
+                        CustomToast.showShort(R.string.lite_request_camera_permission_fail)
                     }
                 }).request()
         }
@@ -321,14 +321,14 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
                         )
                     } else {
                         CustomToast.showShort(
-                            response?.msg ?: getString(R.string.transaction_failed)
+                            response?.msg ?: getString(R.string.lite_transaction_failed)
                         )
                     }
                 }
 
                 override fun failed() {
                     dismissProgress()
-                    CustomToast.showShort(R.string.transaction_failed)
+                    CustomToast.showShort(R.string.lite_transaction_failed)
                 }
             })
     }
@@ -355,7 +355,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
             totalValue <= availableNum
         }
         if (!isEnough) {
-            CustomToast.showShort(R.string.balance_insufficient)
+            CustomToast.showShort(R.string.lite_balance_insufficient)
         }
         binding.tvNotSupportTips.visibility =
             if ((preTokenSend?.trans_type ?: 0) == 0) View.VISIBLE else View.GONE

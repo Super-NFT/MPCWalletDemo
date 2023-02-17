@@ -3,7 +3,6 @@ package com.go23wallet.mpcwalletdemo.wallet
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.Go23WalletManage
@@ -30,10 +29,10 @@ class TokenDetailsActivity : BaseActivity<ActivityTokenDetailsBinding>() {
 
     private val tabList by lazy {
         mutableListOf(
-            getString(R.string.type_all),
-            getString(R.string.type_out),
-            getString(R.string.type_in),
-            getString(R.string.failed)
+            getString(R.string.lite_type_all),
+            getString(R.string.lite_type_out),
+            getString(R.string.lite_type_in),
+            getString(R.string.lite_failed)
         )
     }
     private val fragments = mutableListOf<BaseFragment<out ViewBinding>>()

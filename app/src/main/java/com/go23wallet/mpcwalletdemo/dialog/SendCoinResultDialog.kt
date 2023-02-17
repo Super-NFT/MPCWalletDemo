@@ -33,7 +33,7 @@ class SendCoinResultDialog(
             viewBinding.ivStatus.setImageResource(R.drawable.icon_charge_failed)
             viewBinding.tvDetails.visibility = View.GONE
             viewBinding.tvSuccessContent.visibility = View.GONE
-            viewBinding.tvStatus.text = getString(R.string.failed)
+            viewBinding.tvStatus.text = getString(R.string.lite_failed)
         }
 
         viewBinding.ivClose.setOnClickListener {

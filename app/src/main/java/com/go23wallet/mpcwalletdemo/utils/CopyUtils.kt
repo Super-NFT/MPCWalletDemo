@@ -15,7 +15,7 @@ object CopyUtils {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clipData = ClipData.newPlainText(null, text)
         clipboard.setPrimaryClip(clipData)
-        CustomToast.showShort(R.string.copy_success)
+        CustomToast.showShort(R.string.lite_copy_success)
     }
 
     fun pasteText(context: Context, etView: EditText) {
@@ -26,7 +26,7 @@ object CopyUtils {
             val text = clipData.getItemAt(0).text
             etView.setText(text)
         } else {
-            CustomToast.showShort(R.string.paste_error)
+            CustomToast.showShort(R.string.lite_paste_error)
         }
     }
 }

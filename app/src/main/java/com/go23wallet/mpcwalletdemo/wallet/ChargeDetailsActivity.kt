@@ -114,16 +114,16 @@ class ChargeDetailsActivity : BaseActivity<ActivityChargeDetailsBinding>() {
             when (it.status) {
                 1 -> {
                     binding.ivChargeType.setImageResource(R.drawable.icon_charge_processing)
-                    binding.tvType.text = getString(R.string.processing)
+                    binding.tvType.text = getString(R.string.lite_processing)
                     mHandler.postDelayed(runnable, 3 * 1000)
                 }
                 2 -> {
                     binding.ivChargeType.setImageResource(R.drawable.icon_charge_success)
-                    binding.tvType.text = getString(R.string.successful)
+                    binding.tvType.text = getString(R.string.lite_successful)
                 }
                 else -> {
                     binding.ivChargeType.setImageResource(R.drawable.icon_charge_failed)
-                    binding.tvType.text = getString(R.string.failed)
+                    binding.tvType.text = getString(R.string.lite_failed)
                 }
             }
         }

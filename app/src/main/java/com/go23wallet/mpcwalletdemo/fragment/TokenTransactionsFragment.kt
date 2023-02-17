@@ -57,7 +57,7 @@ class TokenTransactionsFragment : BaseFragment<FragmentTabLayoutBinding>() {
             adapter = mAdapter
         }
         emptyView.findViewById<AppCompatTextView>(R.id.tv_tips).text =
-            getString(R.string.empty_transaction_tips)
+            getString(R.string.lite_empty_transaction_tips)
         mAdapter?.setEmptyView(emptyView)
 
         mAdapter?.setOnItemClickListener { _, _, position ->

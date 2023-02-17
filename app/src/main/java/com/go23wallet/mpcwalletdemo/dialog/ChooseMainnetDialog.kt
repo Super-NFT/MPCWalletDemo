@@ -70,12 +70,12 @@ class ChooseMainnetDialog(private val mContext: Context) :
                                     dismissAllowingStateLoss()
                                     return@let
                                 }
-                                CustomToast.showShort(getString(R.string.switch_chain_fail))
+                                CustomToast.showShort(getString(R.string.lite_switch_chain_fail))
                             }
                         }
 
                         override fun failed() {
-                            CustomToast.showShort(getString(R.string.switch_chain_fail))
+                            CustomToast.showShort(getString(R.string.lite_switch_chain_fail))
                         }
                     })
             }

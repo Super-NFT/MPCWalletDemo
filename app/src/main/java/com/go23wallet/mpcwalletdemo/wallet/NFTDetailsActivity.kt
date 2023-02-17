@@ -53,7 +53,7 @@ class NFTDetailsActivity : BaseActivity<ActivityNftDetailsBinding>() {
                         binding.tvNftNum.visibility = if (it.value > 1) View.VISIBLE else View.GONE
                         binding.lineNum.visibility = if (it.value > 1) View.VISIBLE else View.GONE
                         binding.tvNftNum.text =
-                            String.format(getString(R.string.nft_own_num_tips), it.value)
+                            String.format(getString(R.string.lite_nft_own_num_tips), it.value)
                         binding.tvNftName.text = it.name
                         binding.tvSeriesName.text = it.series
                         binding.tvDescriptionContent.text =

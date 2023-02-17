@@ -32,11 +32,11 @@ class StartReshardDialog(private val mContext: Context) :
         }
 
         viewBinding.tvStartLoading.setOnClickListener {
-            if (viewBinding.tvStartLoading.text == getString(R.string.loading)) {
-                CustomToast.showShort(R.string.resharding_loading)
+            if (viewBinding.tvStartLoading.text == getString(R.string.lite_loading)) {
+                CustomToast.showShort(R.string.lite_resharding_loading)
                 return@setOnClickListener
             }
-            viewBinding.tvStartLoading.text = getString(R.string.loading)
+            viewBinding.tvStartLoading.text = getString(R.string.lite_loading)
             // TODO
             mHandler.postDelayed({
                 setPinCodeDialog.setHeight((ScreenUtils.getScreenHeight() * 0.8).toInt())

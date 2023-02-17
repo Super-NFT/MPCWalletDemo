@@ -84,12 +84,12 @@ class ImportNFTDialog :
                         try {
                             registerResult.launch(Intent(context, CaptureActivity::class.java))
                         } catch (ignored: Exception) {
-                            CustomToast.showShort(R.string.request_camera_permission_fail)
+                            CustomToast.showShort(R.string.lite_request_camera_permission_fail)
                         }
                     }
 
                     override fun onDenied() {
-                        CustomToast.showShort(R.string.request_camera_permission_fail)
+                        CustomToast.showShort(R.string.lite_request_camera_permission_fail)
                     }
                 }).request()
         }
@@ -109,19 +109,19 @@ class ImportNFTDialog :
                     override fun success(data: NftResponse?) {
                         data?.let {
                             if (it.code == 0) {
-                                CustomToast.showShort(R.string.add_success)
+                                CustomToast.showShort(R.string.lite_add_success)
                                 UpdateDataLiveData.setUpdateType(2)
                                 dismissAllowingStateLoss()
                             } else {
                                 CustomToast.showShort(it.message)
                             }
                         } ?: kotlin.run {
-                            CustomToast.showShort(R.string.add_fail)
+                            CustomToast.showShort(R.string.lite_add_fail)
                         }
                     }
 
                     override fun failed() {
-                        CustomToast.showShort(R.string.add_fail)
+                        CustomToast.showShort(R.string.lite_add_fail)
                     }
                 })
         }

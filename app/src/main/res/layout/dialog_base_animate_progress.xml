@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:gravity="center"
-            android:text="@string/loading"
+            android:text="@string/lite_loading"
             android:textColor="@color/color_262626"
             android:textSize="24sp"
             android:visibility="gone" />

@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/qrcode"
+            android:text="@string/lite_qrcode"
             android:textColor="@color/color_F5F5F5"
             android:textSize="20sp" />
 
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginEnd="20dp"
-            android:text="@string/album"
+            android:text="@string/lite_album"
             android:textColor="@color/color_F5F5F5"
             android:textSize="16sp" />
 

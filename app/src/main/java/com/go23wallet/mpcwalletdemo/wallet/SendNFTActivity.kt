@@ -25,7 +25,6 @@ import com.go23wallet.mpcwalletdemo.utils.CopyUtils
 import com.go23wallet.mpcwalletdemo.utils.CustomToast
 import com.go23wallet.mpcwalletdemo.utils.GlideUtils
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
-import com.google.gson.Gson
 import com.google.zxing.activity.CaptureActivity
 
 class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
@@ -50,7 +49,7 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
         }
         nftInfo?.let {
             binding.groupQuantity.visibility = if (it.value > 1) View.VISIBLE else View.GONE
-            binding.tvAmountTip.text = String.format(getString(R.string.amount_own), it.value)
+            binding.tvAmountTip.text = String.format(getString(R.string.lite_amount_own), it.value)
         }
         initView()
         setListener()
@@ -120,12 +119,12 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
                                 )
                             )
                         } catch (ignored: Exception) {
-                            CustomToast.showShort(R.string.request_camera_permission_fail)
+                            CustomToast.showShort(R.string.lite_request_camera_permission_fail)
                         }
                     }
 
                     override fun onDenied() {
-                        CustomToast.showShort(R.string.request_camera_permission_fail)
+                        CustomToast.showShort(R.string.lite_request_camera_permission_fail)
                     }
                 }).request();
         }
@@ -230,13 +229,13 @@ class SendNFTActivity : BaseActivity<ActivitySendNftBinding>() {
                             )
                         sendCoinResultDialog?.show(supportFragmentManager, "sendCoinResultDialog")
                     } else {
-                        CustomToast.showShort(R.string.transaction_failed)
+                        CustomToast.showShort(R.string.lite_transaction_failed)
                     }
                 }
 
                 override fun failed() {
                     dismissProgress()
-                    CustomToast.showShort(R.string.transaction_failed)
+                    CustomToast.showShort(R.string.lite_transaction_failed)
                 }
             }
         )

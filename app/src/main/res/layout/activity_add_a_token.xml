@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/add_a_token"
+            android:text="@string/lite_add_a_token"
             android:textColor="@color/color_262626"
             android:textSize="20sp" />
 
@@ -42,7 +42,7 @@
         android:gravity="center_vertical"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:text="@string/add_custom_token"
+        android:text="@string/lite_add_custom_token"
         android:textColor="@color/color_262626"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"

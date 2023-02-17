@@ -29,7 +29,7 @@ class ReceiveDialog(
     override fun initViews(v: View?) {
         viewBinding.tvTitle.text = symbol
         viewBinding.tvBottomTips.text =
-            String.format(getString(R.string.receive_qrcode_tips), symbol)
+            String.format(getString(R.string.lite_receive_qrcode_tips), symbol)
         viewBinding.ivQrcode.setImageBitmap(BitmapUtils.create2DCode(address))
 
         val newText = if (address.length > 30) {

@@ -99,7 +99,7 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
                                 item.isIs_selected = !item.isIs_selected
                                 hasChange = true
                                 mAdapter?.notifyItemChanged(position)
-                                CustomToast.showShort(getString(R.string.remove_success))
+                                CustomToast.showShort(getString(R.string.lite_remove_success))
                             }
 
                             override fun failed() {
@@ -118,7 +118,7 @@ class AddATokenActivity : BaseActivity<ActivityAddATokenBinding>() {
                                 hasChange = true
                                 item.isIs_selected = !item.isIs_selected
                                 mAdapter?.notifyItemChanged(position)
-                                CustomToast.showShort(getString(R.string.add_success))
+                                CustomToast.showShort(getString(R.string.lite_add_success))
                             }
 
                             override fun failed() {
