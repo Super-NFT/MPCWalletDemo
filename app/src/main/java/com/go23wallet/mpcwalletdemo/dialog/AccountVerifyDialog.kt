@@ -58,7 +58,7 @@ class AccountVerifyDialog(private val mContext: Context) :
                 viewBinding.tvPhoneTitle.visibility = View.GONE
                 updateView(false)
             } else {
-                if (it.phone.isNullOrEmpty()) {
+                if (it.phoneInfo.phone.isNullOrEmpty() || it.phoneInfo.dialCode.isNullOrEmpty()) {
                     viewBinding.tvEmailTitle.visibility = View.GONE
                     viewBinding.tvPhoneTitle.visibility = View.GONE
                 } else {
@@ -71,7 +71,9 @@ class AccountVerifyDialog(private val mContext: Context) :
 
         viewBinding.ivBack.setOnClickListener {
             callback.invoke(
-                null, if (emailSelect) userInfo?.email ?: "" else userInfo?.phone ?: ""
+                null, if (emailSelect) userInfo?.email ?: "" else {
+                    "${userInfo?.phoneInfo?.dialCode ?: ""} ${userInfo?.phoneInfo?.phone ?: ""}"
+                }
             )
             dismissAllowingStateLoss()
         }
@@ -79,7 +81,9 @@ class AccountVerifyDialog(private val mContext: Context) :
             override fun inputCodeComplete(verificationCode: String?) {
                 verifyCode = verificationCode
                 callback.invoke(
-                    verifyCode, if (emailSelect) userInfo?.email ?: "" else userInfo?.phone ?: ""
+                    verifyCode, if (emailSelect) userInfo?.email ?: "" ?: "" else {
+                        "${userInfo?.phoneInfo?.dialCode ?: ""} ${userInfo?.phoneInfo?.phone ?: ""}"
+                    }
                 )
             }
 
@@ -94,7 +98,9 @@ class AccountVerifyDialog(private val mContext: Context) :
                 }
                 callback.invoke(
                     "",
-                    if (emailSelect) userInfo?.email ?: "" else userInfo?.phone ?: ""
+                    if (emailSelect) userInfo?.email ?: "" else {
+                        "${userInfo?.phoneInfo?.dialCode ?: ""} ${userInfo?.phoneInfo?.phone ?: ""}"
+                    }
                 )
                 type = TYPE_VERITY
                 viewBinding.tvEmailTitle.visibility = View.GONE
@@ -118,7 +124,9 @@ class AccountVerifyDialog(private val mContext: Context) :
                     }
                     callback.invoke(
                         verifyCode,
-                        if (emailSelect) userInfo?.email ?: "" else userInfo?.phone ?: ""
+                        if (emailSelect) userInfo?.email ?: "" else {
+                            "${userInfo?.phoneInfo?.dialCode ?: ""} ${userInfo?.phoneInfo?.phone ?: ""}"
+                        }
                     )
                 }
             }
@@ -140,7 +148,9 @@ class AccountVerifyDialog(private val mContext: Context) :
             if (viewBinding.tvResend.visibility == View.VISIBLE) {
                 viewBinding.llVerify.setText("")
                 callback.invoke(
-                    "", if (emailSelect) userInfo?.email ?: "" else userInfo?.phone ?: ""
+                    "", if (emailSelect) userInfo?.email ?: "" else {
+                        "${userInfo?.phoneInfo?.dialCode ?: ""} ${userInfo?.phoneInfo?.phone ?: ""}"
+                    }
                 )
                 lifecycleScope.launch {
                     delay(1000)
@@ -159,7 +169,7 @@ class AccountVerifyDialog(private val mContext: Context) :
                 viewBinding.tvSendTips.text = getString(R.string.lite_send_code, "email")
                 viewBinding.hasSendTips.text = getString(R.string.lite_has_send_tips, "email")
             } else {
-                viewBinding.tvAccount.text = it.phone
+                viewBinding.tvAccount.text = "${it.phoneInfo.dialCode} ${it.phoneInfo.phone}"
                 viewBinding.llVerify.setTextLen(4)
                 viewBinding.tvSendTips.text = getString(R.string.lite_send_code, "SMS")
                 viewBinding.hasSendTips.text = getString(R.string.lite_has_send_tips, "SMS")

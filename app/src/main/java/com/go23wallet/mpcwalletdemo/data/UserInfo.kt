@@ -8,9 +8,15 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class UserInfo(
     val uniqueId: String,
-    val nickname: String,
-    val avatar: String,
     val email: String,
+    val phoneInfo: PhoneInfo,
+    val nickname: String? = "",
+    val avatar: String? = "",
+) : Parcelable
+
+@Keep
+@Parcelize
+data class PhoneInfo(
     val dialCode: String,
     val phone: String
 ) : Parcelable

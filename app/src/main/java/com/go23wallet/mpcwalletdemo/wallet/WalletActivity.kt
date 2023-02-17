@@ -82,7 +82,10 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
     override fun initViews(savedInstanceState: Bundle?) {
         userInfo = intent.getParcelableExtra("user_info")
-        if (userInfo == null || userInfo?.uniqueId.isNullOrEmpty() || (userInfo?.email.isNullOrEmpty() && userInfo?.phone.isNullOrEmpty())) {
+        if (userInfo == null
+            || userInfo?.uniqueId.isNullOrEmpty()
+            || (userInfo?.email.isNullOrEmpty() && (userInfo?.phoneInfo?.dialCode.isNullOrEmpty() || userInfo?.phoneInfo?.phone.isNullOrEmpty()))
+        ) {
             finish()
             return
         }
@@ -93,10 +96,12 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
 
     private fun initUserInfo() {
         userInfo?.let {
-            binding.tvEmail.text = it.nickname
+            binding.tvEmail.text = if (it.nickname.isNullOrEmpty()) {
+                if (it.email.isNullOrEmpty()) "${it.phoneInfo.dialCode} ${it.phoneInfo.phone}" else it.email
+            } else it.nickname
             GlideUtils.loadImg(
                 this@WalletActivity,
-                it.avatar,
+                if (it.avatar.isNullOrEmpty()) "" else it.avatar,
                 binding.ivAvatar
             )
             initData(it)
@@ -119,7 +124,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         Go23WalletManage.getInstance()
             .setUniqueId(userInfo.uniqueId)
             .setEmail(userInfo.email)
-            .setPhoneAndDialCode(userInfo.phone, userInfo.dialCode)
+            .setPhoneAndDialCode(userInfo.phoneInfo.phone, userInfo.phoneInfo.dialCode)
             .start(this@WalletActivity, object : Go23WalletCallBack {
                 override fun reStore(p0: MutableList<WalletInfo>?) {
                     accountVerifyDialog.setDialogType(OperationType.RECOVER)
