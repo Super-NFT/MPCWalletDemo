@@ -11,8 +11,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
-        android:fontFamily="@font/barlowcondensed_medium"
-        android:letterSpacing="0.04"
         android:text="@string/search_country"
         android:textColor="@color/color_262626"
         android:textSize="20sp"

@@ -53,8 +53,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/barlowcondensed_medium"
-            android:letterSpacing="0.04"
             android:text="@string/qrcode"
             android:textColor="@color/color_F5F5F5"
             android:textSize="20sp" />
