@@ -4,65 +4,83 @@ import android.content.Context
 import android.os.CountDownTimer
 import android.view.*
 import androidx.lifecycle.lifecycleScope
-import com.blankj.utilcode.util.RegexUtils
-import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ScreenUtils
+import com.go23.enumclass.OperationType
 import com.go23wallet.mpcwalletdemo.R
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
+import com.go23wallet.mpcwalletdemo.data.UserInfo
 import com.go23wallet.mpcwalletdemo.databinding.DialogAccountVerifyLayoutBinding
 import com.go23wallet.mpcwalletdemo.utils.CustomToast
 import com.go23wallet.mpcwalletdemo.view.InputCodeView.OnCodeCompleteListener
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class AccountVerifyDialog(private val mContext: Context, private var dialogType: Int = 0) :
+class AccountVerifyDialog(private val mContext: Context) :
     BaseDialogFragment<DialogAccountVerifyLayoutBinding>() {
 
     private var mCountDownTimer: CountDownTimer? = null
 
     override val layoutId: Int = R.layout.dialog_account_verify_layout
 
-    var callback: (code: String?) -> Unit = {}
+    var callback: (code: String?, account: String) -> Unit = { code: String?, account: String -> }
 
     private var type = TYPE_SEND
 
     private var verifyCode: String? = ""
+
+    private var emailSelect = true
+
+    private var userInfo: UserInfo? = null
+
+    private var dialogType: OperationType = OperationType.RECOVER
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         setHeight((ScreenUtils.getScreenHeight() * 0.8).toInt())
     }
 
-    /**
-     * @param type 0 resharding 1 recover
-     */
-    fun setDialogType(type: Int) {
+    fun setDialogType(type: OperationType) {
         dialogType = type
     }
 
+    fun setUserInfo(info: UserInfo) {
+        userInfo = info
+    }
+
     override fun initViews(v: View?) {
-        if (dialogType == 1) {
+        if (dialogType == OperationType.RECOVER) {
             viewBinding.ivBack.visibility = View.GONE
         }
-        val accountStr = SPUtils.getInstance().getString("account")
-        if (RegexUtils.isEmail(accountStr)) {
-            viewBinding.llVerify.setTextLen(6)
-            viewBinding.tvSendTips.text = getString(R.string.send_email_code)
-            viewBinding.hasSendTips.text = getString(R.string.has_send_email_tips)
-        } else {
-            viewBinding.llVerify.setTextLen(4)
-            viewBinding.tvSendTips.text = getString(R.string.send_sms_code)
-            viewBinding.hasSendTips.text = getString(R.string.has_send_sms_tips)
+
+        userInfo?.let {
+            if (it.email.isNullOrEmpty()) {
+                viewBinding.tvEmailTitle.visibility = View.GONE
+                viewBinding.tvPhoneTitle.visibility = View.GONE
+                updateView(false)
+            } else {
+                if (it.phone.isNullOrEmpty()) {
+                    viewBinding.tvEmailTitle.visibility = View.GONE
+                    viewBinding.tvPhoneTitle.visibility = View.GONE
+                } else {
+                    viewBinding.tvEmailTitle.visibility = View.VISIBLE
+                    viewBinding.tvPhoneTitle.visibility = View.VISIBLE
+                }
+                updateView(true)
+            }
         }
-        viewBinding.tvAccount.text = accountStr
+
         viewBinding.ivBack.setOnClickListener {
-            callback.invoke(null)
+            callback.invoke(
+                null, if (emailSelect) userInfo?.email ?: "" else userInfo?.phone ?: ""
+            )
             dismissAllowingStateLoss()
         }
         viewBinding.llVerify.setOnCodeCompleteListener(object : OnCodeCompleteListener {
             override fun inputCodeComplete(verificationCode: String?) {
                 verifyCode = verificationCode
-                callback.invoke(verifyCode)
+                callback.invoke(
+                    verifyCode, if (emailSelect) userInfo?.email ?: "" else userInfo?.phone ?: ""
+                )
             }
 
             override fun inputCodeInput(verificationCode: String?) {
@@ -74,8 +92,13 @@ class AccountVerifyDialog(private val mContext: Context, private var dialogType:
                     CustomToast.showShort(R.string.sending)
                     return@setOnClickListener
                 }
-                callback.invoke("")
+                callback.invoke(
+                    "",
+                    if (emailSelect) userInfo?.email ?: "" else userInfo?.phone ?: ""
+                )
                 type = TYPE_VERITY
+                viewBinding.tvEmailTitle.visibility = View.GONE
+                viewBinding.tvPhoneTitle.visibility = View.GONE
                 viewBinding.tvSendTips.visibility = View.INVISIBLE
                 viewBinding.bottomGroup.visibility = View.VISIBLE
                 viewBinding.llVerify.visibility = View.VISIBLE
@@ -93,15 +116,32 @@ class AccountVerifyDialog(private val mContext: Context, private var dialogType:
                         CustomToast.showShort(R.string.verifying)
                         return@setOnClickListener
                     }
-                    callback.invoke(verifyCode)
+                    callback.invoke(
+                        verifyCode,
+                        if (emailSelect) userInfo?.email ?: "" else userInfo?.phone ?: ""
+                    )
                 }
             }
+        }
+
+        viewBinding.tvEmailTitle.setOnClickListener {
+            viewBinding.tvEmailTitle.setTextColor(mContext.getColor(R.color.color_262626))
+            viewBinding.tvPhoneTitle.setTextColor(mContext.getColor(R.color.color_8C8C8C))
+            updateView(true)
+        }
+
+        viewBinding.tvPhoneTitle.setOnClickListener {
+            viewBinding.tvEmailTitle.setTextColor(mContext.getColor(R.color.color_8C8C8C))
+            viewBinding.tvPhoneTitle.setTextColor(mContext.getColor(R.color.color_262626))
+            updateView(false)
         }
 
         viewBinding.tvResend.setOnClickListener {
             if (viewBinding.tvResend.visibility == View.VISIBLE) {
                 viewBinding.llVerify.setText("")
-                callback.invoke("")
+                callback.invoke(
+                    "", if (emailSelect) userInfo?.email ?: "" else userInfo?.phone ?: ""
+                )
                 lifecycleScope.launch {
                     delay(1000)
                     countDown()
@@ -110,8 +150,25 @@ class AccountVerifyDialog(private val mContext: Context, private var dialogType:
         }
     }
 
+    private fun updateView(isEmail: Boolean) {
+        emailSelect = isEmail
+        userInfo?.let {
+            if (emailSelect) {
+                viewBinding.tvAccount.text = it.email
+                viewBinding.llVerify.setTextLen(6)
+                viewBinding.tvSendTips.text = getString(R.string.send_code, "email")
+                viewBinding.hasSendTips.text = getString(R.string.has_send_tips, "email")
+            } else {
+                viewBinding.tvAccount.text = it.phone
+                viewBinding.llVerify.setTextLen(4)
+                viewBinding.tvSendTips.text = getString(R.string.send_code, "SMS")
+                viewBinding.hasSendTips.text = getString(R.string.has_send_tips, "SMS")
+            }
+        }
+    }
+
     private fun countDown() {
-        if(viewBinding.tvResend.isEnabled) {
+        if (viewBinding.tvResend.isEnabled) {
             mCountDownTimer = object : CountDownTimer(60 * 1000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                     viewBinding.tvResend.isEnabled = false

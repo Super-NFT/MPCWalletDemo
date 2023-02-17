@@ -47,7 +47,7 @@ android {
         }
         debug {
             minifyEnabled true
-            shrinkResources true
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
             buildConfigField("String", "APP_KEY", "\"j9ASxn5REHG8akytevRYZwCp\"")

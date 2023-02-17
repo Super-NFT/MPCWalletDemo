@@ -32,11 +32,9 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="forget_psw">Forget Pincode</string>
-    <string name="send_email_code">Send verification email</string>
-    <string name="send_sms_code">Send verification SMS</string>
+    <string name="send_code">Send verification %s</string>
     <string name="send_code_fail">Sending failed, please try again</string>
-    <string name="has_send_email_tips">Enter the 6-digit code sent to your email.</string>
-    <string name="has_send_sms_tips">Enter the 6-digit code sent to your SMS.</string>
+    <string name="has_send_tips">Enter the 6-digit code sent to your %s.</string>
     <string name="sending">Sending， please wait</string>
     <string name="verifying">Verifying， please wait</string>
     <string name="verify_error">Verify code is error, please check it</string>
