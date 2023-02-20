@@ -1,5 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="lite_app_name">GO23 Wallet</string>
+
+    <string name="lite_user_info_tips">User info does not exist</string>
+    <string name="lite_unique_tips">Unique id does not exist</string>
+    <string name="lite_email_phone_tips">Email or phone number does not exist</string>
+
     <string name="lite_network_error">Network error</string>
 
     <string name="lite_total_balance">Total Balance</string>

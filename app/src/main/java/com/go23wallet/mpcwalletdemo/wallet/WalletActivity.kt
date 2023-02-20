@@ -86,6 +86,13 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
             || userInfo?.uniqueId.isNullOrEmpty()
             || (userInfo?.email.isNullOrEmpty() && (userInfo?.phoneInfo?.dialCode.isNullOrEmpty() || userInfo?.phoneInfo?.phone.isNullOrEmpty()))
         ) {
+            CustomToast.showShort(
+                if (userInfo == null)
+                    getString(R.string.lite_user_info_tips)
+                else if (userInfo?.uniqueId.isNullOrEmpty())
+                    getString(R.string.lite_unique_tips)
+                else getString(R.string.lite_email_phone_tips)
+            )
             finish()
             return
         }
