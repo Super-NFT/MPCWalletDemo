@@ -133,9 +133,4 @@ dependencies {
     api('androidx.work:work-runtime:2.7.1')
     api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     api 'com.google.android.flexbox:flexbox:3.0.0'
-
-    //google auth 验证
-    implementation 'com.google.android.gms:play-services-auth:20.1.0'
-    //google drive
-    implementation 'com.google.android.gms:play-services-drive:17.0.0'
 }
