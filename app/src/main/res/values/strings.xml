@@ -87,7 +87,7 @@
     <string name="gas_free">Gas Fee</string>
     <string name="lending_gas_free">Equivalent Gas Fee</string>
     <string name="total">Total</string>
-    <string name="coin_mark">Standard: ERC-20</string>
+    <string name="change_asset">Change Asset</string>
 
     <string name="description">Description</string>
     <string name="attributes">Attributes</string>
@@ -142,6 +142,7 @@
     <string name="transaction_failed">Transaction failed</string>
     <string name="remove_success">Remove Success</string>
 
+    <string name="switch_chain_fail">Failed to switch chain</string>
     <string name="empty_tips">No Records</string>
     <string name="empty_transaction_tips">No transaction records</string>
 </resources>

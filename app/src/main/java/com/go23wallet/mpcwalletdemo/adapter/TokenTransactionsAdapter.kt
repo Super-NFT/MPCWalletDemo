@@ -24,7 +24,7 @@ class TokenTransactionsAdapter :
         } else {
             item.value
         }
-        tvBalance.setTextColor(context.getColor(R.color.color_D83548))
+        tvBalance.setTextColor(context.getColor(R.color.color_262626))
         tvBalance.text = "-${valueStr}${item.symbol}"
         tvValue.visibility =
             if (item.balance_u.toDouble() > 0) View.VISIBLE else View.INVISIBLE

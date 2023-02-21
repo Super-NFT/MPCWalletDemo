@@ -22,7 +22,7 @@
             app:frame_color="@color/transparent"
             app:label_text="Transfer or Connect Wallet"
             app:label_text_color="@color/white"
-            app:label_text_size="20"
+            app:label_text_size="16"
             app:laser_color="@color/color_00D6E1"
             app:mask_color="@color/transparent" />
 

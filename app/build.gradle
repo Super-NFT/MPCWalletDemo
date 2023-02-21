@@ -47,12 +47,16 @@ android {
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            buildConfigField("String", "APP_KEY", "\"OcHB6Ix8bIWiOyE35ze6Ra9e\"")
+            buildConfigField("String", "APP_SECRET", "\"KX6OquHkkKQmzLSncmnmNt2q\"")
         }
         debug{
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
+            buildConfigField("String", "APP_KEY", "\"j9ASxn5REHG8akytevRYZwCp\"")
+            buildConfigField("String", "APP_SECRET", "\"QHXFT28Nu1u4R7IiGBlFCVXF\"")
         }
     }
     compileOptions {

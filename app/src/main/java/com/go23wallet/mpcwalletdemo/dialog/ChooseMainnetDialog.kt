@@ -5,8 +5,6 @@ import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.Go23WalletManage
 import com.blankj.utilcode.util.ScreenUtils
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.go23.bean.chain.ChainResponse
 import com.go23.bean.chain.UserChain
 import com.go23.bean.chain.UserChainResponse
@@ -16,6 +14,7 @@ import com.go23wallet.mpcwalletdemo.adapter.MainnetAdapter
 import com.go23wallet.mpcwalletdemo.base.dialog.BaseDialogFragment
 import com.go23wallet.mpcwalletdemo.databinding.DialogChooseMainnetLayoutBinding
 import com.go23wallet.mpcwalletdemo.utils.Constant
+import com.go23wallet.mpcwalletdemo.utils.CustomToast
 import com.go23wallet.mpcwalletdemo.utils.UserWalletInfoManager
 import com.go23wallet.mpcwalletdemo.view.LoadMoreListener
 
@@ -63,13 +62,20 @@ class ChooseMainnetDialog(private val mContext: Context) :
                     it.chain_id,
                     UserWalletInfoManager.getUserWalletInfo().walletInfo.wallet_address,
                     object : BaseCallBack<ChainResponse> {
-                        override fun success(p0: ChainResponse?) {
-                            it.isHas_default = true
-                            callback.invoke(it)
-                            dismissAllowingStateLoss()
+                        override fun success(data: ChainResponse?) {
+                            data?.let { response ->
+                                if (response.code == 0) {
+                                    it.isHas_default = true
+                                    callback.invoke(it)
+                                    dismissAllowingStateLoss()
+                                    return@let
+                                }
+                                CustomToast.showShort(getString(R.string.switch_chain_fail))
+                            }
                         }
 
                         override fun failed() {
+                            CustomToast.showShort(getString(R.string.switch_chain_fail))
                         }
                     })
             }
