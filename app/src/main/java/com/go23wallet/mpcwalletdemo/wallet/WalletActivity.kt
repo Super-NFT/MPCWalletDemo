@@ -577,5 +577,30 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
         binding.ivAdd.setOnClickListener {
             importAssetDialog.show(supportFragmentManager, "importAssetDialog")
         }
+
+        binding.fab.setOnClickListener {
+            showProgress()
+            KeygenUtils.getInstance().requestMerchantKey(
+                Go23WalletManage.getInstance().walletAddress,
+                object : BaseCallBack<MerchantResponse> {
+                    override fun success(data: MerchantResponse?) {
+                        data?.data?.let {
+                            Go23WalletManage.getInstance().startDappViewWithMerchantKey(
+                                this@WalletActivity,
+                                it.keygen,
+                                "https://pancakeswap.finance/swap?utm_source=bitkeep&_needChain=bnb",
+                                UserWalletInfoManager.getUserWalletInfo().userChain.chain_id
+                            )
+                            lifecycleScope.launch {
+                                delay(3000)
+                                dismissProgress()
+                            }
+                        }
+                    }
+
+                    override fun failed() {
+                    }
+                })
+        }
     }
 }
