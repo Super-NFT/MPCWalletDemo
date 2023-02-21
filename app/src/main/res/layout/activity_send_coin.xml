@@ -260,7 +260,6 @@
                 android:gravity="center_vertical"
                 android:hint="@string/input_amount"
                 android:inputType="numberDecimal"
-                android:maxLength="18"
                 android:textColor="@color/color_262626"
                 android:textColorHint="@color/color_BFBFBF"
                 android:textSize="16sp"

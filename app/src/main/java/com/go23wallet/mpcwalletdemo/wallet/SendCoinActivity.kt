@@ -60,7 +60,7 @@ class SendCoinActivity : BaseActivity<ActivitySendCoinBinding>() {
     }
 
     private fun initData() {
-        binding.etInputNum.filters = arrayOf<InputFilter>(FloatLengthFilter(8))
+//        binding.etInputNum.filters = arrayOf<InputFilter>(FloatLengthFilter(8))
         chainTokenInfo?.let {
             GlideUtils.loadImg(this, it.imgUrl, binding.ivCoinIcon)
             binding.tvCoinName.text = it.name
