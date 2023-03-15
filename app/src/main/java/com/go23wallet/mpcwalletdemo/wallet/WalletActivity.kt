@@ -588,7 +588,7 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>() {
                             Go23WalletManage.getInstance().startDappViewWithMerchantKey(
                                 this@WalletActivity,
                                 it.keygen,
-                                "https://pancakeswap.finance/swap?utm_source=bitkeep&_needChain=bnb",
+                                "https://pancakeswap.finance/",
                                 UserWalletInfoManager.getUserWalletInfo().userChain.chain_id
                             )
                             lifecycleScope.launch {
